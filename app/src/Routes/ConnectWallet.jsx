@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 import getPasskeyCredential from "../hooks/getPassKeyCredential";
+import { isoBase64URL } from "@simplewebauthn/server/helpers";
 
 const ConnectWallet = () => {
   const [loading, setLoading] = useState(false);
@@ -54,40 +55,53 @@ const ConnectWallet = () => {
           This functionality confirms that theres a credentials are valid
           and that they match the details related to the users account.
       */
-        const data = await postMethod("/auth/signin-response", {
-          credential: {
-            id: credential.id,
-            response: {
-              clientDataJSON: isoBase64URL.fromBuffer(
-                credential.response.clientDataJSON
-              ),
-              attestationObject: isoBase64URL.fromBuffer(
-                credential.response.attestationObject
-              ),
+        try {
+          const data = await postMethod(
+            "/auth/signin-response",
+            {
+              credential: {
+                id: credential.id,
+                response: {
+                  clientDataJSON: isoBase64URL.fromBuffer(
+                    credential.response.clientDataJSON
+                  ),
+                  attestationObject: isoBase64URL.fromBuffer(
+                    credential.response.attestationObject
+                  ),
+                  userHandle: isoBase64URL.fromBuffer(
+                    credential.response.userHandle
+                  ),
+                },
+                authenticatorAttachment: "cross-platform",
+                rawId: isoBase64URL.fromBuffer(credential.rawId),
+                type: credential.type,
+              },
+              user: userAccount,
             },
-            authenticatorAttachment: "cross-platform",
-            rawId: isoBase64URL.fromBuffer(credential.rawId),
-            type: credential.type,
-          },
-          userAccount,
-        });
-        const { verifiedUserId, verifiedClientData } = data;
-        switch (verifiedUserId) {
-          case true:
-            switch (verifiedClientData) {
-              case true:
-                console.log("✅ You have successfully logged in.");
-                navigate("/", {
-                  state: { from: location },
-                });
-                break;
-              case false:
-                console.log("❌ The challenge does not match.");
-                break;
-            }
-            break;
-          case false:
-            break;
+            true,
+            token,
+            refreshToken
+          );
+          const { verifiedUserId, verifiedClientData } = data;
+          switch (verifiedUserId) {
+            case true:
+              switch (verifiedClientData) {
+                case true:
+                  console.log("✅ You have successfully logged in.");
+                  navigate("/", {
+                    state: { from: location },
+                  });
+                  break;
+                case false:
+                  console.log("❌ The challenge does not match.");
+                  break;
+              }
+              break;
+            case false:
+              break;
+          }
+        } catch (error) {
+          console.log(error);
         }
       }
       setLoading(false);

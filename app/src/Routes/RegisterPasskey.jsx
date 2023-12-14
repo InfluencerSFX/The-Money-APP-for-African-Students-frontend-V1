@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
-import CreatePassKeyCredential from "../hooks/CreatePasskeyCredential.jsx";
 import { validatePassKeyCreation } from "../hooks/validatePassKeyCreation";
+import { createPassKeyCredential } from "../hooks/CreatePassKeyCredential";
 
 const RegisterPasskey = () => {
   const location = useLocation();
@@ -47,7 +47,7 @@ const RegisterPasskey = () => {
     console.log("✅  Created userId : ", userId);
     console.log("✅ Created challengeBufferString : ", challengeBufferString);
     try {
-      const credential = await CreatePassKeyCredential(
+      const credential = await createPassKeyCredential(
         username.toLowerCase(),
         displayName.toLowerCase(),
         challengeBufferString,

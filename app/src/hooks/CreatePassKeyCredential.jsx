@@ -8,7 +8,7 @@ import React from "react";
  * @param {string} userId
  * @param {any[]} excludeCredentials
  */
-const CreatePassKeyCredential = async (
+export const createPassKeyCredential = async (
   username,
   displayName,
   challengeBufferString,
@@ -95,5 +95,3 @@ const CreatePassKeyCredential = async (
     publicKey: publicKeyCredentialCreationOptions,
   });
 };
-
-export default CreatePassKeyCredential;

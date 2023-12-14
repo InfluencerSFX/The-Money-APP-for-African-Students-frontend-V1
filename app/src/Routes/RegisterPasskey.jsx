@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
 import { getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
-import CreatePassKeyCredential from "../hooks/CreatePasskeyCredential.jsx";
+import CreatePassKeyCredential from "../hooks/CreatePasskeyCredential";
 import { validatePassKeyCreation } from "../hooks/validatePassKeyCreation";
 
 const RegisterPasskey = () => {

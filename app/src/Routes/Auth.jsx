@@ -1,29 +1,31 @@
-import { useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../Components/Spinner";
-import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
-
-const AUTH_URL = "/posts/";
 
 const Auth = () => {
   const location = useLocation();
   const { auth, setAuth } = useAuth();
   const [Loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(document.location.search);
+  const token = searchParams.get("token") || localStorage.getItem("token");
+  const refreshToken =
+    searchParams.get("refreshToken") || localStorage.getItem("refreshToken");
+
+  useEffect(() => {
+    if (token && refreshToken) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("refreshToken", refreshToken);
+      navigate("/secure-wallet", { state: { from: location }, replace: true });
+    }
+  }, []);
 
   const handleAuth = async () => {
     try {
-      setLoading(true);
-      const response = await axios.get(AUTH_URL, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.status === 200) {
-        setAuth({ user: "gozie", authenticated: true });
-      }
-      setLoading(false);
+      window.location.href = `${
+        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+      }/auth/google`;
     } catch (error) {
       setAuth(null);
     }

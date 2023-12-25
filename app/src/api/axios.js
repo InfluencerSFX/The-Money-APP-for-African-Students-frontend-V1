@@ -38,12 +38,16 @@ export async function postMethod(url, body, isAuth, token, refreshToken) {
  */
 export async function getMethod(url, isAuth, token, refreshToken) {
   const a = isAuth ? yukiAxios : mainAxios;
-  const res = await a.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "refresh-token": refreshToken,
-    },
-  });
-  saveAccessToken(res);
-  return res.data;
+  try {
+    const res = await a.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "refresh-token": refreshToken,
+      },
+    });
+    saveAccessToken(res);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
 }

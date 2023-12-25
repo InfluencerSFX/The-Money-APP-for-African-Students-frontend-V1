@@ -14,16 +14,16 @@ import Transact from "./Routes/Transact";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <Root />,
-  },
-  {
     path: "/auth",
     element: <Auth />,
   },
   {
     element: <RequireAuth />,
     children: [
+      {
+        path: "/",
+        element: <Root />,
+      },
       {
         path: "/secure-wallet",
         element: <SecureWallet />,

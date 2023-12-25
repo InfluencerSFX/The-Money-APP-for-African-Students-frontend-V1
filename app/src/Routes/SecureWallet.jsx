@@ -6,27 +6,18 @@ import Spinner from "../Components/Spinner";
 const SecureWallet = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
-  const searchParams = new URLSearchParams(document.location.search);
-  const token = searchParams.get("token") || localStorage.getItem("token");
-  const refreshToken =
-    searchParams.get("refreshToken") || localStorage.getItem("refreshToken");
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (token && refreshToken) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("refreshToken", refreshToken);
-    } else {
-      navigate("/auth", { state: { from: location }, replace: true });
-    }
-  }, []);
 
   const passkey = async () => {
     setLoading(true);
     const data = await getMethod("/auth/credential", true, token, refreshToken);
+    const credentialOnDevice = localStorage.getItem("credential");
+    const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
     console.log(data);
     setLoading(false);
-    if (data.length > 0) {
+    if (credentialOnDeviceParsed && data.length > 0) {
       navigate("/connect-wallet", {
         state: { from: location },
       });

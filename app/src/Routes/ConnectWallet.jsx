@@ -11,9 +11,22 @@ const ConnectWallet = () => {
   const location = useLocation();
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
+
   useEffect(() => {
     (async () => {
-      await getMethod("/auth/me", true, token, refreshToken);
+      const data = await getMethod(
+        "/auth/credential",
+        true,
+        token,
+        refreshToken
+      );
+      const credentialOnDevice = localStorage.getItem("credential");
+      const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+      if (!credentialOnDeviceParsed && data.length == 0) {
+        navigate("/register-passkey", {
+          state: { from: location },
+        });
+      }
     })();
   }, []);
 
@@ -34,9 +47,11 @@ const ConnectWallet = () => {
 
   const signin = async () => {
     setLoading(true);
+    const credentialOnDevice = localStorage.getItem("credential");
+    const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
     const userAccount = await postMethod(
       "/auth/signin-request",
-      {},
+      { challenge: credentialOnDeviceParsed.challenge },
       true,
       token,
       refreshToken

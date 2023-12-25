@@ -1,3 +1,4 @@
 export function saveAccessToken(res) {
-  localStorage.setItem("token", res.headers.get("x-access-token"));
+  if (res.headers.get("x-access-token"))
+    localStorage.setItem("token", res.headers.get("x-access-token"));
 }

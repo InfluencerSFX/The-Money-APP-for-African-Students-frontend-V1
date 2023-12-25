@@ -20,7 +20,9 @@ const RegisterPasskey = () => {
         token,
         refreshToken
       );
-      if (data.length > 0) {
+      const credentialOnDevice = localStorage.getItem("credential");
+      const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+      if (credentialOnDeviceParsed && data.length > 0) {
         navigate("/connect-wallet", {
           state: { from: location },
         });
@@ -83,6 +85,10 @@ const RegisterPasskey = () => {
         console.log(clientData);
         console.log(window.location.origin);
         const challenge = validatePassKeyCreation(clientData);
+        localStorage.setItem(
+          "credential",
+          JSON.stringify({ credentialId: credential.id, challenge })
+        );
         if (!challenge) {
           console.log("❌ PassKey verification failed.");
           return;

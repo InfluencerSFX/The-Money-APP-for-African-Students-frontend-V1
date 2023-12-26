@@ -10,7 +10,7 @@ import RegisterPasskey from "./Routes/RegisterPasskey";
 import BackupFound from "./Routes/BackupFound";
 import SecureWallet from "./Routes/SecureWallet";
 import ConnectWallet from "./Routes/ConnectWallet";
-import Transact from "./Routes/Transact";
+import Dashboard from "./Routes/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -41,8 +41,8 @@ const router = createBrowserRouter([
         element: <BackupFound />,
       },
       {
-        path: "/transact",
-        element: <Transact />,
+        path: "/account",
+        element: <Dashboard />,
       },
     ],
   },

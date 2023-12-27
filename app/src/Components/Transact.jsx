@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import AssetCard from "./AssetCard";
-import TransactionCard from "./TransactionCard";
+import CardReturner from "./CardReturner";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -9,42 +8,121 @@ function classNames(...classes) {
 
 export default function Transact() {
   let [categories] = useState({
-    Recent: [
+    wallets: [
       {
         id: 1,
-        title: "Does drinking coffee make you smarter?",
-        date: "5h ago",
-        commentCount: 5,
-        shareCount: 2,
+        network: "POLYGON",
+        marker: "USDC",
+        value: 290,
+        image: "/images/usdc.png",
       },
+
       {
         id: 2,
-        title: "So you've bought coffee... now what?",
-        date: "2h ago",
-        commentCount: 3,
-        shareCount: 2,
+        network: "BSC",
+        marker: "USDT",
+        value: 900,
+        image: "/images/usdt.png",
+      },
+
+      {
+        id: 3,
+        network: "CELO",
+        marker: "CUSD",
+        value: 2000,
+        image: "/images/cusd.png",
       },
     ],
-    Popular: [
+    transactions: [
       {
         id: 1,
-        title: "Is tech making coffee better or worse?",
-        date: "Jan 7",
-        commentCount: 29,
-        shareCount: 16,
+        merchant: "PayPass",
+        date: "1:12pm 23/05/2023",
+        amount: 1500,
+        type: "sent",
       },
       {
         id: 2,
-        title: "The most innovative things happening in coffee",
-        date: "Mar 19",
-        commentCount: 24,
-        shareCount: 12,
+        merchant: "Payant",
+        date: "12:22pm 3/04/2023",
+        amount: 400,
+        type: "received",
+      },
+      {
+        id: 3,
+        merchant: "Payee",
+        date: "2:20am 13/07/2022",
+        amount: 5400,
+        type: "sent",
+      },
+      {
+        id: 1,
+        merchant: "PayPass",
+        date: "1:12pm 23/05/2023",
+        amount: 1500,
+        type: "sent",
+      },
+      {
+        id: 2,
+        merchant: "Payant",
+        date: "12:22pm 3/04/2023",
+        amount: 400,
+        type: "received",
+      },
+      {
+        id: 3,
+        merchant: "Payee",
+        date: "2:20am 13/07/2022",
+        amount: 5400,
+        type: "sent",
+      },
+      {
+        id: 1,
+        merchant: "PayPass",
+        date: "1:12pm 23/05/2023",
+        amount: 1500,
+        type: "sent",
+      },
+      {
+        id: 2,
+        merchant: "Payant",
+        date: "12:22pm 3/04/2023",
+        amount: 400,
+        type: "received",
+      },
+      {
+        id: 3,
+        merchant: "Payee",
+        date: "2:20am 13/07/2022",
+        amount: 5400,
+        type: "sent",
+      },
+      {
+        id: 1,
+        merchant: "PayPass",
+        date: "1:12pm 23/05/2023",
+        amount: 1500,
+        type: "sent",
+      },
+      {
+        id: 2,
+        merchant: "Payant",
+        date: "12:22pm 3/04/2023",
+        amount: 400,
+        type: "received",
+      },
+      {
+        id: 3,
+        merchant: "Payee",
+        date: "2:20am 13/07/2022",
+        amount: 5400,
+        type: "sent",
       },
     ],
   });
 
   return (
-    <div className="w-full max-w-md sm:px-0">
+    <div className="w-full sm:px-0">
       <Tab.Group>
         <Tab.List className="flex space-x-1 rounded-xl bg-[#161817] p-1">
           {Object.keys(categories).map((category) => (
@@ -64,9 +142,22 @@ export default function Transact() {
           ))}
         </Tab.List>
         <Tab.Panels className="mt-2 space-y-2">
-          {Object.values(categories).map((posts, idx) => (
-            // <AssetCard key={idx} />
-            <TransactionCard key={idx} />
+          {Object.values(categories).map((obj, idx) => (
+            <Tab.Panel
+              key={idx}
+              className={classNames(
+                "rounded-xl",
+                "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              )}
+            >
+              <ul className=" space-y-2 container overflow-auto max-h-48 no-scrollbar focus:none">
+                {obj.map((obj, index) => (
+                  <li key={index}>
+                    <CardReturner transaction={obj.merchant} obj={obj} />
+                  </li>
+                ))}
+              </ul>
+            </Tab.Panel>
           ))}
         </Tab.Panels>
       </Tab.Group>

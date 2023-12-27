@@ -11,7 +11,7 @@ import Transact from "../Components/Transact";
 const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(false);
   return (
-    <main className="pt-7 space-y-5">
+    <main className="relative pt-7 space-y-4 h-svh h-screen">
       <div className="flex justify-between">
         <div className="flex space-x-2">
           <img
@@ -37,7 +37,7 @@ const Dashboard = () => {
           alt=""
           srcset=""
         />
-        <div className="z-10 text-white flex flex-col place-items-center space-y-2 p-4 pb-6">
+        <div className="z-10 text-white flex flex-col place-items-center space-y-2 pt-4 mb-3">
           <div className="inline-flex mx-auto space-x-2 align-middle">
             <p className="text-sm my-auto font-light">
               Available Asset Balance
@@ -84,6 +84,11 @@ const Dashboard = () => {
       <section>
         <Transact />
       </section>
+
+      <div className=" z-30 absolute inset-x-0 bottom-0 grid grid-cols-2 bg-sky-300 place-items-center text-[#55BB6C]">
+        <div className="">Fund Wallet</div>
+        <div className="">Send USD</div>
+      </div>
     </main>
   );
 };

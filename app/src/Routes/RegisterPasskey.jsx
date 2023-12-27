@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
-import { getMethod, postMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 import { validatePassKeyCreation } from "../hooks/validatePassKeyCreation";
 import { createPassKeyCredential } from "../hooks/CreatePassKeyCredential";
@@ -16,7 +16,7 @@ const RegisterPasskey = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        true,
+        AxiosType.Yuki,
         token,
         refreshToken
       );
@@ -34,7 +34,7 @@ const RegisterPasskey = () => {
     const data = await postMethod(
       "/auth/register-request",
       {},
-      true,
+      AxiosType.Yuki,
       token,
       refreshToken
     );
@@ -77,7 +77,7 @@ const RegisterPasskey = () => {
             rawId: isoBase64URL.fromBuffer(credential.rawId),
             type: credential.type,
           },
-          true,
+          AxiosType.Yuki,
           token,
           refreshToken
         );
@@ -97,13 +97,21 @@ const RegisterPasskey = () => {
             "✅ PassKey verification passed with challenge : ",
             challenge
           );
-          await postMethod(
+          const savedCredential = await postMethod(
             "/auth/credential",
             {
+              id: credential.id,
               challenge,
               challengeBuffer: challengeBufferString,
             },
-            true,
+            AxiosType.Yuki,
+            token,
+            refreshToken
+          );
+          await postMethod(
+            "/auth/credential",
+            { ...savedCredential },
+            AxiosType.Main,
             token,
             refreshToken
           );

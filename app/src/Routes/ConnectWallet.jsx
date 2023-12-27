@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getMethod, postMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 import getPasskeyCredential from "../hooks/getPassKeyCredential";
 import { isoBase64URL } from "@simplewebauthn/server/helpers";
@@ -16,7 +16,7 @@ const ConnectWallet = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        true,
+        AxiosType.Yuki,
         token,
         refreshToken
       );
@@ -52,7 +52,7 @@ const ConnectWallet = () => {
     const userAccount = await postMethod(
       "/auth/signin-request",
       { challenge: credentialOnDeviceParsed.challenge },
-      true,
+      AxiosType.Yuki,
       token,
       refreshToken
     );
@@ -93,7 +93,7 @@ const ConnectWallet = () => {
               },
               user: userAccount,
             },
-            true,
+            AxiosType.Yuki,
             token,
             refreshToken
           );

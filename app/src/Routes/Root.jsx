@@ -1,13 +1,25 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { getMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 
 const Root = () => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     (async () => {
-      await getMethod("/auth/me", true, token, refreshToken);
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Yuki,
+        token,
+        refreshToken
+      );
+      await postMethod(
+        "/auth/user",
+        { ...user, userId: user.id },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
     })();
   }, []);
 

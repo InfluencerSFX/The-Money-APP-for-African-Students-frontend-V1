@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getMethod } from "../api/axios";
+import { AxiosType, getMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 
 const SecureWallet = () => {
@@ -12,7 +12,12 @@ const SecureWallet = () => {
 
   const passkey = async () => {
     setLoading(true);
-    const data = await getMethod("/auth/credential", true, token, refreshToken);
+    const data = await getMethod(
+      "/auth/credential",
+      AxiosType.Yuki,
+      token,
+      refreshToken
+    );
     const credentialOnDevice = localStorage.getItem("credential");
     const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
     console.log(data);

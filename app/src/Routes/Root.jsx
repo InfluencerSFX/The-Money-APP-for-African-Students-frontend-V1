@@ -6,21 +6,7 @@ const Root = () => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
-    (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Yuki,
-        token,
-        refreshToken
-      );
-      await postMethod(
-        "/auth/user",
-        { ...user, userId: user.id },
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
-    })();
+    (async () => {})();
   }, []);
 
   return (

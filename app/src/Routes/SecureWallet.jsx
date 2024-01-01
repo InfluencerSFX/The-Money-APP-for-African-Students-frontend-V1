@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AxiosType, getMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 
 const SecureWallet = () => {
@@ -9,6 +9,24 @@ const SecureWallet = () => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Yuki,
+        token,
+        refreshToken
+      );
+      await postMethod(
+        "/auth/user",
+        { ...user, userId: user.id },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+    })();
+  });
 
   const passkey = async () => {
     setLoading(true);

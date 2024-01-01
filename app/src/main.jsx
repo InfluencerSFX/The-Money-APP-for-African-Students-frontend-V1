@@ -11,6 +11,10 @@ import BackupFound from "./Routes/BackupFound";
 import SecureWallet from "./Routes/SecureWallet";
 import ConnectWallet from "./Routes/ConnectWallet";
 import Dashboard from "./Routes/Dashboard";
+import AssetDetail from "./Routes/AssetDetail";
+import FundWallet from "./Routes/FundWallet";
+import Send from "./Routes/Send";
+import Settings from "./Routes/Settings";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +47,22 @@ const router = createBrowserRouter([
       {
         path: "/account",
         element: <Dashboard />,
+      },
+      {
+        path: "/asset",
+        element: <AssetDetail />,
+      },
+      {
+        path: "/fund",
+        element: <FundWallet />,
+      },
+      {
+        path: "/send",
+        element: <Send />,
+      },
+      {
+        path: "/settings",
+        element: <Settings />,
       },
     ],
   },

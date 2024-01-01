@@ -33,14 +33,14 @@ const Auth = () => {
     <Navigate to="/secure-wallet" state={{ from: location }} replace />
   ) : (
     <>
-      <div className=" bg-[#000000] max-w-sm mx-auto h-screen px-6">
+      <div className="mobile-screen">
         <div className="flex flex-col place-items-center h-full">
           <div className="basis-4/6 w-10/12 flex">
             <img
               src="/images/sfx-mark.png"
               alt=""
               srcSet=""
-              className="rounded-md my-auto "
+              className="rounded-md my-auto mx-auto "
             />
           </div>
 
@@ -53,7 +53,7 @@ const Auth = () => {
               onClick={() => {
                 handleAuth();
               }}
-              className="inline-flex bg-[#336D21] rounded-md w-full "
+              className="inline-flex bg-[#336D21] rounded-md w-full"
             >
               <div className="basis-1/8">
                 {Loading ? (

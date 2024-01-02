@@ -145,24 +145,26 @@ const ConnectWallet = () => {
           />
         </div>
 
-      <div className="basis-3/6 w-full space-y-5 ">
-        {loading ? (
-          <div className="flex justify-center items-center">
-            <Spinner />
-          </div>
-        ) : (
-          <button
-            onClick={signin}
-            className=" bg-[#336D21] rounded-md w-full text-center "
-          >
-            Authenticate with Passkey
-          </button>
-        )}
-        <p className="text-sm text-[#CEC6BD]">
-          If you are unable to authenticate with a passkey, or cannot proceed
-          from the passkey authentication screen, please cancel the
-          authentication. You will be redirected to the passkey settings screen
-        </p>
+        <div className="basis-3/6 w-full space-y-5 ">
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <button
+              onClick={signin}
+              className=" bg-[#336D21] rounded-md w-full text-center "
+            >
+              Authenticate with Passkey
+            </button>
+          )}
+          <p className="text-sm text-[#CEC6BD]">
+            If you are unable to authenticate with a passkey, or cannot proceed
+            from the passkey authentication screen, please cancel the
+            authentication. You will be redirected to the passkey settings
+            screen
+          </p>
+        </div>
       </div>
     </main>
   );

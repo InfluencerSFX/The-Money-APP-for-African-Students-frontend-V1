@@ -74,19 +74,20 @@ const SecureWallet = () => {
           </p>
         </div>
 
-      <div className="basis-1/6 w-full space-y-3 py-4">
-        {loading ? (
-          <div className="flex justify-center items-center">
-            <Spinner />
-          </div>
-        ) : (
-          <button
-            onClick={passkey}
-            className=" bg-[#336D21] rounded-md w-full text-center "
-          >
-            Next
-          </button>
-        )}
+        <div className="basis-1/6 w-full space-y-3 py-4">
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <button
+              onClick={passkey}
+              className=" bg-[#336D21] rounded-md w-full text-center "
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );

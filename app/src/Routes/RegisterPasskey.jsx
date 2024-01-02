@@ -152,23 +152,24 @@ const RegisterPasskey = () => {
           />
         </div>
 
-      <div className="basis-2/6 w-full space-y-5 py-4">
-        {loading ? (
-          <div className="flex justify-center items-center">
-            <Spinner />
-          </div>
-        ) : (
-          <button
-            onClick={createPassKey}
-            className=" bg-[#336D21] rounded-md w-full text-center "
-          >
-            Register Passkey
-          </button>
-        )}
-        <p className="text-sm text-[#CEC6BD]">
-          If an error occurs please go back to the previous page and start
-          again.
-        </p>
+        <div className="basis-2/6 w-full space-y-5 py-4">
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <button
+              onClick={createPassKey}
+              className=" bg-[#336D21] rounded-md w-full text-center "
+            >
+              Register Passkey
+            </button>
+          )}
+          <p className="text-sm text-[#CEC6BD]">
+            If an error occurs please go back to the previous page and start
+            again.
+          </p>
+        </div>
       </div>
     </main>
   );

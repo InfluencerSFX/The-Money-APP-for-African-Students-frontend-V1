@@ -30,10 +30,10 @@ const ConnectWallet = () => {
     })();
   }, []);
 
-  const performLogin = async (challenge) => {
+  const performLogin = async (userAccount) => {
     console.log("⚈ ⚈ ⚈ performLogin ⚈ ⚈ ⚈");
     try {
-      const credential = await getPasskeyCredential(challenge);
+      const credential = await getPasskeyCredential(userAccount);
       console.log(" performLogin ✅ credential : ", credential);
       return credential;
     } catch (error) {
@@ -63,7 +63,7 @@ const ConnectWallet = () => {
       );
       // Login with the details.
       // This part remains on the front-end in production.
-      const credential = await performLogin(userAccount.challengeBuffer);
+      const credential = await performLogin(userAccount);
       console.log(credential);
       if (credential !== null) {
         /*

@@ -38,7 +38,7 @@ export const createPassKeyCredential = async (
       name: username,
       displayName: displayName,
     },
-    excludeCredentials,
+    // excludeCredentials,
     // SUPPORT ALL PASSKEYS
     pubKeyCredParams: [
       {

@@ -10,12 +10,12 @@ const getPasskeyCredential = async ({
 
   for (const cred of credentials) {
     allowCredentials.push({
-      id: Uint8Array.from(cred.credentialId).buffer,
+      id: Uint8Array.from(cred.credentialId, (c) => c.charCodeAt(0)),
       type: "public-key",
       transports: cred.transports,
     });
   }
-  const challengeBuffer = Uint8Array.from(challenge);
+  const challengeBuffer = Uint8Array.from(challenge, (c) => c.charCodeAt(0));
   const publicKeyCredentialRequestOptions = {
     challenge: challengeBuffer,
     rpId: import.meta.env.VITE_DOMAIN,

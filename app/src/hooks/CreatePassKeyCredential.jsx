@@ -14,15 +14,17 @@ export const createPassKeyCredential = async (
     By generating the challenge on the server we can prevent "replay attacks". 
     The authenticator will sign this along with other data.
   */
-  const challengeBuffer = Uint8Array.from(challengeBufferString);
+  const challengeBuffer = Uint8Array.from(challengeBufferString, (c) =>
+    c.charCodeAt(0)
+  );
 
-  const userIdBuffer = Uint8Array.from(userId);
+  const userIdBuffer = Uint8Array.from(userId, (c) => c.charCodeAt(0));
 
   const excludeCredentials = [];
 
   for (const cred of credentials) {
     excludeCredentials.push({
-      id: Uint8Array.from(cred.credentialId).buffer,
+      id: Uint8Array.from(cred.credentialId, (c) => c.charCodeAt(0)),
       type: "public-key",
       transports: cred.transports,
     });

@@ -123,26 +123,27 @@ const ConnectWallet = () => {
     }
   };
   return (
-    <div className="flex flex-col place-items-center h-full space-y-5 ">
-      <div className=" place-self-start basis-2/6 place-items-center font-medium pt-6 mt-6 space-y-5 w-5/6">
-        <p className="text-2xl text-white opacity-100">
-          Connect to your existing wallet
-        </p>
-        <div>
-          <p className="text-sm text-[#CEC6BD] leading-relaxed">
-            Connect to an existing wallet, restore it, and access the wallet
+    <main className="bg-black mobile-screen">
+      <div className="flex flex-col lg:max-w-md place-items-center h-full space-y-5 ">
+        <div className=" place-self-start basis-2/6 place-items-center font-medium pt-6 mt-6 space-y-5 w-5/6">
+          <p className="text-2xl text-white opacity-100">
+            Connect to your existing wallet
           </p>
+          <div>
+            <p className="text-sm text-[#CEC6BD] leading-relaxed">
+              Connect to an existing wallet, restore it, and access the wallet
+            </p>
+          </div>
         </div>
-      </div>
 
-      <div className=" w-10/12 flex h-1/3 ">
-        <img
-          src="/images/biometric-key.png"
-          alt=""
-          srcSet=""
-          className="rounded-md my-auto mx-auto h-4/6"
-        />
-      </div>
+        <div className=" w-10/12 flex h-1/3 ">
+          <img
+            src="/images/biometric-key.png"
+            alt=""
+            srcSet=""
+            className="rounded-md my-auto mx-auto h-4/6"
+          />
+        </div>
 
       <div className="basis-3/6 w-full space-y-5 ">
         {loading ? (
@@ -163,7 +164,7 @@ const ConnectWallet = () => {
           authentication. You will be redirected to the passkey settings screen
         </p>
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -2,36 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .mobile-screen {
+    @apply px-6 lg:max-w-md mx-auto h-screen  text-white;
+  }
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+body {
+  height: 100dvh;
+  margin: 0;
+  min-width: 320px;
+  color: whitesmoke;
+  display: relative;
+  overflow-y: hidden;
+}
+/* background-color: #000000; */
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* color-scheme: light dark; */
+  /* color: rgba(255, 255, 255, 0.87);
+  background-color: #242424; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #55bb6c;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #55bb6c;
+}
+.test-color {
+  color: #5758585d;
 }
 
-body {
-  margin: 0;
-  /* display: flex;
-  place-items: center; */
-  min-width: 320px;
-  min-height: 100dvh;
+.asset-btn {
+  background: linear-gradient(
+      0deg,
+      rgba(148, 162, 171, 0.4),
+      rgba(148, 162, 171, 0.4)
+    ),
+    linear-gradient(0deg, rgba(148, 162, 171, 0), rgba(148, 162, 171, 0));
 }
 
 h1 {
@@ -51,26 +80,36 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #55bb6c;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #55BB6C;
   }
   button {
     background-color: #f9f9f9;
   }
-}
+} */
 
 .bg-faded {
   background-color: rgba(148, 162, 171, 0.267);
+}
+
+*:focus {
+  outline: none;
+}
+
+number:focus,
+button:focus,
+input:focus {
+  outline: none;
 }

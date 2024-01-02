@@ -84,6 +84,6 @@ export const createPassKeyCredential = async (
   );
 
   return await navigator.credentials.create({
-    createCredentialOptions: publicKeyCredentialCreationOptions,
+    publicKey: publicKeyCredentialCreationOptions,
   });
 };

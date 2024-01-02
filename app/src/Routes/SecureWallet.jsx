@@ -1,4 +1,56 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import Spinner from "../Components/Spinner";
+
 const SecureWallet = () => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Yuki,
+        token,
+        refreshToken
+      );
+      await postMethod(
+        "/auth/user",
+        { ...user, userId: user.id },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+    })();
+  });
+
+  const passkey = async () => {
+    setLoading(true);
+    const data = await getMethod(
+      "/auth/credential",
+      AxiosType.Yuki,
+      token,
+      refreshToken
+    );
+    const credentialOnDevice = localStorage.getItem("credential");
+    const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+    console.log(data);
+    setLoading(false);
+    if (credentialOnDeviceParsed && data.length > 0) {
+      navigate("/connect-wallet", {
+        state: { from: location },
+      });
+    } else {
+      navigate("/register-passkey", {
+        state: { from: location },
+      });
+    }
+  };
+
   return (
     <main className="bg-black mobile-screen">
       <div className="flex flex-col place-items-center h-full">
@@ -23,9 +75,18 @@ const SecureWallet = () => {
         </div>
 
         <div className="basis-1/6 w-full space-y-3 py-4">
-          <button className=" bg-[#336D21] rounded-md w-full text-center ">
-            Next
-          </button>
+          {loading ? (
+            <div className="flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : (
+            <button
+              onClick={passkey}
+              className=" bg-[#336D21] rounded-md w-full text-center "
+            >
+              Next
+            </button>
+          )}
         </div>
       </div>
     </main>

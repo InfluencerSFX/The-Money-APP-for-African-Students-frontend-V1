@@ -2,10 +2,11 @@ import { useState } from "react";
 import { AuthContext } from "./Context";
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState(null);
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ token, refreshToken }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,7 +5,7 @@ import { mockTransactions } from "../utils/mockData";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay } from "../utils/utilityFunctions";
-import AssetModal from "../Components/assetModal";
+import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 
 const mockAsset = mockTransactions.Wallets;

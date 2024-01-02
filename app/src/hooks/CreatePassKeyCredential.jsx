@@ -5,7 +5,7 @@ export const createPassKeyCredential = async (
   displayName,
   challengeBufferString,
   userId,
-  excludeCredentials,
+  credentials,
   authenticatorSelection
 ) => {
   /*
@@ -17,6 +17,18 @@ export const createPassKeyCredential = async (
   const challengeBuffer = Uint8Array.from(challengeBufferString);
 
   const userIdBuffer = Uint8Array.from(userId);
+
+  const excludeCredentials = [];
+
+  for (const cred of credentials) {
+    excludeCredentials.push({
+      id: Uint8Array.from(cred.credentialId).buffer,
+      type: "public-key",
+      transports: cred.transports,
+    });
+  }
+
+  console.log(excludeCredentials);
 
   const publicKeyCredentialCreationOptions = {
     challenge: challengeBuffer,

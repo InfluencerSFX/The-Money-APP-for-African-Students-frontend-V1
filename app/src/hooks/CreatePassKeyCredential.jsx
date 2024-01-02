@@ -1,13 +1,5 @@
 import React from "react";
 
-/**
- *
- * @param {string} username
- * @param {string} displayName
- * @param {string} challengeBufferString
- * @param {string} userId
- * @param {any[]} excludeCredentials
- */
 export const createPassKeyCredential = async (
   username,
   displayName,

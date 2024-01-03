@@ -103,6 +103,7 @@ const RegisterPasskey = () => {
               id: credential.id,
               challenge,
               challengeBuffer: challengeBufferString,
+              origin: window.location.origin,
             },
             AxiosType.Yuki,
             token,

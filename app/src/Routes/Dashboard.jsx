@@ -25,7 +25,6 @@ const Dashboard = () => {
         token,
         refreshToken
       );
-      console.log(user);
       setUser(user);
     })();
   }, []);
@@ -38,7 +37,8 @@ const Dashboard = () => {
         <div className="flex justify-between">
           <div className="flex space-x-2">
             <img
-              src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+              // src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+              src={userDetails?.picture}
               alt="user image"
               srcSet=""
               className="rounded-full h-9 w-9 my-auto"

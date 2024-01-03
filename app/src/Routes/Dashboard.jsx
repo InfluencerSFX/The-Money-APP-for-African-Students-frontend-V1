@@ -5,14 +5,31 @@ import {
   ArrowDownRightIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VerifyEmail from "../Components/VefityEmail";
 import CompleteKYC from "../Components/CompleteKYC";
 import Transact from "../Components/Transact";
 import FundModal from "../Components/FundModal";
 import { Link } from "react-router-dom";
+import { AxiosType, getMethod } from "../api/axios";
 
 const Dashboard = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const [userDetails, setUser] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Yuki,
+        token,
+        refreshToken
+      );
+      console.log(user);
+      setUser(user);
+    })();
+  }, []);
+
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
@@ -28,7 +45,9 @@ const Dashboard = () => {
             />
             <div className="">
               <p className="text-sm text-[#55BB6C]">Welcome</p>
-              <p className="text-xs text-[#D4B998]">Victoria Menace</p>
+              <p className="text-xs text-[#D4B998]">
+                {userDetails?.firstName} {userDetails?.lastName}
+              </p>
             </div>
           </div>
           <div className="w-auto">

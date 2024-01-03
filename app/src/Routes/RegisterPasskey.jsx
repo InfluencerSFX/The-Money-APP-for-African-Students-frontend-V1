@@ -115,7 +115,7 @@ const RegisterPasskey = () => {
             token,
             refreshToken
           );
-          navigate("/connect-wallet", {
+          navigate("/account", {
             state: { from: location },
           });
         }

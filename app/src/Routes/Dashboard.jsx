@@ -28,7 +28,6 @@ const Dashboard = () => {
         refreshToken
       );
       setUser(user);
-      localStorage.setItem("user", JSON.stringify(user));
     })();
   }, []);
 

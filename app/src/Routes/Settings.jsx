@@ -24,20 +24,15 @@ const Settings = () => {
 
   const [userDetails, setUser] = useState(null);
   useEffect(() => {
-    const userJSON = localStorage.getItem("user");
-    if (!userJSON) {
-      (async () => {
-        const user = await getMethod(
-          "/auth/me",
-          AxiosType.Main,
-          token,
-          refreshToken
-        );
-        setUser(user);
-        localStorage.setItem("user", JSON.stringify(user));
-      })();
-    }
-    setUser(JSON.parse(userJSON));
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+    })();
   }, []);
 
   return (

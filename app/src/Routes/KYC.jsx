@@ -76,7 +76,7 @@ const KYC = () => {
               }
             >
               {userDetails ? (
-                userDetails?.tier.level > 0 ? (
+                userDetails?.tier?.level > 0 ? (
                   "Verified"
                 ) : userDetails?.tier?.code === Codes.Processing ? (
                   "Processing..."
@@ -124,7 +124,7 @@ const KYC = () => {
               }
             >
               {userDetails ? (
-                userDetails?.tier.level === 2 ? (
+                userDetails?.tier?.level === 2 ? (
                   "Upgraded"
                 ) : userDetails?.tier?.level < 1 ? (
                   "Verify first"

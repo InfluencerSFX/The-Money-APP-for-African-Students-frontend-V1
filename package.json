@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@smile_identity/smart-camera-web": "^1.0.2",
+    "react-select": "^5.8.0"
+  }
+}

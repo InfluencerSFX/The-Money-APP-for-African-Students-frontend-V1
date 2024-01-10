@@ -27,6 +27,7 @@ const Dashboard = () => {
         token,
         refreshToken
       );
+      console.log(user);
       setUser(user);
     })();
   }, []);

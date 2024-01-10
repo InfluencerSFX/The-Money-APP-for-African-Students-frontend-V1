@@ -1,8 +1,13 @@
-import { useState } from "react";
-import { delay } from "../utils/utilityFunctions";
+import { useEffect, useState } from "react";
+import { Codes, delay } from "../utils/utilityFunctions";
 import Spinner from "../Components/Spinner";
+import { AxiosType, getMethod } from "../api/axios";
+import { useNavigate } from "react-router-dom";
 
 const KYC = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+
   const [loading, setLoading] = useState(false);
   const [kYCProcessing, setKYCProcessing] = useState(false);
   const [kYCComplete, setKYCComplete] = useState(false);
@@ -11,16 +16,31 @@ const KYC = () => {
   const [T2kYCProcessing, setT2KYCProcessing] = useState(false);
   const [T2kYCComplete, setT2KYCComplete] = useState(false);
 
+  const navigate = useNavigate();
+  const [userDetails, setUser] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      console.log(user?.tier?.level > 0);
+      setUser(user);
+    })();
+  }, []);
+
   const handleKYC = async () => {
     setLoading(true);
-    await delay();
+    navigate("/collect-kyc?tier=1");
     setKYCProcessing(true);
     setLoading(false);
   };
 
   const handleT2KYC = async () => {
     setT2Loading(true);
-    await delay();
+    navigate("/collect-kyc?tier=2");
     setT2KYCProcessing(true);
     setT2Loading(false);
   };
@@ -48,10 +68,24 @@ const KYC = () => {
             </button>
           ) : (
             <button
-              className="min-w-full bg-[#250335] mx-auto"
+              className="min-w-full bg-[#250335] mx-auto disabled:bg-gray-400"
               onClick={handleKYC}
+              disabled={
+                userDetails?.tier?.level > 0 ||
+                userDetails?.tier?.code === Codes.Processing
+              }
             >
-              Verify
+              {userDetails ? (
+                userDetails?.tier.level > 0 ? (
+                  "Verified"
+                ) : userDetails?.tier?.code === Codes.Processing ? (
+                  "Processing..."
+                ) : (
+                  "Verify"
+                )
+              ) : (
+                <Spinner />
+              )}
             </button>
           )
         ) : (
@@ -83,10 +117,23 @@ const KYC = () => {
             </button>
           ) : (
             <button
-              className="min-w-full bg-[#045725] mx-auto"
+              className={`min-w-full bg-[#045725] mx-auto disabled:bg-gray-400`}
               onClick={handleT2KYC}
+              disabled={
+                !userDetails?.tier?.level || userDetails?.tier?.level < 1
+              }
             >
-              Upgrade
+              {userDetails ? (
+                userDetails?.tier.level === 2 ? (
+                  "Upgraded"
+                ) : userDetails?.tier?.level < 1 ? (
+                  "Verify first"
+                ) : (
+                  "Upgrade"
+                )
+              ) : (
+                <Spinner />
+              )}
             </button>
           )
         ) : (

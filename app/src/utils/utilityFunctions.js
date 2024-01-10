@@ -34,3 +34,7 @@ export const delay = () => {
     }, 2000);
   });
 };
+
+export const Codes = {
+  Processing: 5013,
+};

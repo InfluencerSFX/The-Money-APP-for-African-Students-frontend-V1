@@ -14,7 +14,7 @@ const SecureWallet = () => {
     (async () => {
       const user = await getMethod(
         "/auth/me",
-        AxiosType.Main,
+        AxiosType.Yuki,
         token,
         refreshToken
       );

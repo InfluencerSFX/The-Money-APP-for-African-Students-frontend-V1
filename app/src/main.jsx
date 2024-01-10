@@ -15,6 +15,7 @@ import AssetDetail from "./Routes/AssetDetail";
 import FundWallet from "./Routes/FundWallet";
 import Send from "./Routes/Send";
 import Settings from "./Routes/Settings";
+import KYC from "./Routes/KYC";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/send",
         element: <Send />,
+      },
+      {
+        path: "/KYC",
+        element: <KYC />,
       },
       {
         path: "/settings",

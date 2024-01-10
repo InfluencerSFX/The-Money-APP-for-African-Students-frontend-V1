@@ -7,13 +7,18 @@ const RequireAuth = () => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
 
-  return token && refreshToken ? (
+  return (
     <div className=" bg-[#000000] max-w-sm mx-auto h-screen px-6">
       <Outlet />
     </div>
-  ) : (
-    <Navigate to="/auth" state={{ from: location }} replace />
   );
+  // return token && refreshToken ? (
+  //   <div className=" bg-[#000000] max-w-sm mx-auto h-screen px-6">
+  //     <Outlet />
+  //   </div>
+  // ) : (
+  //   <Navigate to="/auth" state={{ from: location }} replace />
+  // );
 };
 
 export default RequireAuth;

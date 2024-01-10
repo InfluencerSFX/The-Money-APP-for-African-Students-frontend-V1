@@ -84,7 +84,7 @@ const Dashboard = () => {
         </section>
 
         <section>
-          <VerifyEmail />
+          <CompleteKYC />
         </section>
 
         <section>

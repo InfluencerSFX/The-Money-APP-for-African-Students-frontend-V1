@@ -5,14 +5,32 @@ import {
   ArrowDownRightIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VerifyEmail from "../Components/VefityEmail";
 import CompleteKYC from "../Components/CompleteKYC";
 import Transact from "../Components/Transact";
 import FundModal from "../Components/FundModal";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AxiosType, getMethod } from "../api/axios";
 
 const Dashboard = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [userDetails, setUser] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+    })();
+  }, []);
+
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
@@ -21,17 +39,30 @@ const Dashboard = () => {
         <div className="flex justify-between">
           <div className="flex space-x-2">
             <img
-              src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+              // src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+              src={
+                userDetails?.picture ||
+                "https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+              }
               alt="user image"
               srcSet=""
               className="rounded-full h-9 w-9 my-auto"
             />
             <div className="">
               <p className="text-sm text-[#55BB6C]">Welcome</p>
-              <p className="text-xs text-[#D4B998]">Victoria Menace</p>
+              <p className="text-xs text-[#D4B998]">
+                {userDetails?.firstName} {userDetails?.lastName}
+              </p>
             </div>
           </div>
-          <div className="w-auto">
+          <div
+            className="w-auto"
+            onClick={() =>
+              navigate("/settings", {
+                state: { from: location },
+              })
+            }
+          >
             <AdjustmentsVerticalIcon className="h-7 w-auto text-[#D4B998]" />
           </div>
         </div>

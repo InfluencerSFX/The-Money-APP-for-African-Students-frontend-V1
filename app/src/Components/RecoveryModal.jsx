@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
-const RecoveryModal = ({ isOpen, setIsOpen }) => {
+const RecoveryModal = ({ isOpen, setIsOpen, email }) => {
   function closeModal() {
     setIsOpen(false);
   }
@@ -62,9 +62,7 @@ const RecoveryModal = ({ isOpen, setIsOpen }) => {
                       <p className="text-sm text-[#55BB6C]">
                         Your wallet is backed up
                       </p>
-                      <p className="text-xs text-[#D4B998]">
-                        Victoriallison@gmail.com
-                      </p>
+                      <p className="text-xs text-[#D4B998]">{email}</p>
                     </div>
                   </div>
                 </div>

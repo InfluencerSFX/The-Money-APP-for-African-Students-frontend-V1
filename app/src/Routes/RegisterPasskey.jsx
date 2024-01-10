@@ -103,6 +103,7 @@ const RegisterPasskey = () => {
               id: credential.id,
               challenge,
               challengeBuffer: challengeBufferString,
+              origin: window.location.origin,
             },
             AxiosType.Yuki,
             token,
@@ -115,7 +116,7 @@ const RegisterPasskey = () => {
             token,
             refreshToken
           );
-          navigate("/connect-wallet", {
+          navigate("/account", {
             state: { from: location },
           });
         }

@@ -4,22 +4,31 @@ import { AxiosType, postMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
 function CollectKYC() {
-  const countries = [
-    { value: "NG", label: "Nigeria" },
-    { value: "TZ", label: "Tanzania" },
-    { value: "GH", label: "Ghana" },
-    { value: "KE", label: "Kenya" },
-    { value: "RW", label: "Rwanda" },
-    { value: "ZA", label: "South Africa" },
-    { value: "UG", label: "Uganda" },
-  ];
-  const [selected, setSelected] = useState(false);
-  const ids = [{ value: "PASSPORT", label: "Passport" }];
-  const [countrySelected, setCountrySelected] = useState(countries[0].value);
-  const [idSelected, setIdSelected] = useState(ids[0].value);
-
   const searchParams = new URLSearchParams(document.location.search);
   const tier = searchParams.get("tier");
+
+  const countries =
+    tier == 1
+      ? [
+          { value: "NG", label: "Nigeria" },
+          { value: "TZ", label: "Tanzania" },
+          { value: "GH", label: "Ghana" },
+          { value: "KE", label: "Kenya" },
+          { value: "RW", label: "Rwanda" },
+          { value: "ZA", label: "South Africa" },
+          { value: "UG", label: "Uganda" },
+        ]
+      : [
+          { value: "TR", label: "Turkey" },
+          { value: "CY", label: "Cyprus" },
+        ];
+  const [selected, setSelected] = useState(false);
+  const ids =
+    tier == 1
+      ? [{ value: "PASSPORT", label: "Passport" }]
+      : [{ value: "PASSPORT", label: "Passport" }];
+  const [countrySelected, setCountrySelected] = useState(countries[0].value);
+  const [idSelected, setIdSelected] = useState(ids[0].value);
 
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");

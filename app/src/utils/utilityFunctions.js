@@ -36,5 +36,6 @@ export const delay = () => {
 };
 
 export const Codes = {
-  Processing: 5013,
+  Processing: "5013",
+  Success: "0810",
 };

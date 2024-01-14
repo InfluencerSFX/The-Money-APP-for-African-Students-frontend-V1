@@ -26,7 +26,11 @@ function CollectKYC() {
   const ids =
     tier == 1
       ? [{ value: "PASSPORT", label: "Passport" }]
-      : [{ value: "PASSPORT", label: "Passport" }];
+      : [
+          { value: "DRIVERS_LICENSE", label: "Driving License" },
+          { value: "RESIDENT_ID", label: "Residence Permit" },
+          { value: "WORK_PERMIT", label: "Work Permit" },
+        ];
   const [countrySelected, setCountrySelected] = useState(countries[0].value);
   const [idSelected, setIdSelected] = useState(ids[0].value);
 

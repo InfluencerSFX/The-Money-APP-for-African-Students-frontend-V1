@@ -26,7 +26,7 @@ const SecureWallet = () => {
         refreshToken
       );
     })();
-  });
+  }, []);
 
   const passkey = async () => {
     setLoading(true);

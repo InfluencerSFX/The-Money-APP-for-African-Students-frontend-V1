@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../Components/Spinner";
@@ -24,10 +23,9 @@ const Auth = () => {
 
   const handleAuth = async () => {
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_YUKI_BACKEND_BASE_URL}/auth/google`
-      );
-      window.location.href = res.data;
+      window.location.href = `${
+        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+      }/auth/google`;
     } catch (error) {
       setAuth(null);
     }

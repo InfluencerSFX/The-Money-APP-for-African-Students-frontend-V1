@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../Components/Spinner";
@@ -23,9 +24,10 @@ const Auth = () => {
 
   const handleAuth = async () => {
     try {
-      window.location.href = `${
-        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
-      }/auth/google`;
+      const res = await axios.get(
+        `${import.meta.env.VITE_YUKI_BACKEND_BASE_URL}/auth/google`
+      );
+      window.location.href = res.data;
     } catch (error) {
       setAuth(null);
     }
@@ -70,7 +72,7 @@ const Auth = () => {
                 )}
               </div>
               <div className="basis-5/6">
-                <p className="mx-auto">Sign in with Google</p>
+                <p className="mx-auto">Continue with Google</p>
               </div>
             </button>
             <p className="text-center opacity-60 text-sm mt-auto">

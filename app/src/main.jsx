@@ -17,6 +17,8 @@ import Send from "./Routes/Send";
 import Settings from "./Routes/Settings";
 import KYC from "./Routes/KYC";
 import CollectKYC from "./Routes/CollectKYC";
+import PayTuition from "./Routes/PayTuition";
+import ConfirmTransaction from "./Routes/ConfirmTransaction";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +75,14 @@ const router = createBrowserRouter([
       {
         path: "/settings",
         element: <Settings />,
+      },
+      {
+        path: "/pay-tuition",
+        element: <PayTuition />,
+      },
+      {
+        path: "/confirm-transaction",
+        element: <ConfirmTransaction />,
       },
     ],
   },

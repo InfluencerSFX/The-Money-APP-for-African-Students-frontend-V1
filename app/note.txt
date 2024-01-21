@@ -1,36 +1,4 @@
-{validated ? (
-            <p className="text-sm opacity-60 mx-auto">
-              {`Only send ${selected.marker} Coin (${selected.network}) network to this address. Other
-              assets will be lost forever.`}
-            </p>
-          ) : (
-            <Listbox value={selected} onChange={setSelected}>
-              <div className="grid grid-col items-center space-y-2">
-                <Listbox.Button className="p-0 m-0 mx-auto">
-                  <AssetCard asset={selected} dropdown={true} />
-                </Listbox.Button>
-                <Transition
-                  as={Fragment}
-                  leave="transition ease-in duration-100"
-                  leaveFrom="opacity-100"
-                  leaveTo="opacity-0"
-                >
-                  <Listbox.Options className="space-y-2 z-30">
-                    {assets.map((asset, assetIdx) => (
-                      <Listbox.Option
-                        key={assetIdx}
-                        className={({ active }) =>
-                          `relative cursor-default select-none ${
-                            active ? "" : ""
-                          }`
-                        }
-                        value={asset}
-                      >
-                        <AssetCard asset={asset} dropdown={false} />
-                      </Listbox.Option>
-                    ))}
-                  </Listbox.Options>
-                </Transition>
-              </div>
-            </Listbox>
-          )}{" "}
+focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500
+      disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+      invalid:border-pink-500 invalid:text-pink-600
+      focus:invalid:border-pink-500 focus:invalid:ring-pink-500

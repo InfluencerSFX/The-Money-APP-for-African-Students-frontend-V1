@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
     <main className="relative mobile-screen bg-black">
-      <section className="relative space-y-4 ">
+      <section className="relative py-4 space-y-4 ">
         <div className="flex justify-between">
           <div className="flex space-x-2">
             <img
@@ -131,7 +131,7 @@ const Dashboard = () => {
           <div className="p-2 rounded-full bg-[#e9ebd94d]">
             <ArrowDownRightIcon className="h-5 " />
           </div>{" "}
-          <p className="my-auto">Fund Wallet</p>
+          <p className="my-auto text-sm">Fund / Withdraw</p>
         </button>
         {/* <button className=""> */}
         <Link
@@ -141,7 +141,7 @@ const Dashboard = () => {
           <div className="p-2 rounded-full bg-[#e9ebd94d]">
             <ArrowUpRightIcon className="h-5" />
           </div>
-          <p className="my-auto">Send USD</p>
+          <p className="my-auto text-sm">Send USD</p>
         </Link>
         {/* </button> */}
       </footer>

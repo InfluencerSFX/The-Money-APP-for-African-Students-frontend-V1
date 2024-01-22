@@ -34,7 +34,12 @@ export async function postMethod(url, body, axiosType, token, refreshToken) {
     saveAccessToken(res);
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error(error?.response?.data?.statusCode);
+    if (error?.response?.data?.statusCode == 401) {
+      window.location.href = `${
+        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+      }/auth/google`;
+    }
   }
 }
 
@@ -57,6 +62,11 @@ export async function getMethod(url, axiosType, token, refreshToken) {
     saveAccessToken(res);
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error(error?.response?.data?.statusCode);
+    if (error?.response?.data?.statusCode == 401) {
+      window.location.href = `${
+        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+      }/auth/google`;
+    }
   }
 }

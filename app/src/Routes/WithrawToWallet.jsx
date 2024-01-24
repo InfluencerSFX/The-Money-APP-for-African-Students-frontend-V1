@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
 import { mockTransactions } from "../utils/mockData";
@@ -10,23 +11,35 @@ import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 
 const mockAsset = mockTransactions.Wallets;
 
-const Send = () => {
+const WithdrawToWallet = () => {
+  const navigate = useNavigate();
   const [assets] = useState(mockAsset);
   const [selected, setSelected] = useState(assets[0]);
-  const [minimumAmount] = useState(10);
+  const minimumAmount = 10;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
   let [isOpen, setIsOpen] = useState(false);
   let [transactionComplete, setTransactionComplete] = useState(false);
+  let [transactionStatus, setTransactionStatus] = useState(false);
 
-  const handleAmountInput = (inputValue) => {
-    setAmount(inputValue);
-    if (amount < minimumAmount || amount > selected.value) {
-      setError("invalid amount");
+  const handleInput = (inputValue) => {
+    if (validated) {
+      setWalletAddress(inputValue);
+      if (!walletAddress.length) {
+        setError("invalid address");
+      } else {
+        setError("");
+      }
     } else {
-      setError("");
+      setAmount(inputValue);
+      if (amount < minimumAmount || amount > selected.value) {
+        setError("invalid amount");
+      } else {
+        setError("");
+      }
     }
   };
 
@@ -41,24 +54,43 @@ const Send = () => {
     setLoading(true);
     await delay();
     setTransactionComplete(true);
+    try {
+      setTransactionStatus(true);
+      throw new Error("transaction failed");
+    } catch (error) {
+      setTransactionStatus(false);
+    }
     setLoading(false);
   };
 
+  const handleClipboardPaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      setWalletAddress(text);
+    } catch (error) {
+      console.log("Failed to read clipboard");
+    }
+  };
+
   useEffect(() => {
-    handleAmountInput(amount);
+    handleInput(amount);
   }, [amount]);
 
   useEffect(() => {
-    console.log(validated);
-  }, [validated]);
+    handleInput(walletAddress);
+  }, [walletAddress]);
 
   return (
-    <main className=" relative px-0 mobile-screen border border-dashed border-lime-300 bg-black text-white">
+    <main className=" relative px-0 mobile-screen  bg-black text-white">
       <div className="border-b border-[#e9ebd94d] pt-5">
         <button
           className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
           onClick={() => {
-            setValidated(false);
+            if (validated) {
+              setValidated(false);
+            } else {
+              navigate(-1);
+            }
           }}
         >
           <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
@@ -90,7 +122,7 @@ const Send = () => {
               value={amount}
               placeholder="0.00"
               onChange={(e) => {
-                handleAmountInput(e.target.value);
+                setAmount(e.target.value);
               }}
             />
             <span className="text-sm my-auto">{selected.marker}</span>
@@ -105,9 +137,19 @@ const Send = () => {
                 type="text"
                 className="text-start p-0 bg-transparent placeholder:text-white px-2 placeholder:opacity-70"
                 placeholder="Recipient Address or ID"
+                value={walletAddress}
+                onChange={(e) => {
+                  setWalletAddress(e.target.value);
+                }}
               />
               <span>
-                <QrCodeIcon className="h-4" />
+                <button
+                  type="button"
+                  className="p-0 m-0 focus:border-0"
+                  onClick={handleClipboardPaste}
+                >
+                  <QrCodeIcon className="h-4" />
+                </button>
               </span>
             </div>
           )}
@@ -162,9 +204,10 @@ const Send = () => {
       <TransactionCompleteModal
         transactionComplete={transactionComplete}
         setTransactionComplete={setTransactionComplete}
+        transactionStatus={transactionStatus}
       />
     </main>
   );
 };
 
-export default Send;
+export default WithdrawToWallet;

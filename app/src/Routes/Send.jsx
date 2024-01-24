@@ -1,12 +1,19 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
+import { mockTransactions } from "../utils/mockData";
+
+const mockAsset = mockTransactions.Wallets;
+
 const Send = () => {
   const navigate = useNavigate();
 
   return (
     <main className=" relative px-0 mobile-screen  bg-black text-white">
       <div className="border-b border-[#e9ebd94d]">
-        <button className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black">
+        <button
+          className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
+          onClick={() => navigate(-1)}
+        >
           <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
           <p className="my-auto">Send</p>
         </button>
@@ -17,7 +24,7 @@ const Send = () => {
             className="w-full bg-[#3e4837]"
             type="button"
             onClick={() => {
-              navigate("/pay-tuition");
+              navigate("/withdraw-to-wallet");
             }}
           >
             Withdraw to Wallet Address

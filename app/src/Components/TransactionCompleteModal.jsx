@@ -1,12 +1,20 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TransactionCompleteModal = ({
   transactionComplete,
   setTransactionComplete,
+  transactionStatus,
 }) => {
+  const navigate = useNavigate();
+
   function closeModal() {
     setTransactionComplete(false);
+    if (transactionStatus) {
+      navigate("/account");
+    }
+    navigate("/send");
   }
 
   return (
@@ -37,14 +45,20 @@ const TransactionCompleteModal = ({
                 </div>
                 <Dialog.Title
                   as="h3"
-                  className=" text-[#55BB6C] border-[#e9ebd94d] border-b px-4 py-2 self-end"
+                  className={`${
+                    transactionStatus ? "text-[#55BB6C]" : "text-red-500"
+                  } border-[#e9ebd94d] border-b px-4 py-2 self-end`}
                 >
-                  Payment successful
+                  {transactionStatus ? "Payment successful" : "Payment failed"}
                 </Dialog.Title>
                 <div className="mt-2 p-4 space-y-2">
                   <img
-                    src="/images/check.png"
-                    className=" p-4 mx-auto"
+                    src={
+                      transactionStatus
+                        ? "/images/check.png"
+                        : "/images/failed.png"
+                    }
+                    className=" h-24 p-4 mx-auto"
                     alt=""
                     srcSet=""
                   />

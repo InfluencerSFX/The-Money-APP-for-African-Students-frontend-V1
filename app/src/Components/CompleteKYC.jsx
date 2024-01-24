@@ -25,13 +25,13 @@ const CompleteKYC = () => {
   const display = () => {
     if (!userDetails)
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <Spinner as="div" />
         </div>
       );
     if (!userDetails?.tier) {
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Complete your KYC</p>
           <p className="text-xs text-[#CEC6BD]">
             Please complete your KYC to start transacting
@@ -40,7 +40,7 @@ const CompleteKYC = () => {
       );
     } else if (userDetails?.tier?.code === Codes.Processing) {
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Processing</p>
           <p className="text-xs text-[#CEC6BD]">KYC Processing</p>
         </div>
@@ -50,7 +50,7 @@ const CompleteKYC = () => {
       userDetails?.tier?.code === Codes.Success
     ) {
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Verified</p>
           <p className="text-xs text-[#CEC6BD]">Upgrade to Tier 2</p>
         </div>
@@ -60,14 +60,14 @@ const CompleteKYC = () => {
       userDetails?.tier?.code === Codes.Success
     ) {
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Upgraded</p>
           <p className="text-xs text-[#CEC6BD]">Upgraded to Tier 2</p>
         </div>
       );
     } else {
       return (
-        <div className="col-span-3 col-start-2">
+        <div className="col-span-4 text-left col-start-2">
           <p className="text-[#6d2121]">Error, Try again</p>
           <p className="text-xs text-[#CEC6BD]">{userDetails?.tier?.message}</p>
         </div>
@@ -76,13 +76,13 @@ const CompleteKYC = () => {
   };
   return (
     <button
-      className="relative grid grid-cols-4 p-3 w-full bg-[#161817] rounded-lg border border-[#e9ebd94d]"
+      className="relative grid grid-cols-5 p-3 w-full bg-[#161817] rounded-lg border border-[#e9ebd94d]"
       onClick={() => {
         navigate("/kyc");
       }}
     >
       <img
-        className="col-span-1 absolute bottom-5 left-3"
+        className="col-span-1 absolute bottom-4 left-3"
         src="/images/compliance.png"
         alt=""
         srcSet=""

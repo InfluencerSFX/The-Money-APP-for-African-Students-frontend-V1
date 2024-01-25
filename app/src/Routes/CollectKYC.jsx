@@ -69,7 +69,10 @@ function CollectKYC() {
 
   return selected ? (
     <main className="pt-4 h-full space-y-8 flex flex-col justify-center">
-      <smart-camera-web capture-id></smart-camera-web>
+      <smart-camera-web
+        capture-id
+        document-capture-modes="camera,upload"
+      ></smart-camera-web>
     </main>
   ) : (
     <main className="pt-4 h-full space-y-8 flex flex-col justify-center">

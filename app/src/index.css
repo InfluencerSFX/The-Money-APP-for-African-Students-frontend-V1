@@ -4,7 +4,7 @@
 
 @layer components {
   .mobile-screen {
-    @apply px-6 lg:max-w-md mx-auto text-white;
+    @apply lg:max-w-md mx-auto  px-6 text-white;
   }
   .form-validation {
     @apply focus:outline-none focus:border-[#55BB6C] focus:ring-1 focus:ring-[#55BB6C]
@@ -25,6 +25,7 @@ body {
   color: whitesmoke;
   display: relative;
   overflow-y: hidden;
+  padding: 0;
 }
 /* background-color: #000000; */
 

@@ -13,9 +13,9 @@ const RequireAuth = () => {
   //   </>
   // );
   return token && refreshToken ? (
-    <div className=" bg-[#000000] max-w-sm mx-auto h-screen px-6">
+    <>
       <Outlet />
-    </div>
+    </>
   ) : (
     <Navigate to="/auth" state={{ from: location }} replace />
   );

@@ -97,7 +97,7 @@ const RegisterPasskey = () => {
             "✅ PassKey verification passed with challenge : ",
             challenge
           );
-          const savedCredential = await postMethod(
+          await postMethod(
             "/auth/credential",
             {
               id: credential.id,
@@ -106,13 +106,6 @@ const RegisterPasskey = () => {
               origin: window.location.origin,
             },
             AxiosType.Yuki,
-            token,
-            refreshToken
-          );
-          await postMethod(
-            "/auth/credential",
-            { ...savedCredential },
-            AxiosType.Main,
             token,
             refreshToken
           );

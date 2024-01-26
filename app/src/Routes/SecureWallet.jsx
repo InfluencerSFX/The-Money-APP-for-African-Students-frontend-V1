@@ -20,7 +20,7 @@ const SecureWallet = () => {
       );
       await postMethod(
         "/auth/user",
-        { ...user, userId: user.id },
+        { ...user },
         AxiosType.Main,
         token,
         refreshToken

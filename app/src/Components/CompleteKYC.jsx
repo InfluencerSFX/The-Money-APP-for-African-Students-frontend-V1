@@ -4,7 +4,7 @@ import { AxiosType, getMethod } from "../api/axios";
 import { Codes } from "../utils/utilityFunctions";
 import Spinner from "./Spinner";
 
-const CompleteKYC = () => {
+const CompleteVerification = () => {
   const navigate = useNavigate();
   const [userDetails, setUser] = useState(null);
   const token = localStorage.getItem("token");
@@ -32,9 +32,9 @@ const CompleteKYC = () => {
     if (!userDetails?.tier) {
       return (
         <div className="col-span-4 text-left col-start-2">
-          <p className="text-[#336D21]">Complete your KYC</p>
+          <p className="text-[#336D21]">Complete your Verification</p>
           <p className="text-xs text-[#CEC6BD]">
-            Please complete your KYC to start transacting
+            Please complete your Verification to start transacting
           </p>
         </div>
       );
@@ -42,7 +42,7 @@ const CompleteKYC = () => {
       return (
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Processing</p>
-          <p className="text-xs text-[#CEC6BD]">KYC Processing</p>
+          <p className="text-xs text-[#CEC6BD]">Verification Processing</p>
         </div>
       );
     } else if (
@@ -78,7 +78,7 @@ const CompleteKYC = () => {
     <button
       className="relative grid grid-cols-5 p-3 w-full bg-[#161817] rounded-lg border border-[#e9ebd94d]"
       onClick={() => {
-        navigate("/kyc");
+        navigate("/Verification");
       }}
     >
       <img
@@ -92,4 +92,4 @@ const CompleteKYC = () => {
   );
 };
 
-export default CompleteKYC;
+export default CompleteVerification;

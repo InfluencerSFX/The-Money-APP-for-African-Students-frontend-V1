@@ -103,7 +103,7 @@ const Settings = () => {
           </button>
           <button className="inline-flex space-x-2 bg-transparent">
             <ArrowTopRightOnSquareIcon className="h-6" />
-            <p className="font-normal">Add home screen shortcut</p>
+            <p className="font-normal">Add App to home screen</p>
           </button>
           <button className="inline-flex space-x-2 bg-transparent">
             <ChatBubbleOvalLeftIcon className="h-6" />

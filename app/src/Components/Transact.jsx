@@ -57,7 +57,7 @@ export default function Transact() {
                   <p className="text-sm text-[#55BB6C]">Transaction History</p>
                 </div>
 
-                <ul className=" space-y-2 overflow-auto no-scrollbar focus:none max-h-[40svh] pb-4">
+                <ul className=" space-y-2 no-scroll h-[40vh] focus:none overflow-auto pb-12">
                   {categories["Transactions"].map((obj, index) => (
                     <li key={index}>
                       <TransactionCard transaction={obj} />

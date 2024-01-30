@@ -11,7 +11,8 @@ import CompleteKYC from "../Components/CompleteKYC";
 import Transact from "../Components/Transact";
 import FundModal from "../Components/FundModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AxiosType, getMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import { getBalance } from "../utils/utilityFunctions";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userDetails, setUser] = useState(null);
+  const [balances, setBalances] = useState({ USDT: null, USDC: null });
   useEffect(() => {
     (async () => {
       const user = await getMethod(
@@ -29,6 +31,17 @@ const Dashboard = () => {
       );
       console.log(user);
       setUser(user);
+      const polygonBal = await postMethod(
+        "/wallet/check-polygon-assets-balance",
+        {},
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setBalances({
+        USDT: getBalance(polygonBal.USDT),
+        USDC: getBalance(polygonBal.USDC),
+      });
     })();
   }, []);
 
@@ -103,13 +116,15 @@ const Dashboard = () => {
 
             <div className="inline-flex space-x-2 align-text-bottom text-white">
               <p className="text-4xl font-semibold">
-                {showBalance ? "144" : "****"}
+                {showBalance ? balances.USDT + balances.USDC : "****"}
               </p>{" "}
               <span className="mt-auto">USD</span>
             </div>
             <div className="inline-flex space-x-2">
               <span className="mt-auto">₺</span>
-              <p className="text-md font-thin">41562.15</p>{" "}
+              <p className="text-md font-thin">
+                {(balances.USDT + balances.USDC) * 30.36}
+              </p>{" "}
             </div>
             <br />
           </div>

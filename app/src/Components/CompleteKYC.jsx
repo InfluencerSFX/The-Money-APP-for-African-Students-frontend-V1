@@ -17,11 +17,9 @@ const CompleteVerification = () => {
         token,
         refreshToken
       );
-      console.log(user);
       setUser(user);
     })();
   }, []);
-  console.log(userDetails?.tier);
   const display = () => {
     if (!userDetails)
       return (
@@ -78,7 +76,7 @@ const CompleteVerification = () => {
     <button
       className="relative grid grid-cols-5 p-3 w-full bg-[#161817] rounded-lg border border-[#e9ebd94d]"
       onClick={() => {
-        navigate("/Verification");
+        navigate("/kyc");
       }}
     >
       <img

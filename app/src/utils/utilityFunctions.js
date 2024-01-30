@@ -39,3 +39,7 @@ export const Codes = {
   Processing: "5013",
   Success: "0810",
 };
+
+export const getBalance = (bal) => {
+  return bal.length > 0 ? bal[0]?.balance : 0;
+};

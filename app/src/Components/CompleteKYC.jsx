@@ -27,7 +27,7 @@ const CompleteVerification = () => {
           <Spinner as="div" />
         </div>
       );
-    if (!userDetails?.tier) {
+    if (!userDetails?.tier || userDetails?.tier?.level === 0) {
       return (
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Complete your Verification</p>

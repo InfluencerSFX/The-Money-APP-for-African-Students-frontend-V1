@@ -21,6 +21,7 @@ const Dashboard = () => {
   const location = useLocation();
   const [userDetails, setUser] = useState(null);
   const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const [liraRate, setLiraRate] = useState(0);
   useEffect(() => {
     (async () => {
       const user = await getMethod(
@@ -42,6 +43,11 @@ const Dashboard = () => {
         USDT: getBalance(polygonBal.USDT),
         USDC: getBalance(polygonBal.USDC),
       });
+      const latest = await fetch(
+        "https://cdn.moneyconvert.net/api/latest.json"
+      );
+      const latestJSON = await latest.json();
+      setLiraRate(latestJSON.rates["TRY"]);
     })();
   }, []);
 
@@ -123,7 +129,9 @@ const Dashboard = () => {
             <div className="inline-flex space-x-2">
               <span className="mt-auto">₺</span>
               <p className="text-md font-thin">
-                {(balances.USDT + balances.USDC) * 30.36}
+                {showBalance
+                  ? (balances.USDT + balances.USDC) * liraRate
+                  : "****"}
               </p>{" "}
             </div>
             <br />

@@ -42,7 +42,7 @@ export default function Transact() {
             network_name: "Polygon",
             marker: a,
             value: getBalance(polygonBal[a]),
-            image: `/images/${a}.png`,
+            image: `/images/${a.toLowerCase()}.png`,
             contract_address: user?.wallet?.walletAddress,
           }))
         );

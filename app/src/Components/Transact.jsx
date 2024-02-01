@@ -1,15 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 import AssetCard from "./AssetCard";
 import TransactionCard from "./TransactionCard";
 import NoHistory from "./NoHistory";
 import { mockTransactions } from "../utils/mockData";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import { getBalance } from "../utils/utilityFunctions";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Transact() {
   let [categories] = useState(mockTransactions);
+  const [wallets, setWallets] = useState([]);
+  const [userDetails, setUser] = useState(null);
+  const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  useEffect(() => {
+    (async () => {
+      console.log(balances);
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+      if (user?.tier?.level > 0) {
+        const polygonBal = await postMethod(
+          "/wallet/check-polygon-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        console.log(polygonBal["USDT"]);
+        setWallets(
+          user?.wallet?.asset?.map((a) => ({
+            network: "POLYGON",
+            network_name: "Polygon",
+            marker: a,
+            value: getBalance(polygonBal[a]),
+            image: `/images/${a}.png`,
+            contract_address: user?.wallet?.walletAddress,
+          }))
+        );
+        setBalances({ USDT: polygonBal.USDT, USDC: polygonBal.USDC });
+      }
+    })();
+  }, []);
 
   return (
     <div className="w-full sm:px-0">
@@ -33,14 +73,14 @@ export default function Transact() {
         </Tab.List>
         <Tab.Panels className="mt-2 space-y-2 h-auto overflow-y-auto">
           <Tab.Panel
-            key={Object.keys(categories["Wallets"])}
+            key={Object.keys(wallets)}
             className={classNames(
               "rounded-xl",
               "ring-white/60 ring-offset-2 focus:outline-none focus:ring-2"
             )}
           >
             <ul className=" space-y-2 overflow-auto no-scrollbar focus:none pb-4">
-              {categories["Wallets"].map((obj, index) => (
+              {wallets.map((obj, index) => (
                 <li key={index}>
                   <AssetCard asset={obj} />
                 </li>

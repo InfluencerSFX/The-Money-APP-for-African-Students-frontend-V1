@@ -20,7 +20,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userDetails, setUser] = useState(null);
-  const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const [balances, setBalances] = useState({ USDT: 0, USDC: 0 });
   const [liraRate, setLiraRate] = useState(0);
   useEffect(() => {
     (async () => {
@@ -32,17 +32,19 @@ const Dashboard = () => {
       );
       console.log(user);
       setUser(user);
-      const polygonBal = await postMethod(
-        "/wallet/check-polygon-assets-balance",
-        {},
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
-      setBalances({
-        USDT: getBalance(polygonBal.USDT),
-        USDC: getBalance(polygonBal.USDC),
-      });
+      if (user?.tier?.level > 0) {
+        const polygonBal = await postMethod(
+          "/wallet/check-polygon-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        setBalances({
+          USDT: getBalance(polygonBal.USDT),
+          USDC: getBalance(polygonBal.USDC),
+        });
+      }
       const latest = await fetch(
         "https://cdn.moneyconvert.net/api/latest.json"
       );

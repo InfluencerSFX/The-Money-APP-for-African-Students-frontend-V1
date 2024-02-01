@@ -20,14 +20,17 @@ import KYC from "./Routes/KYC";
 import CollectKYC from "./Routes/CollectKYC";
 import PayTuition from "./Routes/PayTuition";
 import ConfirmTransaction from "./Routes/ConfirmTransaction";
+import ErrorPage from "./Routes/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/auth",
     element: <Auth />,
+    errorElement: <ErrorPage />,
   },
   {
     element: <RequireAuth />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

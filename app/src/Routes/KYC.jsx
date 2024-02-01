@@ -46,7 +46,7 @@ const KYC = () => {
   };
 
   return (
-    <main className="pt-4 h-full space-y-8 flex flex-col justify-center">
+    <main className="px-0 mobile-screen space-y-8 flex flex-col justify-center">
       <div className="p-4 rounded-xl bg-[#045725] w-full space-y-2">
         <p className="text-sm">Complete your Tier 1 KYC to start transacting</p>
         <div className="text-sm">

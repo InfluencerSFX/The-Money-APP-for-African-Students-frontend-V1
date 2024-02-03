@@ -1,10 +1,50 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import AssetCard from "./AssetCard";
 import { mockTransactions } from "../utils/mockData";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import { getBalance } from "../utils/utilityFunctions";
 
 const FundModal = ({ isOpen, setIsOpen }) => {
   const [providers] = useState(mockTransactions.Wallets);
+  const [wallets, setWallets] = useState([]);
+  const [userDetails, setUser] = useState(null);
+  const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  useEffect(() => {
+    (async () => {
+      console.log(balances);
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+      if (user?.tier?.level > 0) {
+        const polygonBal = await postMethod(
+          "/wallet/check-polygon-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        console.log(polygonBal["USDT"]);
+        setWallets(
+          user?.wallet?.asset?.map((a) => ({
+            network: "POLYGON",
+            network_name: "Polygon",
+            marker: a,
+            value: getBalance(polygonBal[a]),
+            image: `/images/${a.toLowerCase()}.png`,
+            contract_address: user?.wallet?.walletAddress,
+          }))
+        );
+        setBalances({ USDT: polygonBal.USDT, USDC: polygonBal.USDC });
+      }
+    })();
+  }, []);
 
   function closeModal() {
     setIsOpen(false);
@@ -47,8 +87,8 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <p className="text-sm text-white">
                     Select any of our partners to securely fund your SFX wallet
                   </p>
-                  {providers.map((asset, index) => (
-                    <AssetCard asset={asset} key={index} />
+                  {wallets.map((asset, index) => (
+                    <AssetCard asset={asset} key={index} trunc />
                   ))}
                 </section>
               </Dialog.Panel>

@@ -1,6 +1,32 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 
-const CardBody = ({ asset, dropdown }) => {
+const CardBody = ({ asset, dropdown, trunc }) => {
+  const copyText = () => {
+    console.log("copying...");
+    const text = asset.contract_address;
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log("Text copied to clipboard!");
+      })
+      .catch((error) => {
+        console.error("Error copying text: ", error);
+      });
+  };
+
+  useEffect(() => {
+    (async () => {
+      const copyButton = document.getElementById(`${asset.marker}-copyBtn`);
+      if (copyButton) {
+        copyButton.addEventListener("click", copyText);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <div className={dropdown ? "flex flex-row gap-3" : "flex flex-row gap-2"}>
@@ -13,6 +39,16 @@ const CardBody = ({ asset, dropdown }) => {
           <p className="text-sm text-start text-[#CEC6BD]">{asset.marker}</p>
           <p className="text-xs text-start text-[#C4A383]">{asset.network}</p>
         </div>
+      </div>
+      <div>
+        <p className="text-sm text-[#CFC7CE] space-x-2">
+          <span id={`${asset.marker}-textToCopy`}>
+            {trunc
+              ? `${asset.contract_address.slice(0, 5)}...`
+              : asset.contract_address}
+          </span>
+          <FontAwesomeIcon id={`${asset.marker}-copyBtn`} icon={faCopy} />
+        </p>
       </div>
       {!dropdown ? (
         <div className="space-y-1 justify-end">
@@ -28,7 +64,7 @@ const CardBody = ({ asset, dropdown }) => {
   );
 };
 
-const AssetCard = ({ asset, dropdown, setSelected, asInput }) => {
+const AssetCard = ({ asset, dropdown, setSelected, asInput, trunc }) => {
   const handleClick = () => {
     if (asInput) {
       setSelected(asset);
@@ -41,7 +77,7 @@ const AssetCard = ({ asset, dropdown, setSelected, asInput }) => {
           className="flex justify-between w-full p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d]"
           onClick={handleClick}
         >
-          <CardBody asset={asset} dropdown={dropdown} />
+          <CardBody asset={asset} dropdown={dropdown} trunc />
         </button>
       ) : (
         <div className="flex justify-between w-full px-4 py-2 bg-[#161817] rounded-lg border border-[#e9ebd94d]">

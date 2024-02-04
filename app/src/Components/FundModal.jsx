@@ -88,7 +88,7 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     Select any of our partners to securely fund your SFX wallet
                   </p>
                   {wallets.map((asset, index) => (
-                    <AssetCard asset={asset} key={index} trunc />
+                    <AssetCard asset={asset} key={index} />
                   ))}
                 </section>
               </Dialog.Panel>

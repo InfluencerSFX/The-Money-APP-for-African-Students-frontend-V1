@@ -3,7 +3,7 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 
-const CardBody = ({ asset, dropdown, trunc }) => {
+const CardBody = ({ asset, dropdown }) => {
   const copyText = () => {
     console.log("copying...");
     const text = asset.contract_address;
@@ -43,9 +43,12 @@ const CardBody = ({ asset, dropdown, trunc }) => {
       <div>
         <p className="text-sm text-[#CFC7CE] space-x-2">
           <span id={`${asset.marker}-textToCopy`}>
-            {trunc
-              ? `${asset.contract_address.slice(0, 5)}...`
-              : asset.contract_address}
+            {`${asset.contract_address.slice(
+              0,
+              5
+            )}...${asset.contract_address.slice(
+              asset.contract_address.length - 4
+            )}`}
           </span>
           <FontAwesomeIcon id={`${asset.marker}-copyBtn`} icon={faCopy} />
         </p>
@@ -64,7 +67,7 @@ const CardBody = ({ asset, dropdown, trunc }) => {
   );
 };
 
-const AssetCard = ({ asset, dropdown, setSelected, asInput, trunc }) => {
+const AssetCard = ({ asset, dropdown, setSelected, asInput }) => {
   const handleClick = () => {
     if (asInput) {
       setSelected(asset);
@@ -77,7 +80,7 @@ const AssetCard = ({ asset, dropdown, setSelected, asInput, trunc }) => {
           className="flex justify-between w-full p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d]"
           onClick={handleClick}
         >
-          <CardBody asset={asset} dropdown={dropdown} trunc />
+          <CardBody asset={asset} dropdown={dropdown} />
         </button>
       ) : (
         <div className="flex justify-between w-full px-4 py-2 bg-[#161817] rounded-lg border border-[#e9ebd94d]">

@@ -41,5 +41,14 @@ export const Codes = {
 };
 
 export const getBalance = (bal) => {
-  return bal.length > 0 ? bal[0]?.balance : 0;
+  let sum = 0;
+  for (const chain in bal) {
+    for (const asset in bal[chain]) {
+      sum += bal[chain][asset];
+    }
+  }
+  return sum;
 };
+
+export const filterMarker = (marker) =>
+  marker.filter((m) => m === "USDT" || m === "USDC");

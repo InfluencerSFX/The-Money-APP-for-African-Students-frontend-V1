@@ -20,7 +20,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [userDetails, setUser] = useState(null);
-  const [balances, setBalances] = useState({ USDT: 0, USDC: 0 });
+  const [balances, setBalances] = useState();
   const [liraRate, setLiraRate] = useState(0);
   useEffect(() => {
     (async () => {
@@ -33,17 +33,14 @@ const Dashboard = () => {
       console.log(user);
       setUser(user);
       if (user?.tier?.level > 0) {
-        const polygonBal = await postMethod(
-          "/wallet/check-polygon-assets-balance",
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
           {},
           AxiosType.Main,
           token,
           refreshToken
         );
-        setBalances({
-          USDT: getBalance(polygonBal.USDT),
-          USDC: getBalance(polygonBal.USDC),
-        });
+        setBalances(bal);
       }
       const latest = await fetch(
         "https://cdn.moneyconvert.net/api/latest.json"
@@ -124,16 +121,14 @@ const Dashboard = () => {
 
             <div className="inline-flex space-x-2 align-text-bottom text-white">
               <p className="text-4xl font-semibold">
-                {showBalance ? balances.USDT + balances.USDC : "****"}
+                {showBalance ? getBalance(balances) : "****"}
               </p>{" "}
               <span className="mt-auto">USD</span>
             </div>
             <div className="inline-flex space-x-2">
               <span className="mt-auto">₺</span>
               <p className="text-md font-thin">
-                {showBalance
-                  ? (balances.USDT + balances.USDC) * liraRate
-                  : "****"}
+                {showBalance ? getBalance(balances) * liraRate : "****"}
               </p>{" "}
             </div>
             <br />

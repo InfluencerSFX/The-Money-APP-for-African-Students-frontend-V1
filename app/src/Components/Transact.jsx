@@ -5,7 +5,7 @@ import TransactionCard from "./TransactionCard";
 import NoHistory from "./NoHistory";
 import { mockTransactions } from "../utils/mockData";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-import { getBalance } from "../utils/utilityFunctions";
+import { filterMarker } from "../utils/utilityFunctions";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -14,12 +14,11 @@ export default function Transact() {
   let [categories] = useState(mockTransactions);
   const [wallets, setWallets] = useState([]);
   const [userDetails, setUser] = useState(null);
-  const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const [balances, setBalances] = useState();
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     (async () => {
-      console.log(balances);
       const user = await getMethod(
         "/auth/me",
         AxiosType.Main,
@@ -28,25 +27,25 @@ export default function Transact() {
       );
       setUser(user);
       if (user?.tier?.level > 0) {
-        const polygonBal = await postMethod(
-          "/wallet/check-polygon-assets-balance",
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
           {},
           AxiosType.Main,
           token,
           refreshToken
         );
-        console.log(polygonBal["USDT"]);
-        setWallets(
-          user?.wallet?.asset?.map((a) => ({
-            network: "POLYGON",
-            network_name: "Polygon",
-            marker: a,
-            value: getBalance(polygonBal[a]),
-            image: `/images/${a.toLowerCase()}.png`,
-            contract_address: user?.wallet?.walletAddress,
-          }))
-        );
-        setBalances({ USDT: polygonBal.USDT, USDC: polygonBal.USDC });
+        console.log(bal);
+        const userWallets = user?.wallets?.map((a) => ({
+          network: a.blockchain.toUpperCase(),
+          network_name: a.blockchain,
+          marker: filterMarker(a.asset),
+          value: bal[a.blockchain],
+          // image: `/images/${a.toLowerCase()}.png`,
+          contract_address: a.walletAddress,
+        }));
+        console.log(user);
+        setWallets(userWallets);
+        setBalances(bal);
       }
     })();
   }, []);

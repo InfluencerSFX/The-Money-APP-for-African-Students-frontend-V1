@@ -2,6 +2,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+import { filterMarker } from "../utils/utilityFunctions";
 
 const CardBody = ({ asset, dropdown }) => {
   const copyText = () => {
@@ -29,15 +30,18 @@ const CardBody = ({ asset, dropdown }) => {
 
   return (
     <>
-      <div className={dropdown ? "flex flex-row gap-3" : "flex flex-row gap-2"}>
+      <div
+        className={`${
+          dropdown ? "flex flex-row gap-3" : "flex flex-row gap-2"
+        }`}
+      >
         <img
           className={dropdown ? "basis-1/5 h-7 my-auto" : "basis-1/5 my-auto"}
           src={asset.image}
           alt=""
         />
         <div className="space-y-1">
-          <p className="text-sm text-start text-[#CEC6BD]">{asset.marker}</p>
-          <p className="text-xs text-start text-[#C4A383]">{asset.network}</p>
+          <p className="text-md text-start text-[#C4A383]">{asset.network}</p>
         </div>
       </div>
       <div>
@@ -55,8 +59,14 @@ const CardBody = ({ asset, dropdown }) => {
       </div>
       {!dropdown ? (
         <div className="space-y-1 justify-end">
-          <p className="text-sm text-[#CEC6BD]">{asset.value}</p>
-          <p className="text-xs text-end text-[#C4A383]">USD</p>
+          {/* <p className="text-sm text-start text-[#CEC6BD]">{asset.marker.map(m => )}</p> */}
+          {asset.marker.map((m) => (
+            <p className="text-xs text-[#CEC6BD]" key={m}>
+              {asset.value[m]} <span className="text-[#C4A383]">{m}</span>
+            </p>
+          ))}
+          {/* <p className="text-xs text-[#CEC6BD]">{JSON.stringify(asset)}</p>
+          <p className="text-xs text-end text-[#C4A383]">USD</p> */}
         </div>
       ) : (
         <div className="flex-none justify-end ms-2 my-auto">

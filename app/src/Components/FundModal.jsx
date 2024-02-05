@@ -3,18 +3,18 @@ import { Fragment, useEffect, useState } from "react";
 import AssetCard from "./AssetCard";
 import { mockTransactions } from "../utils/mockData";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-import { getBalance } from "../utils/utilityFunctions";
+import PartnerCard from "./PartnerCard";
+import { filterMarker } from "../utils/utilityFunctions";
 
 const FundModal = ({ isOpen, setIsOpen }) => {
   const [providers] = useState(mockTransactions.Wallets);
   const [wallets, setWallets] = useState([]);
   const [userDetails, setUser] = useState(null);
-  const [balances, setBalances] = useState({ USDT: null, USDC: null });
+  const [balances, setBalances] = useState();
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     (async () => {
-      console.log(balances);
       const user = await getMethod(
         "/auth/me",
         AxiosType.Main,
@@ -23,25 +23,25 @@ const FundModal = ({ isOpen, setIsOpen }) => {
       );
       setUser(user);
       if (user?.tier?.level > 0) {
-        const polygonBal = await postMethod(
-          "/wallet/check-polygon-assets-balance",
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
           {},
           AxiosType.Main,
           token,
           refreshToken
         );
-        console.log(polygonBal["USDT"]);
+        console.log(bal);
         setWallets(
-          user?.wallet?.asset?.map((a) => ({
-            network: "POLYGON",
-            network_name: "Polygon",
-            marker: a,
-            value: getBalance(polygonBal[a]),
-            image: `/images/${a.toLowerCase()}.png`,
-            contract_address: user?.wallet?.walletAddress,
+          user?.wallets?.map((a) => ({
+            network: a.blockchain.toUpperCase(),
+            network_name: a.blockchain,
+            marker: filterMarker(a.asset),
+            value: bal[a.blockchain],
+            // image: `/images/${a.toLowerCase()}.png`,
+            contract_address: a.walletAddress,
           }))
         );
-        setBalances({ USDT: polygonBal.USDT, USDC: polygonBal.USDC });
+        setBalances(bal);
       }
     })();
   }, []);
@@ -87,9 +87,10 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <p className="text-sm text-white">
                     Select any of our partners to securely fund your SFX wallet
                   </p>
-                  {wallets.map((asset, index) => (
+                  {/* {wallets.map((asset, index) => (
                     <AssetCard asset={asset} key={index} />
-                  ))}
+                  ))} */}
+                  <PartnerCard partner={"Paychant"} />
                 </section>
               </Dialog.Panel>
             </Transition.Child>

@@ -24,6 +24,19 @@ const Dashboard = () => {
   const [liraRate, setLiraRate] = useState(0);
   useEffect(() => {
     (async () => {
+      const data = await getMethod(
+        "/auth/credential",
+        AxiosType.Yuki,
+        token,
+        refreshToken
+      );
+      const credentialOnDevice = localStorage.getItem("credential");
+      const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+      if (!credentialOnDeviceParsed || data.length == 0) {
+        navigate("/register-passkey", {
+          state: { from: location },
+        });
+      }
       const user = await getMethod(
         "/auth/me",
         AxiosType.Main,

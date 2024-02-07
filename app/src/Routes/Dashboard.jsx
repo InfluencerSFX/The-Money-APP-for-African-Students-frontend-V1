@@ -53,40 +53,38 @@ const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
-    <main className="relative mobile-screen bg-black">
-      <section className="relative py-4 space-y-4 ">
-        <div className="flex justify-between">
-          <div className="flex space-x-2">
-            <img
-              // src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
-              src={
-                userDetails?.picture ||
-                "https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
-              }
-              alt="user image"
-              srcSet=""
-              className="rounded-full h-9 w-9 my-auto"
-            />
-            <div className="">
-              <p className="text-sm text-[#55BB6C]">Welcome</p>
-              <p className="text-xs text-[#D4B998]">
-                {userDetails?.firstName} {userDetails?.lastName}
-              </p>
-            </div>
-          </div>
-          <div
-            className="w-auto"
-            onClick={() =>
-              navigate("/settings", {
-                state: { from: location },
-              })
+    <main className="relative mobile-screen bg-black pt-2">
+      <div className="flex justify-between w-full px-4 py-2 z-10">
+        <div className="flex space-x-2 w-full">
+          <img
+            src={
+              userDetails?.picture ||
+              "https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
             }
-          >
-            <AdjustmentsVerticalIcon className="h-7 w-auto text-[#D4B998]" />
+            alt="user image"
+            srcSet=""
+            className="rounded-full h-9 w-9 my-auto"
+          />
+          <div className="">
+            <p className="text-sm text-[#55BB6C]">Welcome</p>
+            <p className="text-xs text-[#D4B998]">
+              {userDetails?.firstName} {userDetails?.lastName}
+            </p>
           </div>
         </div>
-
-        <section className="flex justify-center">
+        <div
+          className="w-auto"
+          onClick={() =>
+            navigate("/settings", {
+              state: { from: location },
+            })
+          }
+        >
+          <AdjustmentsVerticalIcon className="h-7 w-auto text-[#D4B998]" />
+        </div>
+      </div>
+      <section className="w-full h-full space-y-3 pt-2  pb-20 mb-auto overflow-scroll no-scrollbar">
+        <section className="relative flex justify-center">
           <img
             src="/images/stacked-cards.png"
             className="absolute"
@@ -139,11 +137,11 @@ const Dashboard = () => {
           <CompleteKYC />
         </section>
 
-        <section>
+        <section className="min-h-40">
           <Transact />
         </section>
       </section>
-      <footer className=" z-10 absolute inset-x-0 bottom-0 flex bg-[#161817] text-[#55BB6C] divide-x divide-[#e9ebd94d] rounded-t-xl">
+      <footer className=" z-10 absolute bottom-0 inset-x-0 flex bg-[#161817] text-[#55BB6C] divide-x divide-[#e9ebd94d] rounded-t-xl">
         <button
           className="w-full flex p-4 bt-transparent transparent bg-transparent flex-row gap-2 justify-center border-0 rounded-none"
           onClick={() => setOpenFundModal(!openFundModal)}

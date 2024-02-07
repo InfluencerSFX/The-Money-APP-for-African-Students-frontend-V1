@@ -51,9 +51,9 @@ export default function Transact() {
   }, []);
 
   return (
-    <div className="w-full sm:px-0">
+    <div className="w-full h-full sm:px-0 no-scrollbar">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-xl bg-[#161817] p-1 border border-[#e9ebd94d]">
+        <Tab.List className="flex space-x-1 rounded-xl bg-[#161817] p-1 border border-[#e9ebd94d] no-scrollbar">
           {Object.keys(categories).map((category) => (
             <Tab
               key={category}
@@ -96,7 +96,7 @@ export default function Transact() {
                   <p className="text-sm text-[#55BB6C]">Transaction History</p>
                 </div>
 
-                <ul className=" space-y-2 no-scroll h-[40vh] focus:none overflow-auto pb-12">
+                <ul className=" space-y-2 no-scrollbar h-[100vw] focus:none overflow-auto pb-20 mb-auto">
                   {categories["Transactions"].map((obj, index) => (
                     <li key={index}>
                       <TransactionCard transaction={obj} />

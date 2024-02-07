@@ -109,17 +109,17 @@ const ConfirmTransaction = () => {
               </p>
             </div>
           </div>
-          <button
-            className="bg-[#55BB6C] w-[95vw] rounded-lg fixed bottom-4 mx-auto inset-x-0"
-            type="submit"
-            onClick={() => {
-              setTransactionComplete(true);
-            }}
-          >
-            Complete Transaction
-          </button>
         </div>
       </div>
+      <button
+        className="bg-[#55BB6C] w-full rounded-lg absolute bottom-0 mx-auto inset-x-0"
+        type="submit"
+        onClick={() => {
+          setTransactionComplete(true);
+        }}
+      >
+        Complete Transaction
+      </button>
       <TransactionCompleteModal
         transactionComplete={transactionComplete}
         setTransactionComplete={setTransactionComplete}

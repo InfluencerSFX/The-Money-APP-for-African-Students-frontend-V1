@@ -45,13 +45,15 @@ const PartnerCard = ({ partner, email }) => {
     console.log(urlFormatted);
 
     const obj = paramsToObject(urlFormatted);
-    // obj['env'] = 'sandbox'
+    obj["env"] = "sandbox";
+    obj["partnerApiKey"] = "CmrT77e7zf2zNGAGSh1WAkABF";
     new PaychantWidget({
       env: obj["env"],
       action: "buy",
       partnerApiKey: obj["partnerApiKey"],
       partnerLogoUrl: obj["partnerLogoUrl"],
-      partnerThemeColor: obj["partnerThemeColor"],
+      partnerThemeColor: obj["partnerThemeColor"].slice(1),
+      fiatAmount: "15000",
       listedAsset: "bsc_usdc,bsc_usdt",
       userEmailAddress: email,
       webhookStatusUrl: `${

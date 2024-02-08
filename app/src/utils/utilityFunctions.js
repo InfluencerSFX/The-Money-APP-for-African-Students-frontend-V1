@@ -52,3 +52,12 @@ export const getBalance = (bal) => {
 
 export const filterMarker = (marker) =>
   marker.filter((m) => m === "USDT" || m === "USDC");
+
+export const paramsToObject = (params) => {
+  const obj = {};
+  for (const pair of params.split("&")) {
+    const [key, value] = pair.split("=");
+    obj[key] = value;
+  }
+  return obj;
+};

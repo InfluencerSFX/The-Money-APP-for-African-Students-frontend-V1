@@ -28,6 +28,11 @@ const CardBody = ({ asset, dropdown }) => {
     })();
   }, []);
 
+  const networkDisplay = {
+    TRON: "TRC20",
+    BSC: "BEP20",
+  };
+
   return (
     <>
       <div
@@ -37,14 +42,17 @@ const CardBody = ({ asset, dropdown }) => {
       >
         <img
           className={dropdown ? "basis-1/5 h-7 my-auto" : "basis-1/5 my-auto"}
-          src={asset.image}
+          src={`/images/${asset.marker.toLowerCase()}.png`}
           alt=""
         />
         <div className="space-y-1">
-          <p className="text-md text-start text-[#C4A383]">{asset.network}</p>
+          <p className="text-lg text-start text-[#fbf7f4]">{asset.marker}</p>
+          <p className="text-xs text-start text-[#C4A383]">
+            {networkDisplay[asset.network]}
+          </p>
         </div>
       </div>
-      <div>
+      {/* <div>
         <p className="text-sm text-[#CFC7CE] space-x-2">
           <span id={`${asset.marker}-textToCopy`}>
             {`${asset.contract_address.slice(
@@ -56,17 +64,11 @@ const CardBody = ({ asset, dropdown }) => {
           </span>
           <FontAwesomeIcon id={`${asset.marker}-copyBtn`} icon={faCopy} />
         </p>
-      </div>
+      </div> */}
       {!dropdown ? (
         <div className="space-y-1 justify-end">
-          {/* <p className="text-sm text-start text-[#CEC6BD]">{asset.marker.map(m => )}</p> */}
-          {asset.marker.map((m) => (
-            <p className="text-xs text-[#CEC6BD]" key={m}>
-              {asset.value[m]} <span className="text-[#C4A383]">{m}</span>
-            </p>
-          ))}
-          {/* <p className="text-xs text-[#CEC6BD]">{JSON.stringify(asset)}</p>
-          <p className="text-xs text-end text-[#C4A383]">USD</p> */}
+          <p className="text-lg text-[#CEC6BD]">{asset.value}</p>
+          <p className="text-xs text-end text-[#C4A383]">USD</p>
         </div>
       ) : (
         <div className="flex-none justify-end ms-2 my-auto">

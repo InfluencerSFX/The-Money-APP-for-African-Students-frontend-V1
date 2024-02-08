@@ -15,7 +15,7 @@ const mockAsset = mockTransactions.Wallets;
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
   const [assets] = useState(mockAsset);
-  const minimumAmount = -5;
+  const minimumAmount = 10;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -54,15 +54,25 @@ const WithdrawToWallet = () => {
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
         }));
-        setWallets(userWallets);
-        setSelected(userWallets?.[0]);
-        setMarkerSelected(userWallets?.[0].marker?.[0]);
+        const wallets = [];
+        for (const userWallet of userWallets) {
+          for (const marker of userWallet.marker) {
+            wallets.push({
+              network: userWallet.network,
+              network_name: userWallet.network_name,
+              marker,
+              value: userWallet.value[marker],
+              contract_address: userWallet.contract_address,
+            });
+          }
+        }
+        setWallets(wallets);
+        setSelected(wallets?.[0]);
       }
     })();
   }, []);
 
   const [selected, setSelected] = useState(null);
-  const [markerSelected, setMarkerSelected] = useState("");
 
   const handleInput = (inputValue) => {
     if (validated) {
@@ -74,7 +84,7 @@ const WithdrawToWallet = () => {
       }
     } else {
       setAmount(inputValue);
-      if (amount < minimumAmount || amount > selected.value[markerSelected]) {
+      if (amount < minimumAmount || amount > selected.value) {
         setError("invalid amount");
       } else {
         setError("");
@@ -116,14 +126,6 @@ const WithdrawToWallet = () => {
   }, [amount, selected]);
 
   useEffect(() => {
-    setMarkerSelected(selected?.marker?.[0]);
-  }, [selected]);
-
-  useEffect(() => {
-    console.log(markerSelected);
-  }, [markerSelected]);
-
-  useEffect(() => {
     if (selected) handleInput(walletAddress);
   }, [walletAddress, selected]);
 
@@ -145,9 +147,7 @@ const WithdrawToWallet = () => {
           }}
         >
           <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
-          <p className="my-auto">{`Send${selected.marker.map(
-            (m) => ` ${m}`
-          )}`}</p>
+          <p className="my-auto">{`Send ${selected.marker}`}</p>
         </button>
       </div>
 
@@ -155,7 +155,7 @@ const WithdrawToWallet = () => {
         <div className="p-2 grid bg-transparent mx-auto space-y-2">
           {validated ? (
             <p className="text-sm opacity-60 mx-auto">
-              {`Only send ${markerSelected} Coin (${selected.network}) network to this address. Other
+              {`Only send ${selected.marker} (${selected.network}) network to this address. Other
                 assets will be lost forever.`}
             </p>
           ) : (
@@ -169,7 +169,7 @@ const WithdrawToWallet = () => {
               </button>
             </>
           )}
-          <div className="flex bg-transparent w-1/2 mx-auto px-3 space-x-1">
+          <div className="flex bg-transparent items-center w-1/2 mx-auto px-3 space-x-1">
             <input
               type="number"
               className="w-full h-12 font-medium text-2xl text-start p-0 bg-transparent placeholder:text-white px-2"
@@ -179,19 +179,10 @@ const WithdrawToWallet = () => {
                 setAmount(e.target.value);
               }}
             />
-            <select
-              className="text-black"
-              onChange={(e) => setMarkerSelected(e.target.value)}
-            >
-              {selected.marker.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
+            <p>{selected.marker}</p>
           </div>
           <p className="flex-none text-xs text-center text-[#C4A383]">
-            {`Available balance: ${selected.value[markerSelected]}`}
+            {`Available balance: ${selected.value}`}
           </p>
 
           {validated && (

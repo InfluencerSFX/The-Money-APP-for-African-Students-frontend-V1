@@ -87,10 +87,10 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <p className="text-sm text-white">
                     Select any of our partners to securely fund your SFX wallet
                   </p>
-                  {/* {wallets.map((asset, index) => (
-                    <AssetCard asset={asset} key={index} />
-                  ))} */}
-                  <PartnerCard partner={"Paychant"} />
+                  <PartnerCard
+                    partner={"Paychant"}
+                    email={userDetails?.email}
+                  />
                 </section>
               </Dialog.Panel>
             </Transition.Child>

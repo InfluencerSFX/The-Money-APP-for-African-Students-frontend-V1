@@ -3,6 +3,7 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { AxiosType, postMethod } from "../api/axios";
+import { paramsToObject } from "../utils/utilityFunctions";
 
 const CardBody = ({ partner }) => {
   useEffect(() => {
@@ -27,7 +28,7 @@ const CardBody = ({ partner }) => {
   );
 };
 
-const PartnerCard = ({ partner }) => {
+const PartnerCard = ({ partner, email }) => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   async function paychantFund() {
@@ -39,11 +40,30 @@ const PartnerCard = ({ partner }) => {
       refreshToken
     );
 
-    console.log(url.split(" ").join(""));
-    const win = window.open(url.split(" ").join(""), "_blank");
-    if (win != null) {
-      win.focus();
-    }
+    const urlFormatted = url.replace(/\s|\n/g, "").split("?")[1];
+
+    console.log(urlFormatted);
+
+    const obj = paramsToObject(urlFormatted);
+    // obj['env'] = 'sandbox'
+    new PaychantWidget({
+      env: obj["env"],
+      action: "buy",
+      partnerApiKey: obj["partnerApiKey"],
+      partnerLogoUrl: obj["partnerLogoUrl"],
+      partnerThemeColor: obj["partnerThemeColor"],
+      listedAsset: "bsc_usdc,bsc_usdt",
+      userEmailAddress: email,
+      webhookStatusUrl: `${
+        import.meta.env.VITE_SFX_BACKEND_BASE_URL
+      }/wallet/paychant-webhook`,
+      callback: {
+        onClose: function () {},
+        onStatus: function (txStatus) {
+          console.log("txStatus", txStatus);
+        },
+      },
+    }).openWindow();
   }
 
   return (

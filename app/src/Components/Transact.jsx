@@ -6,11 +6,13 @@ import NoHistory from "./NoHistory";
 import { mockTransactions } from "../utils/mockData";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { filterMarker } from "../utils/utilityFunctions";
+import { useNavigate } from "react-router-dom";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Transact() {
+  const navigate = useNavigate();
   let [categories] = useState(mockTransactions);
   const [wallets, setWallets] = useState([]);
   const [userDetails, setUser] = useState(null);
@@ -43,7 +45,7 @@ export default function Transact() {
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
         }));
-        console.log(user);
+        console.log(userWallets);
         setWallets(userWallets);
         setBalances(bal);
       }
@@ -79,11 +81,25 @@ export default function Transact() {
             )}
           >
             <ul className=" space-y-2 overflow-auto no-scrollbar focus:none pb-4">
-              {wallets.map((obj, index) => (
-                <li key={index}>
-                  <AssetCard asset={obj} />
-                </li>
-              ))}
+              {wallets.map((obj, index) =>
+                obj.marker.map((m, i) => (
+                  <li
+                    key={i}
+                    onClick={() => navigate(`/asset?i=${index}&m=${m}`)}
+                  >
+                    <AssetCard
+                      asset={{
+                        network: obj.network,
+                        network_name: obj.network_name,
+                        marker: m,
+                        value: obj.value[m],
+                        // image: `/images/${a.toLowerCase()}.png`,
+                        contract_address: obj.contract_address,
+                      }}
+                    />
+                  </li>
+                ))
+              )}
             </ul>
           </Tab.Panel>
           <Tab.Panel

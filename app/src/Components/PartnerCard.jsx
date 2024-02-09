@@ -42,8 +42,6 @@ const PartnerCard = ({ partner, email }) => {
 
     const urlFormatted = url.replace(/\s|\n/g, "").split("?")[1];
 
-    console.log(urlFormatted);
-
     const obj = paramsToObject(urlFormatted);
     new PaychantWidget({
       env: obj["env"],

@@ -45,8 +45,6 @@ const PartnerCard = ({ partner, email }) => {
     console.log(urlFormatted);
 
     const obj = paramsToObject(urlFormatted);
-    obj["env"] = "sandbox";
-    obj["partnerApiKey"] = "CmrT77e7zf2zNGAGSh1WAkABF";
     new PaychantWidget({
       env: obj["env"],
       action: "buy",

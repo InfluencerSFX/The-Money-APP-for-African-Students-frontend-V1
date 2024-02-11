@@ -53,7 +53,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
       fiatAmount: "15000",
       listedAsset: "bsc_usdc,bsc_usdt",
       userEmailAddress: email,
-      walletAddress: address,
+      walletAddress: wallet.walletAddress,
       webhookStatusUrl: `${
         import.meta.env.VITE_SFX_BACKEND_BASE_URL
       }/wallet/paychant-webhook`,

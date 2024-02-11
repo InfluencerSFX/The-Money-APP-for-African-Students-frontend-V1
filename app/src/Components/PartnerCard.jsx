@@ -28,7 +28,7 @@ const CardBody = ({ partner }) => {
   );
 };
 
-const PartnerCard = ({ partner, email }) => {
+const PartnerCard = ({ partner, email, wallet, action }) => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   async function paychantFund() {
@@ -39,19 +39,21 @@ const PartnerCard = ({ partner, email }) => {
       token,
       refreshToken
     );
+    console.log(wallet.walletAddress);
 
     const urlFormatted = url.replace(/\s|\n/g, "").split("?")[1];
 
     const obj = paramsToObject(urlFormatted);
     new PaychantWidget({
       env: obj["env"],
-      action: "buy",
+      action,
       partnerApiKey: obj["partnerApiKey"],
       partnerLogoUrl: obj["partnerLogoUrl"],
       partnerThemeColor: obj["partnerThemeColor"].slice(1),
       fiatAmount: "15000",
       listedAsset: "bsc_usdc,bsc_usdt",
       userEmailAddress: email,
+      walletAddress: address,
       webhookStatusUrl: `${
         import.meta.env.VITE_SFX_BACKEND_BASE_URL
       }/wallet/paychant-webhook`,

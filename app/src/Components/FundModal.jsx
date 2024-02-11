@@ -90,6 +90,30 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <PartnerCard
                     partner={"Paychant"}
                     email={userDetails?.email}
+                    wallet={userDetails?.wallets?.find((w) =>
+                      w.asset.includes("USDT")
+                    )}
+                    action="buy"
+                  />
+                </section>
+                <Dialog.Title
+                  as="h3"
+                  className=" text-[#55BB6C] border-b border-[#e9ebd94d] px-4 py-2 self-end"
+                >
+                  Withdraw from Wallet
+                </Dialog.Title>
+                <section className="p-4 space-y-2">
+                  <p className="text-sm text-white">
+                    Select any of our partners to securely withdraw from your
+                    SFX wallet
+                  </p>
+                  <PartnerCard
+                    partner={"Paychant"}
+                    email={userDetails?.email}
+                    wallet={userDetails?.wallets?.find((w) =>
+                      w.asset.includes("USDT")
+                    )}
+                    action="sell"
                   />
                 </section>
               </Dialog.Panel>

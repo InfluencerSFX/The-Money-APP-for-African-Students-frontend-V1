@@ -1,9 +1,5 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router-dom";
-import { mockTransactions } from "../utils/mockData";
-
-const mockAsset = mockTransactions.Wallets;
-
 const Send = () => {
   const navigate = useNavigate();
 

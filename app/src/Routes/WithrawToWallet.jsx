@@ -6,9 +6,10 @@ import { mockTransactions } from "../utils/mockData";
 
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
-import { delay } from "../utils/utilityFunctions";
+import { delay, filterMarker } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import QrScanner from "../Components/QrScanner";
 
 const mockAsset = mockTransactions.Wallets;
@@ -16,8 +17,7 @@ const mockAsset = mockTransactions.Wallets;
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
   const [assets] = useState(mockAsset);
-  const [selected, setSelected] = useState(assets[0]);
-  const minimumAmount = 10;
+  const minimumAmount = 5;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,6 +27,55 @@ const WithdrawToWallet = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [transactionComplete, setTransactionComplete] = useState(false);
   let [transactionStatus, setTransactionStatus] = useState(false);
+
+  const [wallets, setWallets] = useState([]);
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      if (user?.tier?.level > 0) {
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        console.log(bal);
+        const userWallets = user?.wallets?.map((a) => ({
+          network: a.blockchain.toUpperCase(),
+          network_name: a.blockchain,
+          marker: filterMarker(a.asset),
+          value: bal[a.blockchain],
+          // image: `/images/${a.toLowerCase()}.png`,
+          contract_address: a.walletAddress,
+        }));
+        const wallets = [];
+        for (const userWallet of userWallets) {
+          for (const marker of userWallet.marker) {
+            wallets.push({
+              network: userWallet.network,
+              network_name: userWallet.network_name,
+              marker,
+              value: userWallet.value[marker],
+              contract_address: userWallet.contract_address,
+            });
+          }
+        }
+        setWallets(wallets);
+        setSelected(wallets?.[0]);
+      }
+    })();
+  }, []);
+
+  const [selected, setSelected] = useState(null);
 
   const handleInput = (inputValue) => {
     if (validated) {
@@ -76,14 +125,18 @@ const WithdrawToWallet = () => {
   };
 
   useEffect(() => {
-    handleInput(amount);
-  }, [amount]);
+    if (selected) handleInput(amount);
+  }, [amount, selected]);
 
   useEffect(() => {
-    handleInput(walletAddress);
-  }, [walletAddress]);
+    if (selected) handleInput(walletAddress);
+  }, [walletAddress, selected]);
 
-  return (
+  return !selected ? (
+    <div className="flex items-center justify-center relative px-0 mobile-screen  bg-black text-white">
+      <Spinner />
+    </div>
+  ) : (
     <main className=" relative px-0 mobile-screen  bg-black text-white">
       <div className="border-b border-[#e9ebd94d] pt-5">
         <button
@@ -100,11 +153,12 @@ const WithdrawToWallet = () => {
           <p className="my-auto">{`Send ${selected.marker}`}</p>
         </button>
       </div>
+
       <section className="p-4 space-y-2">
         <div className="p-2 grid bg-transparent mx-auto space-y-2">
           {validated ? (
             <p className="text-sm opacity-60 mx-auto">
-              {`Only send ${selected.marker} Coin (${selected.network}) network to this address. Other
+              {`Only send ${selected.marker} (${selected.network}) network to this address. Other
                 assets will be lost forever.`}
             </p>
           ) : (
@@ -118,7 +172,7 @@ const WithdrawToWallet = () => {
               </button>
             </>
           )}
-          <div className="flex bg-transparent w-1/2 mx-auto px-3 space-x-1">
+          <div className="flex bg-transparent items-center w-1/2 mx-auto px-3 space-x-1">
             <input
               type="number"
               className="w-full h-12 font-medium text-2xl text-start p-0 bg-transparent placeholder:text-white px-2"
@@ -128,7 +182,7 @@ const WithdrawToWallet = () => {
                 setAmount(e.target.value);
               }}
             />
-            <span className="text-sm my-auto">{selected.marker}</span>
+            <p>{selected.marker}</p>
           </div>
           <p className="flex-none text-xs text-center text-[#C4A383]">
             {`Available balance: ${selected.value}`}
@@ -208,7 +262,7 @@ const WithdrawToWallet = () => {
       <AssetModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        assets={assets}
+        assets={wallets}
         setSelected={setSelected}
       />
 

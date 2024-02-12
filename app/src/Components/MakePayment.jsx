@@ -8,13 +8,13 @@ import Spinner from "../Components/Spinner";
 import { delay } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 
 const mockAsset = mockTransactions.Wallets;
 
 const MakePayment = () => {
   const navigate = useNavigate();
   const [assets] = useState(mockAsset);
-  const [selected, setSelected] = useState(assets[0]);
   const minimumAmount = 10;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
@@ -24,6 +24,55 @@ const MakePayment = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [transactionComplete, setTransactionComplete] = useState(false);
   let [transactionStatus, setTransactionStatus] = useState(false);
+
+  const [wallets, setWallets] = useState([]);
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      if (user?.tier?.level > 0) {
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        console.log(bal);
+        const userWallets = user?.wallets?.map((a) => ({
+          network: a.blockchain.toUpperCase(),
+          network_name: a.blockchain,
+          marker: filterMarker(a.asset),
+          value: bal[a.blockchain],
+          // image: `/images/${a.toLowerCase()}.png`,
+          contract_address: a.walletAddress,
+        }));
+        const wallets = [];
+        for (const userWallet of userWallets) {
+          for (const marker of userWallet.marker) {
+            wallets.push({
+              network: userWallet.network,
+              network_name: userWallet.network_name,
+              marker,
+              value: userWallet.value[marker],
+              contract_address: userWallet.contract_address,
+            });
+          }
+        }
+        setWallets(wallets);
+        setSelected(wallets?.[0]);
+      }
+    })();
+  }, []);
+
+  const [selected, setSelected] = useState(null);
 
   const handleInput = (inputValue) => {
     if (validated) {
@@ -73,15 +122,19 @@ const MakePayment = () => {
   };
 
   useEffect(() => {
-    handleInput(amount);
-  }, [amount]);
+    if (selected) handleInput(amount);
+  }, [amount, selected]);
 
   useEffect(() => {
-    handleInput(walletAddress);
-  }, [walletAddress]);
+    if (selected) handleInput(walletAddress);
+  }, [walletAddress, selected]);
 
-  return (
-    <main className=" relative px-0 mobile-screen  bg-black text-white">
+  return !selected ? (
+    <div className="flex items-center justify-center relative px-0 mobile-screen  bg-black text-white">
+      <Spinner />
+    </div>
+  ) : (
+    <main className="relative px-0 mobile-screen  bg-black text-white">
       <div className="border-b border-[#e9ebd94d] pt-5">
         <button
           className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"

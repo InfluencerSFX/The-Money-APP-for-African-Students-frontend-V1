@@ -4,27 +4,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
 import Spinner from "./Spinner";
 
-const schema = yup
-  .object({
-    firstName: yup.string().required(),
-    surname: yup.string().required(),
-    address: yup.string().required(),
-    universityName: yup.string().required(),
-    bankName: yup.string().required(),
-    IBAN: yup
-      .string()
-      .matches(/^TR/, "must start with TR")
-      .length(26, "IBAN must be 26 characters")
-      .required()
-      .uppercase()
-      .trim(),
-    accountNumber: yup
-      .string()
-      .length(16, "Account number must be 16 Numbers")
-      .required(),
-    description: yup.string().max(30, "30 characters maximum").required(),
-  })
-  .required();
+const schema = yup.object({
+  firstName: yup.string().required(),
+  surname: yup.string().required(),
+  address: yup.string().required(),
+  universityName: yup.string().required(),
+  bankName: yup.string().required(),
+  IBAN: yup
+    .string()
+    .matches(/^TR/, "must start with TR")
+    .length(26, "IBAN must be 26 characters")
+    .required()
+    .uppercase()
+    .trim(),
+  accountNumber: yup.string().notRequired(),
+  // .length(16, "Account number must be 16 Numbers"),
+  description: yup.string().max(30, "30 characters maximum").required(),
+});
 
 const TuitionForm = ({ setValidated }) => {
   const {
@@ -150,6 +146,7 @@ const TuitionForm = ({ setValidated }) => {
 
         <div className="form-style form-validation">
           <input
+            // required={false}
             type="number"
             className="bg-transparent w-full"
             autoComplete="chrome-off"

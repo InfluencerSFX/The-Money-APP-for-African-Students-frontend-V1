@@ -27,20 +27,20 @@ const CompleteVerification = () => {
           <Spinner as="div" />
         </div>
       );
-    if (!userDetails?.tier) {
+    if (userDetails?.tier?.code === Codes.Processing) {
+      return (
+        <div className="col-span-4 text-left col-start-2">
+          <p className="text-[#336D21]">Processing</p>
+          <p className="text-xs text-[#CEC6BD]">Verification Processing</p>
+        </div>
+      );
+    } else if (!userDetails?.tier || userDetails?.tier?.level === 0) {
       return (
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Complete your Verification</p>
           <p className="text-xs text-[#CEC6BD]">
             Please complete your Verification to start transacting
           </p>
-        </div>
-      );
-    } else if (userDetails?.tier?.code === Codes.Processing) {
-      return (
-        <div className="col-span-4 text-left col-start-2">
-          <p className="text-[#336D21]">Processing</p>
-          <p className="text-xs text-[#CEC6BD]">Verification Processing</p>
         </div>
       );
     } else if (
@@ -80,7 +80,7 @@ const CompleteVerification = () => {
       }}
     >
       <img
-        className="col-span-1 absolute bottom-4 left-3"
+        className="col-span-1 absolute bottom-8 md:bottom-4 lg:bottom-8 left-4"
         src="/images/compliance.png"
         alt=""
         srcSet=""

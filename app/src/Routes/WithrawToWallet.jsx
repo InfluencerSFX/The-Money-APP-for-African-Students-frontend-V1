@@ -15,7 +15,7 @@ const mockAsset = mockTransactions.Wallets;
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
   const [assets] = useState(mockAsset);
-  const minimumAmount = 10;
+  const minimumAmount = 5;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

@@ -98,7 +98,7 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                 </section>
                 <Dialog.Title
                   as="h3"
-                  className=" text-[#55BB6C] border-b border-[#e9ebd94d] px-4 py-2 self-end"
+                  className=" text-[#f53d3a] border-b border-[#e9ebd94d] px-4 py-2 self-end"
                 >
                   Withdraw from Wallet
                 </Dialog.Title>

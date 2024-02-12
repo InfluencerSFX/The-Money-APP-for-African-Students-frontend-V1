@@ -15,6 +15,7 @@ import AssetDetail from "./Routes/AssetDetail";
 import FundWallet from "./Routes/FundWallet";
 import Send from "./Routes/Send";
 import WithdrawToWallet from "./Routes/WithrawToWallet";
+import WithdrawFromWallet from "./Routes/WithdrawFromWallet";
 import Settings from "./Routes/Settings";
 import KYC from "./Routes/KYC";
 import CollectKYC from "./Routes/CollectKYC";
@@ -72,6 +73,7 @@ const router = createBrowserRouter([
         path: "withdraw-to-wallet",
         element: <WithdrawToWallet />,
       },
+      { path: "withdraw-from-wallet", element: <WithdrawFromWallet /> },
       {
         path: "/KYC",
         element: <KYC />,

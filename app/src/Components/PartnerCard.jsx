@@ -32,6 +32,8 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   async function paychantFund() {
+    if (action === "sell")
+      return window.open(`/withdraw-from-wallet`, "_blank");
     const url = await postMethod(
       "/wallet/paychant-fund?assetAmount=10",
       {},

@@ -16,7 +16,7 @@ const ConnectWallet = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        AxiosType.Yuki,
+        AxiosType.Main,
         token,
         refreshToken
       );
@@ -57,7 +57,7 @@ const ConnectWallet = () => {
     const userAccount = await postMethod(
       "/auth/signin-request",
       { challenge: credentialOnDeviceParsed.challenge },
-      AxiosType.Yuki,
+      AxiosType.Main,
       token,
       refreshToken
     );
@@ -98,7 +98,7 @@ const ConnectWallet = () => {
               },
               user: userAccount,
             },
-            AxiosType.Yuki,
+            AxiosType.Main,
             token,
             refreshToken
           );

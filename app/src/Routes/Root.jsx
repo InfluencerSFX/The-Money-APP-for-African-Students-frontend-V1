@@ -11,7 +11,7 @@ const Root = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        AxiosType.Yuki,
+        AxiosType.Main,
         token,
         refreshToken
       );

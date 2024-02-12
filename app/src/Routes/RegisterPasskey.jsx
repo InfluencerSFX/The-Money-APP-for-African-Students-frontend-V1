@@ -16,7 +16,7 @@ const RegisterPasskey = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        AxiosType.Yuki,
+        AxiosType.Main,
         token,
         refreshToken
       );
@@ -34,7 +34,7 @@ const RegisterPasskey = () => {
     const data = await postMethod(
       "/auth/register-request",
       {},
-      AxiosType.Yuki,
+      AxiosType.Main,
       token,
       refreshToken
     );
@@ -77,7 +77,7 @@ const RegisterPasskey = () => {
             rawId: isoBase64URL.fromBuffer(credential.rawId),
             type: credential.type,
           },
-          AxiosType.Yuki,
+          AxiosType.Main,
           token,
           refreshToken
         );
@@ -105,7 +105,7 @@ const RegisterPasskey = () => {
               challengeBuffer: challengeBufferString,
               origin: window.location.origin,
             },
-            AxiosType.Yuki,
+            AxiosType.Main,
             token,
             refreshToken
           );

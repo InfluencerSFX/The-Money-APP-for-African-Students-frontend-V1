@@ -12,8 +12,10 @@ const Auth = () => {
   const token = searchParams.get("token") || localStorage.getItem("token");
   const refreshToken =
     searchParams.get("refreshToken") || localStorage.getItem("refreshToken");
+  const isSignin = searchParams.get("signin");
 
   useEffect(() => {
+    if (isSignin) return;
     if (token && refreshToken) {
       localStorage.setItem("token", token);
       localStorage.setItem("refreshToken", refreshToken);
@@ -24,7 +26,7 @@ const Auth = () => {
   const handleAuth = async () => {
     try {
       window.location.href = `${
-        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+        import.meta.env.VITE_SFX_BACKEND_BASE_URL
       }/auth/google`;
     } catch (error) {
       setAuth(null);

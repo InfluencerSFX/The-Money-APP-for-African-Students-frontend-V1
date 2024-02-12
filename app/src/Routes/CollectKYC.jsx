@@ -17,6 +17,7 @@ function CollectKYC() {
           { value: "RW", label: "Rwanda" },
           { value: "ZA", label: "South Africa" },
           { value: "UG", label: "Uganda" },
+          { value: "ZM", label: "Zambia" },
         ]
       : [
           { value: "TR", label: "Turkey" },

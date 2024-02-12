@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
 import { mockTransactions } from "../utils/mockData";
+
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay, filterMarker } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
+import QrScanner from "../Components/QrScanner";
 
 const mockAsset = mockTransactions.Wallets;
 
@@ -21,6 +23,7 @@ const WithdrawToWallet = () => {
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
   const [walletAddress, setWalletAddress] = useState("");
+
   let [isOpen, setIsOpen] = useState(false);
   let [transactionComplete, setTransactionComplete] = useState(false);
   let [transactionStatus, setTransactionStatus] = useState(false);
@@ -207,6 +210,7 @@ const WithdrawToWallet = () => {
               </span>
             </div>
           )}
+
           {error.length > 0 && (
             <div className="px-3 py-1 text-xs bg-red-700 rounded-xl w-fit inline-flex space-x-1 mx-auto">
               <span>
@@ -215,8 +219,15 @@ const WithdrawToWallet = () => {
               <p className="my-auto">{error}</p>
             </div>
           )}
+
+          {validated && (
+            <div>
+              <QrScanner setScanWalletAddress={setWalletAddress} />
+            </div>
+          )}
         </div>
       </section>
+
       <div className="absolute w-full bottom-0 -left-0 max-w-md px-4 mb-4  text-white">
         {validated ? (
           <button

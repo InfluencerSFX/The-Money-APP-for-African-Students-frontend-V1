@@ -21,6 +21,8 @@
     "@smile_identity/smart-camera-web": "^1.0.2",
     "axios": "^1.6.2",
     "heroicons": "^2.0.18",
+    "html5-qrcode": "^2.3.8",
+    "quagga": "^0.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",

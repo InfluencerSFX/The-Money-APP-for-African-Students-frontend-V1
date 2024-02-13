@@ -57,7 +57,6 @@ const WithdrawToWallet = () => {
           value: bal[a.blockchain],
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
-          transaction_signature: a.privateKeys,
         }));
         const wallets = [];
         for (const userWallet of userWallets) {
@@ -68,7 +67,6 @@ const WithdrawToWallet = () => {
               marker,
               value: userWallet.value[marker],
               contract_address: userWallet.contract_address,
-              transaction_signature: userWallet.transaction_signature,
             });
           }
         }
@@ -117,7 +115,6 @@ const WithdrawToWallet = () => {
         sendAddress: selected.contract_address,
         receiverAddress: walletAddress,
         amount: amount.toString(),
-        transactionSignature: selected.transaction_signature,
       },
       AxiosType.Main,
       token,

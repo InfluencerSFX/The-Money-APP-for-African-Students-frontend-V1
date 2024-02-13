@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { delay } from "../utils/utilityFunctions";
 
@@ -13,20 +14,70 @@ const ConfirmTransaction = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [fee] = useState(9);
-  const [commision] = useState(2);
-  const [wallet] = useState("0x35bD54aEe54aD4154754aD414554aD414aD54aD4");
+  const [commission] = useState(2);
+  const [wallet] = useState("TG9y21RBqFMA6nJXRqBGqp43JV3HzqhfRH");
   const [amount] = useState(location.state.amount);
-  const [finalAmount] = useState(447);
+  const [fee] = useState((commission * amount) / 100);
+  const [finalAmount] = useState(amount - fee);
   const [transactionComplete, setTransactionComplete] = useState(false);
   const [transactionStatus, setTransactionStatus] = useState(false);
+  const [transactionMessage, setTransactionMessage] = useState("");
   const [copied, setCopied] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
 
   async function handleCopyToClipboard() {
     setCopied(true);
     navigator.clipboard.writeText("copyText.value");
     await delay();
     setCopied(false);
+  }
+
+  async function completeTransaction() {
+    const user = await getMethod(
+      "/auth/me",
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    const tuition = localStorage.getItem("tuition");
+    if (!tuition) return alert("Tuition form not filled");
+    const tuitionObj = JSON.parse(tuition);
+    await postMethod(
+      "/wallet/submit-tuition",
+      { ...tuitionObj, amountPaid: amount, finalAmount },
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    const userWallet = user?.wallets?.find((w) => w.asset.includes("USDT"));
+    console.log(userWallet);
+    console.log(finalAmount);
+    console.log(wallet);
+    const data = await postMethod(
+      "/wallet/send-usdt",
+      {
+        sendAddress: userWallet.walletAddress,
+        receiverAddress: wallet,
+        amount: finalAmount.toString(),
+        tuition: true,
+      },
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    console.log(data);
+
+    if (data?.txId) {
+      setTransactionStatus(true);
+      setTransactionComplete(true);
+      setTransactionMessage("SUCCESS");
+    } else {
+      setTransactionStatus(false);
+      setTransactionComplete(true);
+      setTransactionMessage(data?.cause);
+    }
   }
 
   return (
@@ -39,7 +90,7 @@ const ConfirmTransaction = () => {
           }}
         >
           <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
-          <p className="my-auto">Connfirm Transaction</p>
+          <p className="my-auto">Confirm Transaction</p>
         </button>
       </div>
       <div className="h-full grid p-4 place-items-center">
@@ -65,7 +116,7 @@ const ConfirmTransaction = () => {
               <p className="text-sm">Commision:</p>
               <p className="">
                 {" "}
-                {commision}
+                {commission}
                 <span className="text-[xx-small] ms-0.5">%</span>
               </p>
             </div>
@@ -114,8 +165,8 @@ const ConfirmTransaction = () => {
       <button
         className="bg-[#55BB6C] w-full rounded-lg absolute bottom-0 mx-auto inset-x-0"
         type="submit"
-        onClick={() => {
-          setTransactionComplete(true);
+        onClick={async () => {
+          await completeTransaction();
         }}
       >
         Complete Transaction
@@ -124,6 +175,7 @@ const ConfirmTransaction = () => {
         transactionComplete={transactionComplete}
         setTransactionComplete={setTransactionComplete}
         transactionStatus={transactionStatus}
+        transactionMessage={transactionMessage}
       />
     </main>
   );

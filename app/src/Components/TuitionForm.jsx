@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
 import Spinner from "./Spinner";
+import { AxiosType, getMethod } from "../api/axios";
 
 const schema = yup.object({
   firstName: yup.string().required(),
@@ -33,9 +34,23 @@ const TuitionForm = ({ setValidated }) => {
     defaultValues: {},
   });
 
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+
   const onSubmit = async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      console.log(data);
+      localStorage.setItem(
+        "tuition",
+        JSON.stringify({ ...data, email: user?.email })
+      );
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       // throw new Error();
       alert("form submitted successfully");
       setValidated(true);

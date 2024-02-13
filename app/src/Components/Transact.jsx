@@ -1,20 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 import AssetCard from "./AssetCard";
 import TransactionCard from "./TransactionCard";
 import NoHistory from "./NoHistory";
 import { mockTransactions } from "../utils/mockData";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import { filterMarker } from "../utils/utilityFunctions";
+import { useNavigate } from "react-router-dom";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Transact() {
+  const navigate = useNavigate();
   let [categories] = useState(mockTransactions);
+  const [wallets, setWallets] = useState([]);
+  const [userDetails, setUser] = useState(null);
+  const [balances, setBalances] = useState();
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+      if (user?.tier?.level > 0) {
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        console.log(bal);
+        const userWallets = user?.wallets?.map((a) => ({
+          network: a.blockchain.toUpperCase(),
+          network_name: a.blockchain,
+          marker: filterMarker(a.asset),
+          value: bal[a.blockchain],
+          // image: `/images/${a.toLowerCase()}.png`,
+          contract_address: a.walletAddress,
+        }));
+        console.log(userWallets);
+        setWallets(userWallets);
+        setBalances(bal);
+      }
+    })();
+  }, []);
 
   return (
-    <div className="w-full sm:px-0">
+    <div className="w-full h-full sm:px-0 no-scrollbar">
       <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-xl bg-[#161817] p-1 border border-[#e9ebd94d]">
+        <Tab.List className="flex space-x-1 rounded-xl bg-[#161817] p-1 border border-[#e9ebd94d] no-scrollbar">
           {Object.keys(categories).map((category) => (
             <Tab
               key={category}
@@ -33,18 +74,32 @@ export default function Transact() {
         </Tab.List>
         <Tab.Panels className="mt-2 space-y-2 h-auto overflow-y-auto">
           <Tab.Panel
-            key={Object.keys(categories["Wallets"])}
+            key={Object.keys(wallets)}
             className={classNames(
               "rounded-xl",
               "ring-white/60 ring-offset-2 focus:outline-none focus:ring-2"
             )}
           >
             <ul className=" space-y-2 overflow-auto no-scrollbar focus:none pb-4">
-              {categories["Wallets"].map((obj, index) => (
-                <li key={index}>
-                  <AssetCard asset={obj} />
-                </li>
-              ))}
+              {wallets.map((obj, index) =>
+                obj.marker.map((m, i) => (
+                  <li
+                    key={i}
+                    onClick={() => navigate(`/asset?i=${index}&m=${m}`)}
+                  >
+                    <AssetCard
+                      asset={{
+                        network: obj.network,
+                        network_name: obj.network_name,
+                        marker: m,
+                        value: obj.value[m],
+                        // image: `/images/${a.toLowerCase()}.png`,
+                        contract_address: obj.contract_address,
+                      }}
+                    />
+                  </li>
+                ))
+              )}
             </ul>
           </Tab.Panel>
           <Tab.Panel
@@ -57,7 +112,7 @@ export default function Transact() {
                   <p className="text-sm text-[#55BB6C]">Transaction History</p>
                 </div>
 
-                <ul className=" space-y-2 overflow-auto no-scrollbar focus:none max-h-[40svh] pb-4">
+                <ul className=" space-y-2 no-scrollbar h-[100vw] focus:none overflow-auto pb-20 mb-auto">
                   {categories["Transactions"].map((obj, index) => (
                     <li key={index}>
                       <TransactionCard transaction={obj} />

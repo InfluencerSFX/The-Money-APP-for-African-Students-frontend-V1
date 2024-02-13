@@ -16,13 +16,17 @@ const ConnectWallet = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        AxiosType.Yuki,
+        AxiosType.Main,
         token,
         refreshToken
       );
       const credentialOnDevice = localStorage.getItem("credential");
       const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
-      if (!credentialOnDeviceParsed && data.length == 0) {
+      console.log(
+        "connect-wallet",
+        !credentialOnDeviceParsed || data.length == 0
+      );
+      if (!credentialOnDeviceParsed || data.length == 0) {
         navigate("/register-passkey", {
           state: { from: location },
         });
@@ -49,10 +53,11 @@ const ConnectWallet = () => {
     setLoading(true);
     const credentialOnDevice = localStorage.getItem("credential");
     const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+    console.log(credentialOnDeviceParsed);
     const userAccount = await postMethod(
       "/auth/signin-request",
       { challenge: credentialOnDeviceParsed.challenge },
-      AxiosType.Yuki,
+      AxiosType.Main,
       token,
       refreshToken
     );
@@ -93,7 +98,7 @@ const ConnectWallet = () => {
               },
               user: userAccount,
             },
-            AxiosType.Yuki,
+            AxiosType.Main,
             token,
             refreshToken
           );
@@ -103,7 +108,7 @@ const ConnectWallet = () => {
               switch (verifiedClientData) {
                 case true:
                   console.log("✅ You have successfully logged in.");
-                  navigate("/", {
+                  navigate("/account", {
                     state: { from: location },
                   });
                   break;

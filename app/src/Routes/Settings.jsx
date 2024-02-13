@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeftIcon,
   CheckCircleIcon,
@@ -11,15 +11,41 @@ import {
   ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
 import RecoveryModal from "../Components/RecoveryModal";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AxiosType, getMethod } from "../api/axios";
 
 const Settings = () => {
   const [backedUp, setBackedUp] = useState(true);
   const [openModal, setOpenModal] = useState(false);
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [userDetails, setUser] = useState(null);
+  useEffect(() => {
+    (async () => {
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      setUser(user);
+    })();
+  }, []);
 
   return (
     <main className=" relative mobile-screen px-0 bg-[#161817] text-white">
       <div className="border-b border-[#D4B998] pt-5 bg-black">
-        <button className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black">
+        <button
+          onClick={() =>
+            navigate("/account", {
+              state: { from: location },
+            })
+          }
+          className="bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
+        >
           <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
           <p className="my-auto">Settings</p>
         </button>
@@ -29,7 +55,10 @@ const Settings = () => {
           <div className="flex space-x-2">
             <div className="relative">
               <img
-                src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+                src={
+                  userDetails?.picture ||
+                  "https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+                }
                 alt="user image"
                 srcSet=""
                 className="rounded-full h-14 w-14 my-auto"
@@ -42,8 +71,10 @@ const Settings = () => {
               />
             </div>
             <div className="">
-              <p className="text-sm text-[#55BB6C]">Victoria Alisson,</p>
-              <p className="text-xs text-[#D4B998]">Victoriallison@gmail.com</p>
+              <p className="text-sm text-[#55BB6C]">
+                {userDetails?.firstName} {userDetails?.lastName},
+              </p>
+              <p className="text-xs text-[#D4B998]">{userDetails?.email}</p>
               {backedUp && (
                 <button
                   className="inline-flex space-x-1 p-0.5 px-1 rounded-xl mt-1 bg-[#161817]"
@@ -72,7 +103,7 @@ const Settings = () => {
           </button>
           <button className="inline-flex space-x-2 bg-transparent">
             <ArrowTopRightOnSquareIcon className="h-6" />
-            <p className="font-normal">Add home screen shortcut</p>
+            <p className="font-normal">Add App to home screen</p>
           </button>
           <button className="inline-flex space-x-2 bg-transparent">
             <ChatBubbleOvalLeftIcon className="h-6" />
@@ -88,7 +119,11 @@ const Settings = () => {
           </button>
         </div>
       </section>
-      <RecoveryModal isOpen={openModal} setIsOpen={setOpenModal} />
+      <RecoveryModal
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        email={userDetails?.email}
+      />
     </main>
   );
 };

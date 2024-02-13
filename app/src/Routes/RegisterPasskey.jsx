@@ -16,7 +16,7 @@ const RegisterPasskey = () => {
     (async () => {
       const data = await getMethod(
         "/auth/credential",
-        AxiosType.Yuki,
+        AxiosType.Main,
         token,
         refreshToken
       );
@@ -34,7 +34,7 @@ const RegisterPasskey = () => {
     const data = await postMethod(
       "/auth/register-request",
       {},
-      AxiosType.Yuki,
+      AxiosType.Main,
       token,
       refreshToken
     );
@@ -77,7 +77,7 @@ const RegisterPasskey = () => {
             rawId: isoBase64URL.fromBuffer(credential.rawId),
             type: credential.type,
           },
-          AxiosType.Yuki,
+          AxiosType.Main,
           token,
           refreshToken
         );
@@ -97,25 +97,19 @@ const RegisterPasskey = () => {
             "✅ PassKey verification passed with challenge : ",
             challenge
           );
-          const savedCredential = await postMethod(
+          await postMethod(
             "/auth/credential",
             {
               id: credential.id,
               challenge,
               challengeBuffer: challengeBufferString,
+              origin: window.location.origin,
             },
-            AxiosType.Yuki,
-            token,
-            refreshToken
-          );
-          await postMethod(
-            "/auth/credential",
-            { ...savedCredential },
             AxiosType.Main,
             token,
             refreshToken
           );
-          navigate("/connect-wallet", {
+          navigate("/account", {
             state: { from: location },
           });
         }

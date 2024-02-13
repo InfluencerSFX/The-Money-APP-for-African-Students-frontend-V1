@@ -12,27 +12,27 @@ const SecureWallet = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Yuki,
-        token,
-        refreshToken
-      );
-      await postMethod(
-        "/auth/user",
-        { ...user, userId: user.id },
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      // const user = await getMethod(
+      //   "/auth/me",
+      //   AxiosType.Yuki,
+      //   token,
+      //   refreshToken
+      // );
+      // await postMethod(
+      //   "/auth/user",
+      //   { ...user },
+      //   AxiosType.Main,
+      //   token,
+      //   refreshToken
+      // );
     })();
-  });
+  }, []);
 
   const passkey = async () => {
     setLoading(true);
     const data = await getMethod(
       "/auth/credential",
-      AxiosType.Yuki,
+      AxiosType.Main,
       token,
       refreshToken
     );

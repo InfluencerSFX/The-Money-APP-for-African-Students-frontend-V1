@@ -5,38 +5,99 @@ import {
   ArrowDownRightIcon,
   ArrowUpRightIcon,
 } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import VerifyEmail from "../Components/VefityEmail";
 import CompleteKYC from "../Components/CompleteKYC";
 import Transact from "../Components/Transact";
 import FundModal from "../Components/FundModal";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import { getBalance } from "../utils/utilityFunctions";
 
 const Dashboard = () => {
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [userDetails, setUser] = useState(null);
+  const [balances, setBalances] = useState();
+  const [liraRate, setLiraRate] = useState(0);
+  useEffect(() => {
+    (async () => {
+      const data = await getMethod(
+        "/auth/credential",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      const credentialOnDevice = localStorage.getItem("credential");
+      const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
+      if (!credentialOnDeviceParsed || data.length == 0) {
+        navigate("/register-passkey", {
+          state: { from: location },
+        });
+      }
+      const user = await getMethod(
+        "/auth/me",
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      console.log(user);
+      setUser(user);
+      if (user?.tier?.level > 0) {
+        const bal = await postMethod(
+          "/wallet/check-assets-balance",
+          {},
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
+        setBalances(bal);
+      }
+      const latest = await fetch(
+        "https://cdn.moneyconvert.net/api/latest.json"
+      );
+      const latestJSON = await latest.json();
+      setLiraRate(latestJSON.rates["TRY"]);
+    })();
+  }, []);
+
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
-    <main className="relative mobile-screen bg-black">
-      <section className="relative space-y-4 ">
-        <div className="flex justify-between">
-          <div className="flex space-x-2">
-            <img
-              src="https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
-              alt="user image"
-              srcSet=""
-              className="rounded-full h-9 w-9 my-auto"
-            />
-            <div className="">
-              <p className="text-sm text-[#55BB6C]">Welcome</p>
-              <p className="text-xs text-[#D4B998]">Victoria Menace</p>
-            </div>
-          </div>
-          <div className="w-auto">
-            <AdjustmentsVerticalIcon className="h-7 w-auto text-[#D4B998]" />
+    <main className="relative mobile-screen bg-black pt-2">
+      <div className="flex justify-between w-full px-4 py-2 z-10">
+        <div className="flex space-x-2 w-full">
+          <img
+            src={
+              userDetails?.picture ||
+              "https://images.pexels.com/photos/19414563/pexels-photo-19414563/free-photo-of-a-woman-in-a-leather-jacket-sitting-on-the-ground.jpeg"
+            }
+            alt="user image"
+            srcSet=""
+            className="rounded-full h-9 w-9 my-auto"
+          />
+          <div className="">
+            <p className="text-sm text-[#55BB6C]">Welcome</p>
+            <p className="text-xs text-[#D4B998]">
+              {userDetails?.firstName} {userDetails?.lastName}
+            </p>
           </div>
         </div>
-
-        <section className="flex justify-center">
+        <div
+          className="w-auto"
+          onClick={() =>
+            navigate("/settings", {
+              state: { from: location },
+            })
+          }
+        >
+          <AdjustmentsVerticalIcon className="h-7 w-auto text-[#D4B998]" />
+        </div>
+      </div>
+      <section className="w-full h-full space-y-3 pt-2  pb-20 mb-auto overflow-scroll no-scrollbar">
+        <section className="relative flex justify-center">
           <img
             src="/images/stacked-cards.png"
             className="absolute"
@@ -71,27 +132,29 @@ const Dashboard = () => {
 
             <div className="inline-flex space-x-2 align-text-bottom text-white">
               <p className="text-4xl font-semibold">
-                {showBalance ? "144" : "****"}
+                {showBalance ? getBalance(balances) : "****"}
               </p>{" "}
               <span className="mt-auto">USD</span>
             </div>
             <div className="inline-flex space-x-2">
               <span className="mt-auto">₺</span>
-              <p className="text-md font-thin">41562.15</p>{" "}
+              <p className="text-md font-thin">
+                {showBalance ? getBalance(balances) * liraRate : "****"}
+              </p>{" "}
             </div>
             <br />
           </div>
         </section>
 
         <section>
-          <VerifyEmail />
+          <CompleteKYC />
         </section>
 
-        <section>
+        <section className="min-h-40">
           <Transact />
         </section>
       </section>
-      <footer className=" z-10 absolute inset-x-0 bottom-0 flex bg-[#161817] text-[#55BB6C] divide-x divide-[#e9ebd94d] rounded-t-xl">
+      <footer className=" z-10 absolute bottom-0 inset-x-0 flex bg-[#161817] text-[#55BB6C] divide-x divide-[#e9ebd94d] rounded-t-xl">
         <button
           className="w-full flex p-4 bt-transparent transparent bg-transparent flex-row gap-2 justify-center border-0 rounded-none"
           onClick={() => setOpenFundModal(!openFundModal)}
@@ -99,7 +162,7 @@ const Dashboard = () => {
           <div className="p-2 rounded-full bg-[#e9ebd94d]">
             <ArrowDownRightIcon className="h-5 " />
           </div>{" "}
-          <p className="my-auto">Fund Wallet</p>
+          <p className="my-auto text-sm">Fund / Withdraw</p>
         </button>
         {/* <button className=""> */}
         <Link
@@ -109,7 +172,7 @@ const Dashboard = () => {
           <div className="p-2 rounded-full bg-[#e9ebd94d]">
             <ArrowUpRightIcon className="h-5" />
           </div>
-          <p className="my-auto">Send USD</p>
+          <p className="my-auto text-sm">Send USD</p>
         </Link>
         {/* </button> */}
       </footer>

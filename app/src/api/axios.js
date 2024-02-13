@@ -34,7 +34,10 @@ export async function postMethod(url, body, axiosType, token, refreshToken) {
     saveAccessToken(res);
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error(error?.response?.data?.statusCode);
+    if (error?.response?.data?.statusCode == 401) {
+      window.location.href = `${window.location.origin}/auth?signin=true`;
+    }
   }
 }
 
@@ -57,6 +60,9 @@ export async function getMethod(url, axiosType, token, refreshToken) {
     saveAccessToken(res);
     return res.data;
   } catch (error) {
-    console.error(error);
+    console.error(error?.response?.data?.statusCode);
+    if (error?.response?.data?.statusCode == 401) {
+      window.location.href = `${window.location.origin}/auth?signin=true`;
+    }
   }
 }

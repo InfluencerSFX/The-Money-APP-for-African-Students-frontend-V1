@@ -12,8 +12,8 @@ export const mockTransactions = {
 
     {
       id: 2,
-      network: "BSC",
-      network_name: "Binance Smart Chain",
+      network: "POLYGON",
+      network_name: "Polygon",
       marker: "USDT",
       value: 900,
       image: "/images/usdt.png",

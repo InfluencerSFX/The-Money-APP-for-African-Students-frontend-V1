@@ -12,8 +12,10 @@ const Auth = () => {
   const token = searchParams.get("token") || localStorage.getItem("token");
   const refreshToken =
     searchParams.get("refreshToken") || localStorage.getItem("refreshToken");
+  const isSignin = searchParams.get("signin");
 
   useEffect(() => {
+    if (isSignin) return;
     if (token && refreshToken) {
       localStorage.setItem("token", token);
       localStorage.setItem("refreshToken", refreshToken);
@@ -24,7 +26,7 @@ const Auth = () => {
   const handleAuth = async () => {
     try {
       window.location.href = `${
-        import.meta.env.VITE_YUKI_BACKEND_BASE_URL
+        import.meta.env.VITE_SFX_BACKEND_BASE_URL
       }/auth/google`;
     } catch (error) {
       setAuth(null);
@@ -34,7 +36,7 @@ const Auth = () => {
   return auth?.authenticated ? (
     <Navigate to="/secure-wallet" state={{ from: location }} replace />
   ) : (
-    <>
+    <main className="bg-black">
       <div className="mobile-screen">
         <div className="flex flex-col place-items-center h-full">
           <div className="basis-4/6 w-10/12 flex">
@@ -70,7 +72,7 @@ const Auth = () => {
                 )}
               </div>
               <div className="basis-5/6">
-                <p className="mx-auto">Sign in with Google</p>
+                <p className="mx-auto">Continue with Google</p>
               </div>
             </button>
             <p className="text-center opacity-60 text-sm mt-auto">
@@ -80,7 +82,7 @@ const Auth = () => {
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 };
 

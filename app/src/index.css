@@ -4,7 +4,17 @@
 
 @layer components {
   .mobile-screen {
-    @apply px-6 lg:max-w-md mx-auto h-screen  text-white;
+    @apply lg:max-w-md mx-auto  px-6 text-white;
+  }
+  .form-validation {
+    @apply focus:outline-none focus:border-[#55BB6C] focus:ring-1 focus:ring-[#55BB6C]
+    disabled:bg-slate-500 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none
+    invalid:border-red-600 invalid:text-red-600
+    focus:invalid:border-red-600 focus:invalid:ring-red-600;
+  }
+
+  .form-style {
+    @apply w-full text-sm border border-[#e9ebd94d] p-2 rounded-lg text-start bg-transparent placeholder:text-white px-2;
   }
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -15,8 +25,13 @@ body {
   color: whitesmoke;
   display: relative;
   overflow-y: hidden;
+  padding: 0;
 }
 /* background-color: #000000; */
+
+.mobile-screen {
+  height: 100dvh;
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

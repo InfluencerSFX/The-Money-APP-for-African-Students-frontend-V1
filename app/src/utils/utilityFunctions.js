@@ -34,3 +34,30 @@ export const delay = () => {
     }, 2000);
   });
 };
+
+export const Codes = {
+  Processing: "5013",
+  Success: "0810",
+};
+
+export const getBalance = (bal) => {
+  let sum = 0;
+  for (const chain in bal) {
+    for (const asset in bal[chain]) {
+      sum += bal[chain][asset];
+    }
+  }
+  return sum;
+};
+
+export const filterMarker = (marker) =>
+  marker.filter((m) => m === "USDT" || m === "USDC");
+
+export const paramsToObject = (params) => {
+  const obj = {};
+  for (const pair of params.split("&")) {
+    const [key, value] = pair.split("=");
+    obj[key] = value;
+  }
+  return obj;
+};

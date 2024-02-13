@@ -27,6 +27,7 @@ const WithdrawToWallet = () => {
   let [isOpen, setIsOpen] = useState(false);
   let [transactionComplete, setTransactionComplete] = useState(false);
   let [transactionStatus, setTransactionStatus] = useState(false);
+  const [transactionMessage, setTransactionMessage] = useState("");
 
   const [wallets, setWallets] = useState([]);
   const token = localStorage.getItem("token");
@@ -56,6 +57,7 @@ const WithdrawToWallet = () => {
           value: bal[a.blockchain],
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
+          transaction_signature: a.privateKeys,
         }));
         const wallets = [];
         for (const userWallet of userWallets) {
@@ -66,6 +68,7 @@ const WithdrawToWallet = () => {
               marker,
               value: userWallet.value[marker],
               contract_address: userWallet.contract_address,
+              transaction_signature: userWallet.transaction_signature,
             });
           }
         }
@@ -104,13 +107,31 @@ const WithdrawToWallet = () => {
 
   const handleTransaction = async () => {
     setLoading(true);
-    await delay();
-    setTransactionComplete(true);
-    try {
+    console.log(walletAddress);
+    console.log(selected);
+    console.log(amount);
+    const data = await postMethod(
+      "/wallet/send-usdt",
+      {
+        sendAddress: selected.contract_address,
+        receiverAddress: walletAddress,
+        amount: amount.toString(),
+        transactionSignature: selected.transaction_signature,
+      },
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    console.log(data);
+
+    if (data?.txId) {
       setTransactionStatus(true);
-      throw new Error("transaction failed");
-    } catch (error) {
+      setTransactionComplete(true);
+      setTransactionMessage("SUCCESS");
+    } else {
       setTransactionStatus(false);
+      setTransactionComplete(true);
+      setTransactionMessage(data?.cause);
     }
     setLoading(false);
   };
@@ -270,6 +291,7 @@ const WithdrawToWallet = () => {
         transactionComplete={transactionComplete}
         setTransactionComplete={setTransactionComplete}
         transactionStatus={transactionStatus}
+        transactionMessage={transactionMessage}
       />
     </main>
   );

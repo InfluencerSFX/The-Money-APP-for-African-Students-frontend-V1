@@ -35,7 +35,7 @@ const WithdrawFromWallet = () => {
         partnerLogoUrl: obj["partnerLogoUrl"],
         partnerThemeColor: obj["partnerThemeColor"].slice(1),
         fiatAmount: "15000",
-        listedAsset: "bsc_usdc,bsc_usdt",
+        listedAsset: "tron_usdt,bsc_usdc",
         userEmailAddress: user?.email,
         walletAddress: wallet.walletAddress,
         webhookStatusUrl: `${

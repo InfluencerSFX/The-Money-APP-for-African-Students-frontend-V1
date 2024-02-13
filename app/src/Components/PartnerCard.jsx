@@ -53,7 +53,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
       partnerLogoUrl: obj["partnerLogoUrl"],
       partnerThemeColor: obj["partnerThemeColor"].slice(1),
       fiatAmount: "15000",
-      listedAsset: "bsc_usdc,bsc_usdt",
+      listedAsset: "tron_usdt,bsc_usdc",
       userEmailAddress: email,
       walletAddress: wallet.walletAddress,
       webhookStatusUrl: `${

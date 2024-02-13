@@ -6,6 +6,7 @@ const TransactionCompleteModal = ({
   transactionComplete,
   setTransactionComplete,
   transactionStatus,
+  transactionMessage,
 }) => {
   const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ const TransactionCompleteModal = ({
                     transactionStatus ? "text-[#55BB6C]" : "text-red-500"
                   } border-[#e9ebd94d] border-b px-4 py-2 self-end`}
                 >
-                  {transactionStatus ? "Payment successful" : "Payment failed"}
+                  {transactionMessage}
                 </Dialog.Title>
                 <div className="mt-2 p-4 space-y-2">
                   <img

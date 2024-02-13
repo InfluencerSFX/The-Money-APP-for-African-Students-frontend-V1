@@ -107,6 +107,7 @@ const WithdrawToWallet = () => {
 
   const handleTransaction = async () => {
     setLoading(true);
+    if (selected.network !== "TRON") return;
     console.log(walletAddress);
     console.log(selected);
     console.log(amount);

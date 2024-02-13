@@ -1,6 +1,6 @@
 const BackupFound = () => {
   return (
-    <main className="bg-black h-full">
+    <main className="bg-black mobile-screen">
       <div className="flex flex-col lg:max-w-md place-items-center h-full">
         <div className="basis-2/6 w-10/12 flex place-items-end pb-4">
           <div className="h-fit p-3 bg-faded rounded-lg  mx-auto mt-11">

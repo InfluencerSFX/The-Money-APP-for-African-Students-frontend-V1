@@ -9,7 +9,7 @@
     "build": "vite build",
     "sync": "aws s3 sync ./dist 's3://sfxchange.app/'",
     "invalidate": "aws cloudfront create-invalidation --distribution-id E26TVS2NPZ0KWF --paths '/*'",
-    "deploy": "npm run sync && npm run invalidate",
+    "deploy": "npm run build && npm run sync && npm run invalidate",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

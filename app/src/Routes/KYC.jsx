@@ -3,6 +3,7 @@ import { Codes, delay } from "../utils/utilityFunctions";
 import Spinner from "../Components/Spinner";
 import { AxiosType, getMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 const KYC = () => {
   const token = localStorage.getItem("token");
@@ -46,7 +47,16 @@ const KYC = () => {
   };
 
   return (
-    <main className="px-0 mobile-screen space-y-8 flex flex-col justify-center">
+    <main className="relative px-0 mobile-screen space-y-8 flex flex-col justify-center">
+      <div className="fixed top-0 inset-x-auto  border-b border-[#e9ebd94d]">
+        <button
+          className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
+          onClick={() => navigate(-1)}
+        >
+          <ArrowLeftIcon className="h-6 text-[#D4B998] my-auto" />
+          <p className="my-auto">Back</p>
+        </button>
+      </div>
       <div className="p-4 rounded-xl bg-[#045725] w-full space-y-2">
         <p className="text-sm">Complete your Tier 1 KYC to start transacting</p>
         <div className="text-sm">

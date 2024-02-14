@@ -67,7 +67,7 @@ const Dashboard = () => {
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (
-    <main className="relative mobile-screen bg-black pt-2">
+    <main className="relative px-2 mobile-screen min-h-full bg-black">
       <div className="flex justify-between w-full px-4 py-2 z-10">
         <div className="flex space-x-2 w-full">
           <img

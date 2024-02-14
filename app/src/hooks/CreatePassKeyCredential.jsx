@@ -32,6 +32,7 @@ export const createPassKeyCredential = async (
   }
 
   console.log(excludeCredentials);
+  console.log(env);
 
   const publicKeyCredentialCreationOptions = {
     challenge: challengeBuffer,

@@ -5,11 +5,23 @@ const envDev = {
   VITE_DOMAIN: "localhost",
 };
 
-const envProd = {
+const envTest = {
   VITE_SFX_BACKEND_BASE_URL: "https://dev-api.sfxchange.app",
+  VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
+  VITE_RP_NAME: "sfx",
+  VITE_DOMAIN: "sfx.vercel.app",
+};
+
+const envProd = {
+  VITE_SFX_BACKEND_BASE_URL: "https://prod-api.sfxchange.app",
   VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfxchange.app",
 };
 
-export const env = process.env.NODE_ENV === "development" ? envDev : envProd;
+export const env =
+  process.env.NODE_ENV === "development"
+    ? envDev
+    : window.location.origin === "https://sfx.vercel.app"
+    ? envTest
+    : envProd;

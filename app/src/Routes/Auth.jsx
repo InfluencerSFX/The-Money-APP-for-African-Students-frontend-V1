@@ -26,7 +26,8 @@ const Auth = () => {
 
   const handleAuth = async () => {
     try {
-      window.location.href = `${env.VITE_SFX_BACKEND_BASE_URL}/auth/google`;
+      console.log(process.env.NODE_ENV, env);
+      // window.location.href = `${env.VITE_SFX_BACKEND_BASE_URL}/auth/google`;
     } catch (error) {
       setAuth(null);
     }

@@ -63,11 +63,11 @@ const AssetDetail = () => {
   return (
     <>
       {!asset ? (
-        <div className="flex items-center justify-center relative bg-[#000000] pt-4 mx-auto lg:max-w-md h-svh h-screen">
+        <div className="flex items-center justify-center relative bg-[#000000] pt-4 mx-auto lg:max-w-md  mobile-screen">
           <Spinner />
         </div>
       ) : (
-        <div className="relative bg-[#000000] pt-4 mx-auto lg:max-w-md h-svh h-screen">
+        <div className="relative bg-[#000000] pt-4 mx-auto lg:max-w-md  mobile-screen">
           <div className="border-b border-[#D4B998]">
             <button
               onClick={() => navigate(-1)}

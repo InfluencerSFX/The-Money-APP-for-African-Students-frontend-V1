@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { paramsToObject } from "../utils/utilityFunctions";
+import { env } from "../utils/env";
 
 const WithdrawFromWallet = () => {
   const token = localStorage.getItem("token");
@@ -38,9 +39,7 @@ const WithdrawFromWallet = () => {
         listedAsset: "tron_usdt,bsc_usdc",
         userEmailAddress: user?.email,
         walletAddress: wallet.walletAddress,
-        webhookStatusUrl: `${
-          import.meta.env.VITE_SFX_BACKEND_BASE_URL
-        }/wallet/paychant-webhook`,
+        webhookStatusUrl: `${env.VITE_SFX_BACKEND_BASE_URL}/wallet/paychant-webhook`,
         callback: {
           onClose: function () {},
           onStatus: function (txStatus) {

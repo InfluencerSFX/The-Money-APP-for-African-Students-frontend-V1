@@ -13,6 +13,7 @@ import FundModal from "../Components/FundModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { getBalance } from "../utils/utilityFunctions";
+import { env } from "../utils/env";
 
 const Dashboard = () => {
   const token = localStorage.getItem("token");

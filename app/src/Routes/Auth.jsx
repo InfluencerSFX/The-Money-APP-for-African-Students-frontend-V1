@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../Components/Spinner";
 import useAuth from "../hooks/useAuth";
+import { env } from "../utils/env";
 
 const Auth = () => {
   const location = useLocation();
@@ -25,9 +26,7 @@ const Auth = () => {
 
   const handleAuth = async () => {
     try {
-      window.location.href = `${
-        import.meta.env.VITE_SFX_BACKEND_BASE_URL
-      }/auth/google`;
+      window.location.href = `${env.VITE_SFX_BACKEND_BASE_URL}/auth/google`;
     } catch (error) {
       setAuth(null);
     }

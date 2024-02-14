@@ -1,4 +1,5 @@
 import React from "react";
+import { env } from "../utils/env";
 
 export const createPassKeyCredential = async (
   username,
@@ -35,8 +36,8 @@ export const createPassKeyCredential = async (
   const publicKeyCredentialCreationOptions = {
     challenge: challengeBuffer,
     rp: {
-      name: import.meta.env.VITE_RP_NAME,
-      id: import.meta.env.VITE_DOMAIN,
+      name: env.VITE_RP_NAME,
+      id: env.VITE_DOMAIN,
     },
     user: {
       id: userIdBuffer,

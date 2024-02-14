@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { AxiosType, postMethod } from "../api/axios";
 import { paramsToObject } from "../utils/utilityFunctions";
+import { env } from "../utils/env";
 
 const CardBody = ({ partner }) => {
   useEffect(() => {
@@ -56,9 +57,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
       listedAsset: "tron_usdt,bsc_usdc",
       userEmailAddress: email,
       walletAddress: wallet.walletAddress,
-      webhookStatusUrl: `${
-        import.meta.env.VITE_SFX_BACKEND_BASE_URL
-      }/wallet/paychant-webhook`,
+      webhookStatusUrl: `${env.VITE_SFX_BACKEND_BASE_URL}/wallet/paychant-webhook`,
       callback: {
         onClose: function () {},
         onStatus: function (txStatus) {

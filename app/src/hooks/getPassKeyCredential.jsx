@@ -1,3 +1,5 @@
+import { env } from "../utils/env";
+
 const getPasskeyCredential = async ({
   userId,
   username,
@@ -18,7 +20,7 @@ const getPasskeyCredential = async ({
   const challengeBuffer = Uint8Array.from(challenge, (c) => c.charCodeAt(0));
   const publicKeyCredentialRequestOptions = {
     challenge: challengeBuffer,
-    rpId: import.meta.env.VITE_DOMAIN,
+    rpId: env.VITE_DOMAIN,
     userVerification: "preferred",
     timeout: 60000,
   };

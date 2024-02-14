@@ -1,12 +1,13 @@
 import axios from "axios";
 import { saveAccessToken } from "../functions/saveAccessToken";
+import { env } from "../utils/env";
 
 export const mainAxios = axios.create({
-  baseURL: import.meta.env.VITE_SFX_BACKEND_BASE_URL,
+  baseURL: env.VITE_SFX_BACKEND_BASE_URL,
 });
 
 export const yukiAxios = axios.create({
-  baseURL: import.meta.env.VITE_YUKI_BACKEND_BASE_URL,
+  baseURL: env.VITE_YUKI_BACKEND_BASE_URL,
 });
 
 export const AxiosType = {

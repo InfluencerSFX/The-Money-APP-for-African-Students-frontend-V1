@@ -39,7 +39,7 @@ const CompleteVerification = () => {
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Complete your Verification</p>
           <p className="text-xs text-[#CEC6BD]">
-            Please complete your Verification to start transacting
+            Complete your Verification to start transacting
           </p>
         </div>
       );

@@ -35,7 +35,7 @@ const Auth = () => {
   return auth?.authenticated ? (
     <Navigate to="/secure-wallet" state={{ from: location }} replace />
   ) : (
-    <main className="bg-black">
+    <main className="bg-black mobile-screen">
       <div className="mobile-screen">
         <div className="flex flex-col place-items-center h-full">
           <div className="basis-4/6 w-10/12 flex">

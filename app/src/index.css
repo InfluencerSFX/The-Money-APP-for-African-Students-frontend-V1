@@ -27,8 +27,8 @@ body {
   display: relative;
   overflow-y: hidden;
   padding: 0;
+  background-color: #000000;
 }
-/* background-color: #000000; */
 
 .mobile-screen {
   height: 100%;

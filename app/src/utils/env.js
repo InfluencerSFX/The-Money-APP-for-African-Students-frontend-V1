@@ -13,7 +13,7 @@ const envTest = {
 };
 
 const envProd = {
-  VITE_SFX_BACKEND_BASE_URL: "https://dev-api.sfxchange.app",
+  VITE_SFX_BACKEND_BASE_URL: "https://prod-api.sfxchange.app",
   VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfxchange.app",

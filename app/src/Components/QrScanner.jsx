@@ -15,6 +15,7 @@ const QrScanner = ({ setScanWalletAddress }) => {
         height: 250,
       },
       fps: 10,
+      cameraDeviceId: null,
     });
 
     scanner.render(success);

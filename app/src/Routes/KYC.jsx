@@ -47,8 +47,8 @@ const KYC = () => {
   };
 
   return (
-    <main className="relative px-0 mobile-screen space-y-8 flex flex-col justify-center">
-      <div className="fixed top-0 inset-x-auto  border-b border-[#e9ebd94d]">
+    <main className="relative mobile-screen space-y-8 flex flex-col justify-center">
+      <div className="fixed top-0 inset-x-auto w-full border-b border-[#e9ebd94d]">
         <button
           className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
           onClick={() => navigate(-1)}

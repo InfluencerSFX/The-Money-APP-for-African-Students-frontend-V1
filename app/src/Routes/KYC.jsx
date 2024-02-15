@@ -58,7 +58,7 @@ const KYC = () => {
         </button>
       </div>
 
-      <div className="h-full grid space-y-4 place-items-center w-full">
+      <div className="flex flex-col space-y-4 w-full">
         <div className="p-4 rounded-xl bg-[#045725] w-full space-y-2">
           <p className="text-sm">
             Complete your Tier 1 KYC to start transacting

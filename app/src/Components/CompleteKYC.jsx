@@ -80,7 +80,7 @@ const CompleteVerification = () => {
       }}
     >
       <img
-        className="col-span-1 absolute bottom-6 md:bottom-3 lg:bottom-7 left-4"
+        className="col-span-1 absolute bottom-[1rem] left-4"
         src="/images/compliance.png"
         alt=""
         srcSet=""

@@ -5,9 +5,8 @@ const QrScanner = ({ setScanWalletAddress }) => {
   useEffect(() => {
     const success = (result) => {
       setScanWalletAddress(result);
-      scanner.clear()
+      scanner.clear();
     };
-
 
     const scanner = new Html5QrcodeScanner("reader", {
       qrbox: {
@@ -15,11 +14,11 @@ const QrScanner = ({ setScanWalletAddress }) => {
         height: 250,
       },
       fps: 10,
+      cameraDeviceId: null,
     });
 
-    scanner.render(success);
+    scanner.render({ facingMode: "environment" }, success);
 
-  
     return () => {
       scanner.clear();
     };

@@ -3,7 +3,6 @@ import { Tab } from "@headlessui/react";
 import AssetCard from "./AssetCard";
 import TransactionCard from "./TransactionCard";
 import NoHistory from "./NoHistory";
-import { mockTransactions } from "../utils/mockData";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { filterMarker } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
@@ -13,8 +12,13 @@ function classNames(...classes) {
 
 export default function Transact() {
   const navigate = useNavigate();
-  let [categories] = useState(mockTransactions);
+  const categories = {
+    Wallets: [],
+    Transactions: [],
+  };
+
   const [wallets, setWallets] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [userDetails, setUser] = useState(null);
   const [balances, setBalances] = useState();
   const token = localStorage.getItem("token");
@@ -45,7 +49,7 @@ export default function Transact() {
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
         }));
-        console.log(userWallets);
+        console.log(Object.keys(userWallets));
         setWallets(userWallets);
         setBalances(bal);
       }
@@ -74,7 +78,8 @@ export default function Transact() {
         </Tab.List>
         <Tab.Panels className="mt-2 space-y-2 h-auto overflow-y-auto">
           <Tab.Panel
-            key={Object.keys(wallets)}
+            // key={Object.keys(wallets)}
+            key={"wallets"}
             className={classNames(
               "rounded-xl",
               "ring-white/60 ring-offset-2 focus:outline-none focus:ring-2"
@@ -103,26 +108,29 @@ export default function Transact() {
             </ul>
           </Tab.Panel>
           <Tab.Panel
-            key={Object.keys(categories["Transactions"])}
+            // key={Object.keys(transactions)}
+            key={"transactions"}
             className={classNames("rounded-xl", "")}
           >
-            {categories["Transactions"].length && (
+            {transactions.length ? (
               <>
                 <div className="rounded-t-lg bg-[#161817] w-full border-b border-[#e9ebd94d] my-2 px-4 py-2">
                   <p className="text-sm text-[#55BB6C]">Transaction History</p>
                 </div>
 
                 <ul className=" space-y-2 no-scrollbar h-[100vw] focus:none overflow-auto pb-20 mb-auto">
-                  {categories["Transactions"].map((obj, index) => (
+                  {transactions.map((obj, index) => (
                     <li key={index}>
                       <TransactionCard transaction={obj} />
                     </li>
                   ))}
                 </ul>
               </>
+            ) : (
+              <NoHistory />
             )}
 
-            {!categories.Transactions.length && <NoHistory />}
+            {/* {!transactions.length && <NoHistory />} */}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

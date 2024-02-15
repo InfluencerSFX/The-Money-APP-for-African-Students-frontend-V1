@@ -1,16 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import AssetCard from "../Components/AssetCard";
-import { mockTransactions } from "../utils/mockData";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay, filterMarker } from "../utils/utilityFunctions";
-import AssetModal from "../Components/AssetModal";
-import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-
-const mockAsset = mockTransactions.Wallets;
 
 const AmountInput = () => {
   const navigate = useNavigate();
@@ -19,8 +12,6 @@ const AmountInput = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [assets] = useState(mockAsset);
-  // const [selected, setSelected] = useState(assets[0]);
 
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");

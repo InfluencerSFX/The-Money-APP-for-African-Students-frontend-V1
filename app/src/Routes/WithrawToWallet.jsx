@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
-import { mockTransactions } from "../utils/mockData";
-
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay, filterMarker } from "../utils/utilityFunctions";
@@ -12,11 +10,8 @@ import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import QrScanner from "../Components/QrScanner";
 
-const mockAsset = mockTransactions.Wallets;
-
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
-  const [assets] = useState(mockAsset);
   const minimumAmount = 5;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");

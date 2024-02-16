@@ -40,6 +40,12 @@ export default function Transact() {
           token,
           refreshToken
         );
+        const txs = await getMethod(
+          "/wallet/tx-history",
+          AxiosType.Main,
+          token,
+          refreshToken
+        );
         console.log(bal);
         const userWallets = user?.wallets?.map((a) => ({
           network: a.blockchain.toUpperCase(),
@@ -49,8 +55,24 @@ export default function Transact() {
           // image: `/images/${a.toLowerCase()}.png`,
           contract_address: a.walletAddress,
         }));
-        console.log(Object.keys(userWallets));
+        const userTxs = txs?.map((tx) => ({
+          type:
+            user?.email === tx.senderEmail
+              ? tx.transactionType === "Tuition"
+                ? "Tuition"
+                : "Sent"
+              : "Received",
+          date: tx.transactionDate,
+          status: tx.transactionStatus,
+          amount: tx.amount,
+          asset:
+            user?.email === tx.senderEmail
+              ? tx.senderWallet?.asset?.[0]
+              : tx.receiverWallet?.asset?.[0],
+        }));
+        console.log(userTxs);
         setWallets(userWallets);
+        setTransactions(userTxs);
         setBalances(bal);
       }
     })();

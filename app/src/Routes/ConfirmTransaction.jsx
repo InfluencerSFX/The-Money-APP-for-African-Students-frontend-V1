@@ -15,7 +15,7 @@ const ConfirmTransaction = () => {
   const navigate = useNavigate();
 
   const [commission] = useState(2);
-  const [wallet] = useState("TG9y21RBqFMA6nJXRqBGqp43JV3HzqhfRH");
+  const [wallet] = useState("TYduRhBwZcSZ26K9thBanjiLLHNZFaWf8W");
   const [amount] = useState(location.state.amount);
   const [fee] = useState((commission * amount) / 100);
   const [finalAmount] = useState(amount - fee);
@@ -44,7 +44,7 @@ const ConfirmTransaction = () => {
     const tuition = localStorage.getItem("tuition");
     if (!tuition) return alert("Tuition form not filled");
     const tuitionObj = JSON.parse(tuition);
-    await postMethod(
+    const tuitionData = await postMethod(
       "/wallet/submit-tuition",
       { ...tuitionObj, amountPaid: amount, finalAmount },
       AxiosType.Main,
@@ -61,7 +61,7 @@ const ConfirmTransaction = () => {
         sendAddress: userWallet.walletAddress,
         receiverAddress: wallet,
         amount: finalAmount.toString(),
-        tuition: true,
+        tuition: tuitionData,
       },
       AxiosType.Main,
       token,

@@ -1,7 +1,7 @@
 {
   "theme_color": "#146f0e",
   "background_color": "#ae5b35",
-  "display": "browser",
+  "display": "standalone",
   "scope": "/",
   "start_url": ".",
   "name": "SFx",

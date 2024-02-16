@@ -47,7 +47,7 @@ const KYC = () => {
   };
 
   return (
-    <main className="relative mobile-screen space-y-8 bg-black">
+    <main className="relative mobile-screen px-0 space-y-8 bg-black">
       <div className="w-full border-b border-[#e9ebd94d]">
         <button
           className=" bg-transparent inline-flex text-[#55BB6C] gap-3 hover:border-black"
@@ -58,7 +58,7 @@ const KYC = () => {
         </button>
       </div>
 
-      <div className="flex flex-col space-y-4 w-full">
+      <div className="flex flex-col px-4 space-y-4 w-full">
         <div className="p-4 rounded-xl bg-[#045725] w-full space-y-2">
           <p className="text-sm">
             Complete your Tier 1 KYC to start transacting

@@ -35,6 +35,12 @@ const Settings = () => {
     })();
   }, []);
 
+  const signout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    navigate("/auth");
+  };
+
   return (
     <main className=" relative mobile-screen px-0 bg-[#161817] text-white">
       <div className="border-b border-[#D4B998] pt-5 bg-black">
@@ -113,7 +119,10 @@ const Settings = () => {
             <QuestionMarkCircleIcon className="h-6" />
             <p className="font-normal">About</p>
           </button>
-          <button className="inline-flex space-x-2 bg-transparent">
+          <button
+            className="inline-flex space-x-2 bg-transparent"
+            onClick={signout}
+          >
             <ArrowRightOnRectangleIcon className="h-6" />
             <p className="font-normal">Sign out</p>
           </button>

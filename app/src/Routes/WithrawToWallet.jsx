@@ -201,6 +201,15 @@ const WithdrawToWallet = () => {
           <p className="flex-none text-xs text-center text-[#C4A383]">
             {`Available balance: ${selected.value}`}
           </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Minimum withdrawal: ${minimumAmount} USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Fee: 2 USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#336D21]">
+            {`Arrival time: 2 mins`}
+          </p>
 
           {validated && (
             <div className="p-4 text-xs bg-blend-hard-light border rounded-lg w-fit inline-flex mx-auto">

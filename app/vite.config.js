@@ -39,7 +39,6 @@ export default {
         theme_color: "#146f0e",
         background_color: "#ae5b35",
         display: "standalone",
-        name: "SFx",
         short_name: "SFx",
         description: "The money platform for African expats",
       },

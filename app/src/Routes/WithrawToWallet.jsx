@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
-import { mockTransactions } from "../utils/mockData";
-
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay, filterMarker } from "../utils/utilityFunctions";
@@ -12,11 +10,8 @@ import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import {QrScanner} from '@yudiel/react-qr-scanner';
 
-const mockAsset = mockTransactions.Wallets;
-
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
-  const [assets] = useState(mockAsset);
   const minimumAmount = 5;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
@@ -205,6 +200,15 @@ const WithdrawToWallet = () => {
           </div>
           <p className="flex-none text-xs text-center text-[#C4A383]">
             {`Available balance: ${selected.value}`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Minimum withdrawal: ${minimumAmount} USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Fee: 2 USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#336D21]">
+            {`Arrival time: 2 mins`}
           </p>
 
           {validated && (

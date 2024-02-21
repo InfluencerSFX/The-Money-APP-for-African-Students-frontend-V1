@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
-import { mockTransactions } from "../utils/mockData";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 import { filterMarker } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
 
-const mockAsset = mockTransactions.Wallets[0];
-
 const AssetDetail = () => {
   const navigate = useNavigate();
-  // const [asset] = useState(mockAsset);
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   const searchParams = new URLSearchParams(document.location.search);

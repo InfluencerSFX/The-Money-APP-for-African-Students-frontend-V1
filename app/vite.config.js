@@ -9,18 +9,38 @@ export default {
       manifest: {
         icons: [
           {
-            src: "/images/512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
-          {
-            src: "/images/pwa-apple-icon-512.png",
+            src: "/apple-touch-icon.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "apple-touch-icon",
           },
+          {
+            src: "/icon-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "/icon-256x256.png",
+            sizes: "256x256",
+            type: "image/png",
+          },
+          {
+            src: "/icon-384x384.png",
+            sizes: "384x384",
+            type: "image/png",
+          },
+          {
+            src: "/icon-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
         ],
+        name: "SFx",
+        theme_color: "#146f0e",
+        background_color: "#ae5b35",
+        display: "standalone",
+        short_name: "SFx",
+        description: "The money platform for African expats",
       },
       workbox: {
         runtimeCaching: [

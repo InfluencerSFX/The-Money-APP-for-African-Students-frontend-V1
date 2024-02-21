@@ -1,26 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import AssetCard from "../Components/AssetCard";
-import { mockTransactions } from "../utils/mockData";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
 import { delay, filterMarker } from "../utils/utilityFunctions";
-import AssetModal from "../Components/AssetModal";
-import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-
-const mockAsset = mockTransactions.Wallets;
 
 const AmountInput = () => {
   const navigate = useNavigate();
-  const minimumAmount = 5;
+  const minimumAmount = 6;
   const [amount, setAmount] = useState(minimumAmount.toFixed(2));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [assets] = useState(mockAsset);
-  // const [selected, setSelected] = useState(assets[0]);
 
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
@@ -113,8 +104,18 @@ const AmountInput = () => {
             />
             <span className="text-sm my-auto">{selected.marker}</span>
           </div>
-          <p className="flex-none text-xs text-center text-[#C4A383]">
+
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
             {`Available balance: ${selected.value}`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Minimum withdrawal: ${minimumAmount} USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#C4A383]">
+            {`Fee: 2 USDT`}
+          </p>
+          <p className="flex-none text-xs text-center mb-1 text-[#336D21]">
+            {`Arrival time: 2 mins`}
           </p>
 
           {error.length > 0 && (

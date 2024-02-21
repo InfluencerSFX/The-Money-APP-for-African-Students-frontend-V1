@@ -1,13 +1,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import AssetCard from "./AssetCard";
-import { mockTransactions } from "../utils/mockData";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import PartnerCard from "./PartnerCard";
 import { filterMarker } from "../utils/utilityFunctions";
 
 const FundModal = ({ isOpen, setIsOpen }) => {
-  const [providers] = useState(mockTransactions.Wallets);
   const [wallets, setWallets] = useState([]);
   const [userDetails, setUser] = useState(null);
   const [balances, setBalances] = useState();

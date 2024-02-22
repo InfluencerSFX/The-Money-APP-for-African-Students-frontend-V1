@@ -15,7 +15,9 @@ const ConfirmTransaction = () => {
   const navigate = useNavigate();
 
   const [commission] = useState(2);
-  const [wallet] = useState("TYduRhBwZcSZ26K9thBanjiLLHNZFaWf8W");
+  // const [wallet] = useState("TYduRhBwZcSZ26K9thBanjiLLHNZFaWf8W");
+  const [wallet] = useState("0x7d45ff6af69b9882e9ffb1823046fda94951f7bf");
+  // 0x7d45ff6af69b9882e9ffb1823046fda94951f7bf
   const [amount] = useState(location.state.amount);
   const [fee] = useState((commission * amount) / 100);
   const [finalAmount] = useState(amount - fee);

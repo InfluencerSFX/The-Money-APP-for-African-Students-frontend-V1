@@ -8,7 +8,7 @@ import { delay, filterMarker } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-import QrScanner from "../Components/QrScanner";
+import {QrScanner} from '@yudiel/react-qr-scanner';
 
 const WithdrawToWallet = () => {
   const navigate = useNavigate();
@@ -245,7 +245,9 @@ const WithdrawToWallet = () => {
 
           {validated && (
             <div>
-              <QrScanner setScanWalletAddress={setWalletAddress} />
+              {walletAddress ==="" && <QrScanner 
+                     onDecode={(result) => setWalletAddress(result)}
+                     onError={(error) => console.log(error?.message)}/> }
             </div>
           )}
         </div>

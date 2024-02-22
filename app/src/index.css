@@ -65,6 +65,16 @@ a:hover {
 .test-color {
   color: #5758585d;
 }
+.qr-scanner svg{
+  /* position: relative !important; */
+  display: none;
+}   
+
+.qr-scanner video{
+  /* position: relative !important; */
+  object-fit: fill;
+}   
+
 
 .asset-btn {
   background: linear-gradient(

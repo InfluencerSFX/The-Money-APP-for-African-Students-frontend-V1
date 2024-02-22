@@ -244,10 +244,14 @@ const WithdrawToWallet = () => {
           )}
 
           {validated && (
-            <div>
+            <div className="qr-scanner"> 
               {walletAddress ==="" && <QrScanner 
                      onDecode={(result) => setWalletAddress(result)}
-                     onError={(error) => console.log(error?.message)}/> }
+                     onError={(error) => console.log(error?.message)}
+                     videoStyle={{height: '60%' }}
+                     audio = {false}
+                     /> }
+                    
             </div>
           )}
         </div>

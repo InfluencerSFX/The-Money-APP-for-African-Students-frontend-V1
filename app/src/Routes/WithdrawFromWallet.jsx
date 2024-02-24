@@ -36,7 +36,7 @@ const WithdrawFromWallet = () => {
         partnerLogoUrl: obj["partnerLogoUrl"],
         partnerThemeColor: obj["partnerThemeColor"].slice(1),
         fiatAmount: "15000",
-        selectedAsset: "tron_usdt",
+        selectedAsset: "bsc_usdt",
         userEmailAddress: user?.email,
         walletAddress: wallet.walletAddress,
         webhookStatusUrl: `${env.VITE_SFX_BACKEND_BASE_URL}/wallet/paychant-webhook`,

@@ -66,9 +66,13 @@ export default function Transact() {
           status: tx.transactionStatus,
           amount: tx.amount,
           asset:
-            user?.email === tx.senderEmail
-              ? tx.senderWallet?.asset?.[0]
-              : tx.receiverWallet?.asset?.[0],
+            tx.transactionType === "Tuition" || tx.transactionType === "P2P"
+              ? "USDT"
+              : "USDC",
+          // asset:
+          //   user?.email === tx.senderEmail
+          //     ? tx.senderWallet?.asset?.[0]
+          //     : tx.receiverWallet?.asset?.[0],
         }));
         console.log(userTxs);
         setWallets(userWallets);

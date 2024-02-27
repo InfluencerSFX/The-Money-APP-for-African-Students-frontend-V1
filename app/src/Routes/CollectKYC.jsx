@@ -13,6 +13,7 @@ function CollectKYC() {
           { value: "NG", label: "Nigeria" },
           { value: "TZ", label: "Tanzania" },
           { value: "GH", label: "Ghana" },
+          { value: "CM", label: "Cameroon" },
           { value: "KE", label: "Kenya" },
           { value: "RW", label: "Rwanda" },
           { value: "ZA", label: "South Africa" },

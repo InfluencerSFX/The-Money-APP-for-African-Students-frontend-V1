@@ -21,6 +21,7 @@ const Settings = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   const navigate = useNavigate();
   const location = useLocation();
+  const [deferredPrompt, setDeferredPrompt] = useState();
 
   const [userDetails, setUser] = useState(null);
   useEffect(() => {
@@ -40,6 +41,24 @@ const Settings = () => {
     localStorage.removeItem("refreshToken");
     navigate("/auth");
   };
+
+  const handleInstallPrompt = () => {
+    deferredPrompt.prompt();
+
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult) => {
+      setDeferredPrompt(null);
+    });
+  };
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "BeforeInstallPromptEvent" in window) {
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        setDeferredPrompt(event);
+      });
+    }
+  }, []);
 
   return (
     <main className=" relative mobile-screen px-0 bg-[#161817] text-white">
@@ -107,7 +126,10 @@ const Settings = () => {
             <BookOpenIcon className="h-6" />
             <p className="font-normal">Frequently asked questions</p>
           </button>
-          <button className="inline-flex space-x-2 bg-transparent">
+          <button
+            className="inline-flex space-x-2 bg-transparent"
+            onClick={() => handleInstallPrompt()}
+          >
             <ArrowTopRightOnSquareIcon className="h-6" />
             <p className="font-normal">Add App to home screen</p>
           </button>

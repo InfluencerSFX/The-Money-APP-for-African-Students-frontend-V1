@@ -64,6 +64,22 @@ const Dashboard = () => {
     })();
   }, []);
 
+  // install pop-up
+  useEffect(() => {
+    if ("serviceWorker" in navigator && "BeforeInstallPromptEvent" in window) {
+      window.addEventListener("load", () => {
+        // Wait for the beforeinstallprompt event
+        window.addEventListener("beforeinstallprompt", (event) => {
+          // Prevent the default "Add to Home Screen" prompt
+          event.preventDefault();
+
+          // Automatically show the "Add to Home Screen" prompt on page load
+          event.prompt();
+        });
+      });
+    }
+  }, []);
+
   const [showBalance, setShowBalance] = useState(false);
   const [openFundModal, setOpenFundModal] = useState(false);
   return (

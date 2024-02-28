@@ -31,6 +31,7 @@ const CardBody = ({ asset, dropdown }) => {
   const networkDisplay = {
     TRON: "TRC20",
     BSC: "BEP20",
+    POLYGON: "POLYGON",
   };
 
   return (

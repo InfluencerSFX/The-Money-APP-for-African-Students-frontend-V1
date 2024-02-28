@@ -88,11 +88,25 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <PartnerCard
                     partner={"Paychant"}
                     email={userDetails?.email}
-                    wallet={userDetails?.wallets?.find((w) =>
-                      w.asset.includes("USDT")
+                    wallet={userDetails?.wallets?.find(
+                      (w) => w.blockchain === "BSC" && w.asset.includes("USDT")
                     )}
                     action="buy"
                   />
+                  {userDetails?.wallets?.find(
+                    (w) =>
+                      w.blockchain === "Polygon" && w.asset.includes("USDT")
+                  ) && (
+                    <PartnerCard
+                      partner={"NGNC"}
+                      email={userDetails?.email}
+                      wallet={userDetails?.wallets?.find(
+                        (w) =>
+                          w.blockchain === "Polygon" && w.asset.includes("USDT")
+                      )}
+                      action="buy"
+                    />
+                  )}
                 </section>
                 <Dialog.Title
                   as="h3"
@@ -108,11 +122,25 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                   <PartnerCard
                     partner={"Paychant"}
                     email={userDetails?.email}
-                    wallet={userDetails?.wallets?.find((w) =>
-                      w.asset.includes("USDT")
+                    wallet={userDetails?.wallets?.find(
+                      (w) => w.blockchain === "BSC" && w.asset.includes("USDT")
                     )}
                     action="sell"
                   />
+                  {userDetails?.wallets?.find(
+                    (w) =>
+                      w.blockchain === "Polygon" && w.asset.includes("USDT")
+                  ) && (
+                    <PartnerCard
+                      partner={"NGNC"}
+                      email={userDetails?.email}
+                      wallet={userDetails?.wallets?.find(
+                        (w) =>
+                          w.blockchain === "Polygon" && w.asset.includes("USDT")
+                      )}
+                      action="sell"
+                    />
+                  )}
                 </section>
               </Dialog.Panel>
             </Transition.Child>

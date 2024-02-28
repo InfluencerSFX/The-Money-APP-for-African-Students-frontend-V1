@@ -53,12 +53,14 @@ const ConfirmTransaction = () => {
       token,
       refreshToken
     );
-    const userWallet = user?.wallets?.find((w) => w.asset.includes("USDT"));
+    const userWallet = user?.wallets?.find(
+      (w) => w.blockchain === "BSC" && w.asset.includes("USDT")
+    );
     console.log(userWallet);
     console.log(finalAmount);
     console.log(wallet);
     const data = await postMethod(
-      "/wallet/send-usdt",
+      "/wallet/send-bsc-usdt",
       {
         sendAddress: userWallet.walletAddress,
         receiverAddress: wallet,

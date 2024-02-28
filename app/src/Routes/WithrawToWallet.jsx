@@ -100,21 +100,38 @@ const WithdrawToWallet = () => {
 
   const handleTransaction = async () => {
     setLoading(true);
-    if (selected.marker !== "USDT") return;
     console.log(walletAddress);
     console.log(selected);
     console.log(amount);
-    const data = await postMethod(
-      "/wallet/send-usdt",
-      {
-        sendAddress: selected.contract_address,
-        receiverAddress: walletAddress,
-        amount: amount.toString(),
-      },
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    let data;
+    if (selected.network_name === "BSC" && selected.marker === "USDT") {
+      data = await postMethod(
+        "/wallet/send-bsc-usdt",
+        {
+          sendAddress: selected.contract_address,
+          receiverAddress: walletAddress,
+          amount: amount.toString(),
+        },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+    } else if (
+      selected.network_name === "Polygon" &&
+      selected.marker === "USDT"
+    ) {
+      data = await postMethod(
+        "/wallet/send-polygon-usdt",
+        {
+          sendAddress: selected.contract_address,
+          receiverAddress: walletAddress,
+          amount: amount.toString(),
+        },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+    } else return;
     console.log(data);
 
     if (data?.txId) {

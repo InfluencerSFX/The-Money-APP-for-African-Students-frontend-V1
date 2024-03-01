@@ -1,7 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Bridge from "@ngnc/bridge";
 import { useEffect } from "react";
 import { AxiosType, postMethod } from "../api/axios";
 import { paramsToObject } from "../utils/utilityFunctions";
@@ -67,36 +66,10 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
       },
     }).openWindow();
   }
-  async function ngncFund() {
-    if (action === "sell")
-      return window.open(`/withdraw-from-wallet?partner=ngnc`, "_blank");
-    const ngncBuy = new Bridge({
-      key: env.VITE_NGNC_PUBLIC_KEY,
-      type: action,
-      data: {
-        amount: `15000`,
-        network: "Polygon",
-        wallet_address: wallet.walletAddress,
-      },
-      onSuccess: (response) => console.log("SUCCESS", response),
-      onLoad: () => console.log("Bridge widget loaded successfully"),
-      onEvent: (eventName, eventDetail) => {
-        console.log("EVENT_NAME", eventName);
-        console.log("EVENT_DETAIL", eventDetail);
-      },
-      onClose: () => console.log("Bridge widget has been closed"),
-    });
-    ngncBuy.setup();
-    ngncBuy.open();
-  }
-  const func = {
-    NGNC: ngncFund,
-    Paychant: paychantFund,
-  };
 
   return (
     <div
-      onClick={func[partner]}
+      onClick={paychantFund}
       className="flex justify-between w-full p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d] cursor-pointer"
     >
       <CardBody partner={partner} />

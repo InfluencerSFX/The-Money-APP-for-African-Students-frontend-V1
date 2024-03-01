@@ -46,27 +46,6 @@ const WithdrawFromWallet = () => {
     }).openWindow();
   }
 
-  async function ngncWithdraw(wallet) {
-    const ngncSell = new Bridge({
-      key: env.VITE_NGNC_PUBLIC_KEY,
-      type: "sell",
-      data: {
-        amount: `15000`,
-        network: "Polygon",
-        wallet_address: wallet.walletAddress,
-      },
-      onSuccess: (response) => console.log("SUCCESS", response),
-      onLoad: () => console.log("Bridge widget loaded successfully"),
-      onEvent: (eventName, eventDetail) => {
-        console.log("EVENT_NAME", eventName);
-        console.log("EVENT_DETAIL", eventDetail);
-      },
-      onClose: () => console.log("Bridge widget has been closed"),
-    });
-    ngncSell.setup();
-    ngncSell.open();
-  }
-
   useEffect(() => {
     (async () => {
       const user = await getMethod(
@@ -76,11 +55,7 @@ const WithdrawFromWallet = () => {
         refreshToken
       );
       setUser(user);
-      const wallet = user?.wallets?.find(
-        (w) => w.blockchain === "Polygon" && w.asset.includes("USDT")
-      );
-      if (partner === "paychant") await paychantWithdraw(user);
-      else await ngncWithdraw(wallet);
+      await paychantWithdraw(user);
     })();
   }, []);
   return <div></div>;

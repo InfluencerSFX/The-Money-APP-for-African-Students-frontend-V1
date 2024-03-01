@@ -3,8 +3,6 @@ const envDev = {
   VITE_YUKI_BACKEND_BASE_URL: "http://localhost:2000",
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "localhost",
-  VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_2e5a4ccaae4ec70ba5d471fda98724093526aecbd0183c443de256032275b0e3",
 };
 
 const envTest = {
@@ -12,8 +10,6 @@ const envTest = {
   VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfx.vercel.app",
-  VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_2e5a4ccaae4ec70ba5d471fda98724093526aecbd0183c443de256032275b0e3",
 };
 
 const envProd = {
@@ -21,8 +17,6 @@ const envProd = {
   VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfxchange.app",
-  VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_2e5a4ccaae4ec70ba5d471fda98724093526aecbd0183c443de256032275b0e3",
 };
 
 export const env =

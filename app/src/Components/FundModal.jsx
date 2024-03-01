@@ -93,20 +93,6 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     )}
                     action="buy"
                   />
-                  {userDetails?.wallets?.find(
-                    (w) =>
-                      w.blockchain === "Polygon" && w.asset.includes("USDT")
-                  ) && (
-                    <PartnerCard
-                      partner={"NGNC"}
-                      email={userDetails?.email}
-                      wallet={userDetails?.wallets?.find(
-                        (w) =>
-                          w.blockchain === "Polygon" && w.asset.includes("USDT")
-                      )}
-                      action="buy"
-                    />
-                  )}
                 </section>
                 <Dialog.Title
                   as="h3"
@@ -127,20 +113,6 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     )}
                     action="sell"
                   />
-                  {userDetails?.wallets?.find(
-                    (w) =>
-                      w.blockchain === "Polygon" && w.asset.includes("USDT")
-                  ) && (
-                    <PartnerCard
-                      partner={"NGNC"}
-                      email={userDetails?.email}
-                      wallet={userDetails?.wallets?.find(
-                        (w) =>
-                          w.blockchain === "Polygon" && w.asset.includes("USDT")
-                      )}
-                      action="sell"
-                    />
-                  )}
                 </section>
               </Dialog.Panel>
             </Transition.Child>

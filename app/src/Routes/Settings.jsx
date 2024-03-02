@@ -13,6 +13,7 @@ import {
 import RecoveryModal from "../Components/RecoveryModal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosType, getMethod } from "../api/axios";
+import ATHSModal from "../Components/ATHSModal";
 
 const Settings = () => {
   const [backedUp, setBackedUp] = useState(true);
@@ -21,8 +22,7 @@ const Settings = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   const navigate = useNavigate();
   const location = useLocation();
-  const [deferredPrompt, setDeferredPrompt] = useState();
-
+  const [showAddToHomeScreen, setShowAddToHomeScreen] = useState(false);
   const [userDetails, setUser] = useState(null);
   useEffect(() => {
     (async () => {
@@ -43,12 +43,7 @@ const Settings = () => {
   };
 
   const handleInstallPrompt = () => {
-    deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult) => {
-      setDeferredPrompt(null);
-    });
+    setShowAddToHomeScreen(true);
   };
 
   useEffect(() => {
@@ -154,6 +149,11 @@ const Settings = () => {
         isOpen={openModal}
         setIsOpen={setOpenModal}
         email={userDetails?.email}
+      />
+      <ATHSModal
+        isOpen={showAddToHomeScreen}
+        setIsOpen={setShowAddToHomeScreen}
+        useEffectTriggered={false}
       />
     </main>
   );

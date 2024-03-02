@@ -10,6 +10,7 @@ import VerifyEmail from "../Components/VefityEmail";
 import CompleteKYC from "../Components/CompleteKYC";
 import Transact from "../Components/Transact";
 import FundModal from "../Components/FundModal";
+import ATHSModal from "../Components/ATHSModal";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { getBalance } from "../utils/utilityFunctions";
@@ -23,6 +24,8 @@ const Dashboard = () => {
   const [userDetails, setUser] = useState(null);
   const [balances, setBalances] = useState();
   const [liraRate, setLiraRate] = useState(0);
+  const [showAddToHomeScreen, setShowAddToHomeScreen] = useState(false);
+
   useEffect(() => {
     (async () => {
       const data = await getMethod(
@@ -64,20 +67,11 @@ const Dashboard = () => {
     })();
   }, []);
 
-  // install pop-up
   useEffect(() => {
-    if ("serviceWorker" in navigator && "BeforeInstallPromptEvent" in window) {
-      window.addEventListener("load", () => {
-        // Wait for the beforeinstallprompt event
-        window.addEventListener("beforeinstallprompt", (event) => {
-          // Prevent the default "Add to Home Screen" prompt
-          event.preventDefault();
-
-          // Automatically show the "Add to Home Screen" prompt on page load
-          event.prompt();
-        });
-      });
+    if (!localStorage.getItem("guide-seen")) {
+      setShowAddToHomeScreen(true);
     }
+    localStorage.setItem("guide-seen", true);
   }, []);
 
   const [showBalance, setShowBalance] = useState(false);
@@ -194,6 +188,11 @@ const Dashboard = () => {
         {/* </button> */}
       </footer>
       <FundModal isOpen={openFundModal} setIsOpen={setOpenFundModal} />
+      <ATHSModal
+        isOpen={showAddToHomeScreen}
+        setIsOpen={setShowAddToHomeScreen}
+        useEffectTriggered={true}
+      />
     </main>
   );
 };

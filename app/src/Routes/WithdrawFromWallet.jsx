@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { paramsToObject } from "../utils/utilityFunctions";
 import { env } from "../utils/env";
 
 const WithdrawFromWallet = () => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   const searchParams = new URLSearchParams(document.location.search);
@@ -38,7 +40,7 @@ const WithdrawFromWallet = () => {
       walletAddress: wallet.walletAddress,
       webhookStatusUrl: `${env.VITE_SFX_BACKEND_BASE_URL}/wallet/paychant-webhook`,
       callback: {
-        onClose: function () {},
+        onClose: () => window.close(),
         onStatus: function (txStatus) {
           console.log("txStatus", txStatus);
         },
@@ -61,7 +63,7 @@ const WithdrawFromWallet = () => {
         console.log("EVENT_NAME", eventName);
         console.log("EVENT_DETAIL", eventDetail);
       },
-      onClose: () => console.log("Bridge widget has been closed"),
+      onClose: () => window.close(),
     });
     ngncWidget.setup();
     ngncWidget.open();

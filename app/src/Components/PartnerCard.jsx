@@ -12,16 +12,16 @@ const CardBody = ({ partner }) => {
     (async () => {})();
   }, []);
 
+  const images = {
+    Paychant:
+      "https://res.cloudinary.com/dow1kghsa/image/upload/v1707139648/paychant_tywdri.png",
+    NGNC: "https://res.cloudinary.com/dow1kghsa/image/upload/v1709646487/ngng-link_yotzcx.png",
+  };
+
   return (
     <>
       <div className={`flex flex-row gap-3`}>
-        <img
-          className={"basis-1/5 h-7 my-auto"}
-          src={
-            "https://res.cloudinary.com/dow1kghsa/image/upload/v1707139648/paychant_tywdri.png"
-          }
-          alt=""
-        />
+        <img className={"basis-1/5 h-7 my-auto"} src={images[partner]} alt="" />
         <div className="space-y-1">
           <p className="text-md text-start text-[#C4A383]">{partner}</p>
         </div>
@@ -71,11 +71,12 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
   async function ngncBuy() {
     if (action === "sell")
       return window.open(`/withdraw-from-wallet?partner=ngnc`, "_blank");
+    const amount = prompt("Enter amount to buy in NGN: ");
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: action,
       data: {
-        amount: `15000`,
+        amount,
         network: "Polygon",
         wallet_address: wallet.walletAddress,
       },

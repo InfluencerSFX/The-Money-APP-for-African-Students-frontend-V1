@@ -66,9 +66,10 @@ export default function Transact() {
           status: tx.transactionStatus,
           amount: tx.amount,
           asset:
-            tx.transactionType === "Tuition" || tx.transactionType === "P2P"
+            tx.asset ||
+            (tx.transactionType === "Tuition" || tx.transactionType === "P2P"
               ? "USDT"
-              : "USDC",
+              : "USDC"),
           // asset:
           //   user?.email === tx.senderEmail
           //     ? tx.senderWallet?.asset?.[0]

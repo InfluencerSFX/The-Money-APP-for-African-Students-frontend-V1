@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AxiosType, getMethod } from "../api/axios";
-import { Codes } from "../utils/utilityFunctions";
+import { BVN, Codes } from "../utils/utilityFunctions";
 import Spinner from "./Spinner";
 
 const CompleteVerification = () => {
@@ -20,6 +20,18 @@ const CompleteVerification = () => {
       setUser(user);
     })();
   }, []);
+  const displayBVN = () => {
+    if (!userDetails?.bvn)
+      return <p className="text-xs text-[#CEC6BD]">BVN Not Verified</p>;
+    else if (userDetails?.bvn?.code === Codes.Processing)
+      return (
+        <p className="text-xs text-[#CEC6BD]">BVN Verification Processing</p>
+      );
+    else if (userDetails?.bvn?.bvn && userDetails?.bvn?.code === Codes.Success)
+      return <p className="text-xs text-[#CEC6BD]">BVN Verified</p>;
+    else
+      return <p className="text-xs text-[#CEC6BD]">BVN Verification Failed</p>;
+  };
   const display = () => {
     if (!userDetails)
       return (
@@ -32,6 +44,7 @@ const CompleteVerification = () => {
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Processing</p>
           <p className="text-xs text-[#CEC6BD]">Verification Processing</p>
+          {displayBVN()}
         </div>
       );
     } else if (!userDetails?.tier || userDetails?.tier?.level === 0) {
@@ -41,6 +54,7 @@ const CompleteVerification = () => {
           <p className="text-xs text-[#CEC6BD]">
             Complete your Verification to start transacting
           </p>
+          {displayBVN()}
         </div>
       );
     } else if (
@@ -51,6 +65,7 @@ const CompleteVerification = () => {
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Verified</p>
           <p className="text-xs text-[#CEC6BD]">Upgrade to Tier 2</p>
+          {displayBVN()}
         </div>
       );
     } else if (
@@ -61,6 +76,7 @@ const CompleteVerification = () => {
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Upgraded</p>
           <p className="text-xs text-[#CEC6BD]">Upgraded to Tier 2</p>
+          {displayBVN()}
         </div>
       );
     } else {
@@ -68,6 +84,7 @@ const CompleteVerification = () => {
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#6d2121]">Error, Try again</p>
           <p className="text-xs text-[#CEC6BD]">{userDetails?.tier?.message}</p>
+          {displayBVN()}
         </div>
       );
     }

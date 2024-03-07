@@ -7,6 +7,10 @@ function CollectKYC() {
   const searchParams = new URLSearchParams(document.location.search);
   const tier = searchParams.get("tier");
 
+  const [bvn, setBvn] = useState("");
+  const [dob, setDob] = useState(new Date().toISOString().split("T")[0]);
+  const [phoneNumber, setPhoneNumber] = useState("");
+
   const countries =
     tier == 1
       ? [
@@ -58,6 +62,17 @@ function CollectKYC() {
     navigate("/account");
   };
 
+  const verifyBvn = async () => {
+    const result = await postMethod(
+      "/kyc/verify-bvn",
+      { id_number: bvn, dob, phone_number: phoneNumber },
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    setSelected(true);
+  };
+
   useEffect(() => {
     if (selected) {
       const app = document.querySelector("smart-camera-web");
@@ -70,14 +85,14 @@ function CollectKYC() {
   }, [selected]);
 
   return selected ? (
-    <main className="px-0 mobile-screen space-y-8 flex flex-col justify-center">
+    <main className="px-2 mobile-screen space-y-8 flex flex-col justify-center">
       <smart-camera-web
         capture-id
         document-capture-modes="camera,upload"
       ></smart-camera-web>
     </main>
   ) : (
-    <main className="px-0 mobile-screen space-y-8 flex flex-col justify-center">
+    <main className="px-2 mobile-screen space-y-8 flex flex-col justify-center">
       <h3 className="font-bold">Select your country and ID type</h3>
       <div className="flex space-x-2">
         <select
@@ -101,7 +116,41 @@ function CollectKYC() {
           ))}
         </select>
       </div>
-      <button onClick={() => setSelected(true)}>Continue</button>
+      {countrySelected === "NG" && (
+        <div className="space-y-2">
+          <div className="grid grid-cols-1 space-y-2 md:grid-cols-2 md:space-y-0">
+            <div className="form-style form-validation">
+              <input
+                type="string"
+                className="rounded font-medium text-start bg-transparent placeholder:text-gray-600"
+                value={bvn}
+                placeholder="BVN"
+                onChange={(e) => setBvn(e.target.value)}
+              />
+            </div>
+            <div className="form-style form-validation">
+              <input
+                type="string"
+                className="rounded font-medium text-start bg-transparent placeholder:text-gray-600"
+                value={phoneNumber}
+                placeholder="Phone number"
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="form-style form-validation">
+            <input
+              type="date"
+              format="yyyy-mm-dd"
+              className="text-white bg-green-500"
+              value={dob}
+              placeholder="DOB"
+              onChange={(e) => setDob(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
+      <button onClick={() => verifyBvn()}>Continue</button>
     </main>
   );
 }

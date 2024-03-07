@@ -40,6 +40,11 @@ export const Codes = {
   Success: "0810",
 };
 
+export const BVN = {
+  Failed: "Failed",
+  Processing: "Processing",
+};
+
 export const getBalance = (bal) => {
   let sum = 0;
   for (const chain in bal) {

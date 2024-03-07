@@ -49,11 +49,12 @@ const WithdrawFromWallet = () => {
   }
 
   async function ngncWithdraw(wallet) {
+    const amount = prompt("Enter amount to sell in NGN: ");
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: "sell",
       data: {
-        amount: `15000`,
+        amount,
         network: "Polygon",
         wallet_address: wallet.walletAddress,
       },

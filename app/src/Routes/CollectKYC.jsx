@@ -138,7 +138,8 @@ function CollectKYC() {
               />
             </div>
           </div>
-          <div className="form-style form-validation">
+          <div className="form-style form-validation flex-col flex">
+            <label className="">Date of Birth</label>
             <input
               type="date"
               format="yyyy-mm-dd"
@@ -150,7 +151,9 @@ function CollectKYC() {
           </div>
         </div>
       )}
-      <button onClick={() => verifyBvn()}>Continue</button>
+      <button onClick={() => verifyBvn()} className="bg-green-500">
+        Continue
+      </button>
     </main>
   );
 }

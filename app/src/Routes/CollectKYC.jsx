@@ -28,16 +28,20 @@ function CollectKYC() {
           { value: "TR", label: "Turkey" },
           { value: "CY", label: "Cyprus" },
         ];
+  const [countrySelected, setCountrySelected] = useState(countries[0].value);
+
   const [selected, setSelected] = useState(false);
   const ids =
     tier == 1
-      ? [{ value: "PASSPORT", label: "Passport" }]
+      ? [
+          { value: "PASSPORT", label: "Passport" },
+          countrySelected === "NG" ? { value: "BVN", label: "BVN" } : null,
+        ].filter((id) => id !== null)
       : [
           { value: "DRIVERS_LICENSE", label: "Driving License" },
           { value: "RESIDENT_ID", label: "Residence Permit" },
           { value: "WORK_PERMIT", label: "Work Permit" },
         ];
-  const [countrySelected, setCountrySelected] = useState(countries[0].value);
   const [idSelected, setIdSelected] = useState(ids[0].value);
 
   const token = localStorage.getItem("token");
@@ -63,14 +67,26 @@ function CollectKYC() {
   };
 
   const verifyBvn = async () => {
-    const result = await postMethod(
-      "/kyc/verify-bvn",
-      { id_number: bvn, dob, phone_number: phoneNumber },
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
-    setSelected(true);
+    if (idSelected === "BVN") {
+      if (!bvn.match("^[0-9]{11}$")) {
+        alert("Invalid BVN Value");
+        return;
+      }
+      if (!phoneNumber.match("^[0-9]{10}$")) {
+        alert("Invalid Phone Number");
+        return;
+      }
+      const result = await postMethod(
+        "/kyc/verify-bvn",
+        { id_number: bvn, dob, phone_number: phoneNumber },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+      navigate("/account");
+    } else {
+      setSelected(true);
+    }
   };
 
   useEffect(() => {
@@ -116,7 +132,8 @@ function CollectKYC() {
           ))}
         </select>
       </div>
-      {countrySelected === "NG" && (
+
+      {idSelected === "BVN" && (
         <div className="space-y-2">
           <div className="grid grid-cols-1 space-y-2 md:grid-cols-2 md:space-y-0">
             <div className="form-style form-validation">
@@ -124,6 +141,7 @@ function CollectKYC() {
                 type="string"
                 className="rounded font-medium text-start bg-transparent placeholder:text-gray-600"
                 value={bvn}
+                pattern="^[0-9]{11}$"
                 placeholder="BVN"
                 onChange={(e) => setBvn(e.target.value)}
               />
@@ -133,12 +151,14 @@ function CollectKYC() {
                 type="string"
                 className="rounded font-medium text-start bg-transparent placeholder:text-gray-600"
                 value={phoneNumber}
+                pattern="^[0-9]{10}$"
                 placeholder="Phone number"
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
           </div>
-          <div className="form-style form-validation">
+          <div className="form-style form-validation flex-col flex">
+            <label className="">Date of Birth</label>
             <input
               type="date"
               format="yyyy-mm-dd"
@@ -150,7 +170,10 @@ function CollectKYC() {
           </div>
         </div>
       )}
-      <button onClick={() => verifyBvn()}>Continue</button>
+
+      <button onClick={() => verifyBvn()} className="bg-green-500">
+        Continue
+      </button>
     </main>
   );
 }

@@ -170,10 +170,6 @@ function CollectKYC() {
           </div>
         </div>
       )}
-<<<<<<< HEAD
-=======
-
->>>>>>> development
       <button onClick={() => verifyBvn()} className="bg-green-500">
         Continue
       </button>

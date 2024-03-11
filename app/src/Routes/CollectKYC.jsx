@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "@smile_identity/smart-camera-web";
+import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css";
 import { AxiosType, postMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -49,6 +51,7 @@ function CollectKYC() {
   const navigate = useNavigate();
 
   const handleImagesComputed = async (e) => {
+    M.toast({ html: "Sending docs" });
     const result = await postMethod(
       "/kyc/verify-docs",
       {
@@ -63,6 +66,7 @@ function CollectKYC() {
       token,
       refreshToken
     );
+    M.toast({ html: "Done sending docs" });
     navigate("/account");
   };
 
@@ -90,11 +94,15 @@ function CollectKYC() {
   };
 
   useEffect(() => {
+    M.AutoInit();
     if (selected) {
       const app = document.querySelector("smart-camera-web");
+      console.log("enabled");
+      M.toast({ html: "Images enabled" });
       app.addEventListener("imagesComputed", handleImagesComputed);
 
       return () => {
+        M.toast({ html: "Images disabled" });
         app.removeEventListener("imagesComputed", handleImagesComputed);
       };
     }

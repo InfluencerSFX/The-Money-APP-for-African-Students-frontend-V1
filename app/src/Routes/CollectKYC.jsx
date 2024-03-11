@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "@smile_identity/smart-camera-web";
-import "materialize-css/dist/css/materialize.min.css";
-import M from "materialize-css";
 import { AxiosType, postMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import Snackbar from "../Components/Snackbar";
 
 function CollectKYC() {
   const searchParams = new URLSearchParams(document.location.search);
@@ -51,7 +50,7 @@ function CollectKYC() {
   const navigate = useNavigate();
 
   const handleImagesComputed = async (e) => {
-    M.toast({ html: "Sending docs" });
+    show("Sending docs");
     const result = await postMethod(
       "/kyc/verify-docs",
       {
@@ -66,7 +65,7 @@ function CollectKYC() {
       token,
       refreshToken
     );
-    M.toast({ html: "Done sending docs" });
+    show("Done sending docs");
     navigate("/account");
   };
 
@@ -93,16 +92,30 @@ function CollectKYC() {
     }
   };
 
+  function show(message) {
+    // Get the snackbar DIV
+    const x = document.getElementById("snackbar");
+
+    // Add the "show" class to DIV
+    x.textContent = message;
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+      x.className = "snackbar";
+    }, 3000);
+  }
+
   useEffect(() => {
-    M.AutoInit();
+    // M.AutoInit();
     if (selected) {
       const app = document.querySelector("smart-camera-web");
       console.log("enabled");
-      M.toast({ html: "Images enabled" });
+      show("Images enabled");
       app.addEventListener("imagesComputed", handleImagesComputed);
 
       return () => {
-        M.toast({ html: "Images disabled" });
+        show("Images disabled");
         app.removeEventListener("imagesComputed", handleImagesComputed);
       };
     }
@@ -110,6 +123,7 @@ function CollectKYC() {
 
   return selected ? (
     <main className="px-2 mobile-screen space-y-8 flex flex-col justify-center">
+      <Snackbar />
       <smart-camera-web
         capture-id
         document-capture-modes="camera,upload"

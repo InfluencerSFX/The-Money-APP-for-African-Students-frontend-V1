@@ -47,7 +47,7 @@ const CompleteVerification = () => {
           {displayBVN()}
         </div>
       );
-    } else if (!userDetails?.tier || userDetails?.tier?.level === 0) {
+    } else if (!userDetails?.tier) {
       return (
         <div className="col-span-4 text-left col-start-2">
           <p className="text-[#336D21]">Complete your Verification</p>

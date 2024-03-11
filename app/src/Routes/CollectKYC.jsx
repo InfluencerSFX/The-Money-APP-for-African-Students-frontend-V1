@@ -96,14 +96,16 @@ function CollectKYC() {
     // Get the snackbar DIV
     const x = document.getElementById("snackbar");
 
-    // Add the "show" class to DIV
-    x.textContent = message;
-    x.className = "show";
+    if (x) {
+      // Add the "show" class to DIV
+      x.textContent = message;
+      x.className = "show";
 
-    // After 3 seconds, remove the show class from DIV
-    setTimeout(function () {
-      x.className = "snackbar";
-    }, 3000);
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function () {
+        x.className = "snackbar";
+      }, 3000);
+    } else console.log(x);
   }
 
   useEffect(() => {

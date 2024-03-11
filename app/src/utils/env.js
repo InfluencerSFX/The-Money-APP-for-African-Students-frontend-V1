@@ -22,7 +22,7 @@ const envProd = {
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfxchange.app",
   VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_2e5a4ccaae4ec70ba5d471fda98724093526aecbd0183c443de256032275b0e3",
+    "ngnc_p_tk_1af2badc47b90e34d6add4f9f2f708c0c5cfe440a83986c2d6eb3f357f2c83ca",
 };
 
 export const env =

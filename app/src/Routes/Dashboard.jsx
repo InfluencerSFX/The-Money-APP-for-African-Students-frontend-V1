@@ -143,14 +143,16 @@ const Dashboard = () => {
 
             <div className="inline-flex space-x-2 align-text-bottom text-white">
               <p className="text-4xl font-semibold">
-                {showBalance ? getBalance(balances) : "****"}
+                {showBalance ? Number(getBalance(balances)).toFixed(2) : "****"}
               </p>{" "}
               <span className="mt-auto">USD</span>
             </div>
             <div className="inline-flex space-x-2">
               <span className="mt-auto">₺</span>
               <p className="text-md font-thin">
-                {showBalance ? getBalance(balances) * liraRate : "****"}
+                {showBalance
+                  ? Number(getBalance(balances) * liraRate).toFixed(2)
+                  : "****"}
               </p>{" "}
             </div>
             <br />

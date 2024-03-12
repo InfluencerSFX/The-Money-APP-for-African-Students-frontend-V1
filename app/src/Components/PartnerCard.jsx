@@ -72,6 +72,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     if (action === "sell")
       return window.open(`/withdraw-from-wallet?partner=ngnc`, "_blank");
     const amount = prompt("Enter amount to buy in NGN: ");
+    console.log(env.VITE_NGNC_PUBLIC_KEY);
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: action,

@@ -71,7 +71,9 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
   async function ngncBuy() {
     if (action === "sell")
       return window.open(`/withdraw-from-wallet?partner=ngnc`, "_blank");
-    const amount = prompt("Enter amount to buy in NGN: ");
+    const amount = prompt("Enter amount to buy in NGN (Minimum 20000 NGN): ");
+    if (!amount) return;
+    if (Number(amount) < 20000) return alert("Minimum amount is 20000 NGN");
     console.log(env.VITE_NGNC_PUBLIC_KEY);
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,

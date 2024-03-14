@@ -16,12 +16,14 @@ import FundWallet from "./Routes/FundWallet";
 import Send from "./Routes/Send";
 import WithdrawToWallet from "./Routes/WithrawToWallet";
 import WithdrawFromWallet from "./Routes/WithdrawFromWallet";
+import WithdrawToBank from "./Routes/WithdrawToBank";
 import Settings from "./Routes/Settings";
 import KYC from "./Routes/KYC";
 import CollectKYC from "./Routes/CollectKYC";
 import PayTuition from "./Routes/PayTuition";
 import ConfirmTransaction from "./Routes/ConfirmTransaction";
 import ErrorPage from "./Routes/ErrorPage";
+import KotaniPay from "./Routes/KotaniPay";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +36,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",  
+        path: "/",
         element: <Root />,
       },
       {
@@ -74,9 +76,14 @@ const router = createBrowserRouter([
         element: <WithdrawToWallet />,
       },
       { path: "withdraw-from-wallet", element: <WithdrawFromWallet /> },
+      { path: "withdraw-to-bank", element: <WithdrawToBank /> },
       {
         path: "/KYC",
         element: <KYC />,
+      },
+      {
+        path: "/Kotani",
+        element: <KotaniPay />,
       },
       {
         path: "/collect-kyc",

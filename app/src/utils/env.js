@@ -1,8 +1,8 @@
 const envDev = {
-  VITE_SFX_BACKEND_BASE_URL: "http://localhost:3000",
-  VITE_YUKI_BACKEND_BASE_URL: "http://localhost:2000",
+  VITE_SFX_BACKEND_BASE_URL: "https://dev-api.sfxchange.app",
+  VITE_YUKI_BACKEND_BASE_URL: "https://dev-api.altra.click",
   VITE_RP_NAME: "sfx",
-  VITE_DOMAIN: "localhost",
+  VITE_DOMAIN: "sfx.vercel.app",
   VITE_NGNC_PUBLIC_KEY:
     "ngnc_p_tk_2e5a4ccaae4ec70ba5d471fda98724093526aecbd0183c443de256032275b0e3",
 };

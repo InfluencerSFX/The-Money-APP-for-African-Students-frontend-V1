@@ -6,6 +6,7 @@ import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
 import { filterMarker } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 const AssetDetail = () => {
   const navigate = useNavigate();
@@ -87,12 +88,15 @@ const AssetDetail = () => {
                   </p>
                 </div>
                 <div className="flex flex-col place-items-center space-y-2 asset-btn p-4 rounded-lg">
-                  <img
+                  {/* <img
                     className=" h-[35vw] sm:h-[40vw] lg:h-32"
                     src="/images/barcode.png"
                     alt="scan to get address"
                     srcSet=""
-                  />
+                  /> */}
+                  <div className="h-[35vw] sm:h-[40vw] lg:h-32">
+                    <QRCode value={asset.contract_address} />
+                  </div>
                   <p className=" text-white text-sm">{`Scan to receive ${asset.marker}`}</p>
                 </div>
 

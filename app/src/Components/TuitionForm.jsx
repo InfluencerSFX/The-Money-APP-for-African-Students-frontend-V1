@@ -24,6 +24,7 @@ const schema = yup.object({
   description: yup.string().max(30, "30 characters maximum").required(),
 });
 
+// eslint-disable-next-line react/prop-types
 const TuitionForm = ({ setValidated }) => {
   const {
     register,

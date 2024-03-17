@@ -49,7 +49,9 @@ const WithdrawFromWallet = () => {
   }
 
   async function ngncWithdraw(wallet) {
-    const amount = prompt("Enter amount to sell in NGN: ");
+    const amount = prompt("Enter amount to sell in NGN (Minimum 15000 NGN): ");
+    if (!amount) return;
+    if (Number(amount) < 15000) return alert("Minimum amount is 15000 NGN");
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: "sell",

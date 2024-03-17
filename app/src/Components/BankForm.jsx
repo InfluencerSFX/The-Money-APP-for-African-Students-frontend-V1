@@ -9,9 +9,6 @@ import { AxiosType, getMethod } from "../api/axios";
 const schema = yup.object({
   firstName: yup.string().required(),
   surname: yup.string().required(),
-  address: yup.string().required(),
-  universityName: yup.string().required(),
-  bankName: yup.string().required(),
   IBAN: yup
     .string()
     .matches(/^TR/, "must start with TR")
@@ -19,13 +16,9 @@ const schema = yup.object({
     .required()
     .uppercase()
     .trim(),
-  accountNumber: yup.string().notRequired(),
-  // .length(16, "Account number must be 16 Numbers"),
-  description: yup.string().max(30, "30 characters maximum").required(),
 });
 
-// eslint-disable-next-line react/prop-types
-const TuitionForm = ({ setValidated }) => {
+const BankForm = () => {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -55,7 +48,7 @@ const TuitionForm = ({ setValidated }) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
       // throw new Error();
       alert("form submitted successfully");
-      setValidated(true);
+      //   setValidated(true);
     } catch (error) {
       setError("root", { message: "something went wrong" });
     }
@@ -68,7 +61,7 @@ const TuitionForm = ({ setValidated }) => {
       >
         <div className="bg-[#e9ebd94d] inline-flex gap-2 px-2 py-1 rounded-lg w-full">
           <InformationCircleIcon className="h-4 place-self-center" />
-          <p className="text-sm">Fill transaction details</p>
+          <p className="text-sm">Add Bank Account</p>
         </div>
 
         <div className="form-style form-validation">
@@ -105,51 +98,6 @@ const TuitionForm = ({ setValidated }) => {
           <input
             type="text"
             className="bg-transparent w-full"
-            autocomplete="chrome-off"
-            placeholder="Your Address"
-            {...register("address")}
-          />{" "}
-          {errors.address && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.address?.message}
-            </p>
-          )}
-        </div>
-
-        <div className="form-style form-validation">
-          <input
-            type="text"
-            className="bg-transparent w-full"
-            autoComplete="chrome-off"
-            placeholder="University Name"
-            {...register("universityName")}
-          />{" "}
-          {errors.universityName && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.universityName?.message}
-            </p>
-          )}
-        </div>
-
-        <div className="form-style form-validation">
-          <input
-            type="text"
-            className="bg-transparent w-full"
-            autoComplete="chrome-off"
-            placeholder="Bank Name"
-            {...register("bankName")}
-          />{" "}
-          {errors.bankName && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.bankName?.message}
-            </p>
-          )}
-        </div>
-
-        <div className="form-style form-validation">
-          <input
-            type="text"
-            className="bg-transparent w-full"
             autoComplete="chrome-off"
             placeholder="IBAN"
             {...register("IBAN")}
@@ -161,36 +109,6 @@ const TuitionForm = ({ setValidated }) => {
           )}
         </div>
 
-        <div className="form-style form-validation">
-          <input
-            // required={false}
-            type="number"
-            className="bg-transparent w-full"
-            autoComplete="chrome-off"
-            placeholder="Account Number"
-            {...register("accountNumber")}
-          />{" "}
-          {errors.accountNumber && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.accountNumber?.message}
-            </p>
-          )}
-        </div>
-
-        <div className="form-style form-validation">
-          <input
-            type="text"
-            className="bg-transparent w-full"
-            autoComplete="chrome-off"
-            placeholder="Transaction Description"
-            {...register("description")}
-          />{" "}
-          {errors.description && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.description?.message}
-            </p>
-          )}
-        </div>
         {errors.root && (
           <div className="bg-red-400 inline-flex gap-2 p-2 rounded-lg w-full">
             <InformationCircleIcon className="h-4 place-self-center" />
@@ -206,4 +124,4 @@ const TuitionForm = ({ setValidated }) => {
   );
 };
 
-export default TuitionForm;
+export default BankForm;

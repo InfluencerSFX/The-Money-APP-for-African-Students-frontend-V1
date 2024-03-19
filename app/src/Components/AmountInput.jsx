@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
-import { delay, filterMarker } from "../utils/utilityFunctions";
+import { BVN, delay, filterMarker } from "../utils/utilityFunctions";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 
 const AmountInput = () => {
@@ -24,7 +24,7 @@ const AmountInput = () => {
         token,
         refreshToken
       );
-      if (user?.tier?.level > 0) {
+      if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},

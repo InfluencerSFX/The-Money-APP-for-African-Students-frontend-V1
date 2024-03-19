@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import AssetCard from "./AssetCard";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import PartnerCard from "./PartnerCard";
-import { filterMarker } from "../utils/utilityFunctions";
+import { BVN, filterMarker } from "../utils/utilityFunctions";
 
 const FundModal = ({ isOpen, setIsOpen }) => {
   const [wallets, setWallets] = useState([]);
@@ -20,7 +20,7 @@ const FundModal = ({ isOpen, setIsOpen }) => {
         refreshToken
       );
       setUser(user);
-      if (user?.tier?.level > 0) {
+      if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},

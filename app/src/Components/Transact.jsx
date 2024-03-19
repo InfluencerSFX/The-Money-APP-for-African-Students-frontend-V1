@@ -4,7 +4,7 @@ import AssetCard from "./AssetCard";
 import TransactionCard from "./TransactionCard";
 import NoHistory from "./NoHistory";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
-import { filterMarker } from "../utils/utilityFunctions";
+import { BVN, filterMarker } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -32,7 +32,7 @@ export default function Transact() {
         refreshToken
       );
       setUser(user);
-      if (user?.tier?.level > 0) {
+      if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Codes, delay } from "../utils/utilityFunctions";
+import { BVN, Codes, delay } from "../utils/utilityFunctions";
 import Spinner from "../Components/Spinner";
 import { AxiosType, getMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +27,7 @@ const KYC = () => {
         token,
         refreshToken
       );
-      console.log(user?.tier?.level > 0);
+      console.log(user?.tier?.level > 0 || user?.bvn?.code === BVN.Success);
       setUser(user);
     })();
   }, []);

@@ -5,7 +5,7 @@ import AssetCard from "../Components/AssetCard";
 import { mockTransactions } from "../utils/mockData";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
-import { delay } from "../utils/utilityFunctions";
+import { BVN, delay } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
@@ -37,7 +37,7 @@ const MakePayment = () => {
         token,
         refreshToken
       );
-      if (user?.tier?.level > 0) {
+      if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},

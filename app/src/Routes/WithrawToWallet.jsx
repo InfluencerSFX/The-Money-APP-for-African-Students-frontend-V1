@@ -4,7 +4,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import AssetCard from "../Components/AssetCard";
 import { ExclamationTriangleIcon, QrCodeIcon } from "@heroicons/react/20/solid";
 import Spinner from "../Components/Spinner";
-import { delay, filterMarker } from "../utils/utilityFunctions";
+import { BVN, delay, filterMarker } from "../utils/utilityFunctions";
 import AssetModal from "../Components/AssetModal";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
@@ -36,7 +36,7 @@ const WithdrawToWallet = () => {
         token,
         refreshToken
       );
-      if (user?.tier?.level > 0) {
+      if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},

@@ -43,6 +43,7 @@ export const Codes = {
 export const BVN = {
   Failed: "Failed",
   Processing: "Processing",
+  Success: "1012",
 };
 
 export const getBalance = (bal) => {

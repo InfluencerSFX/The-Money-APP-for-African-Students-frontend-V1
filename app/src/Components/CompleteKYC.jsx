@@ -27,7 +27,7 @@ const CompleteVerification = () => {
       return (
         <p className="text-xs text-[#CEC6BD]">BVN Verification Processing</p>
       );
-    else if (userDetails?.bvn?.bvn && userDetails?.bvn?.code === Codes.Success)
+    else if (userDetails?.bvn?.bvn && userDetails?.bvn?.code === BVN.Success)
       return <p className="text-xs text-[#CEC6BD]">BVN Verified</p>;
     else
       return <p className="text-xs text-[#CEC6BD]">BVN Verification Failed</p>;

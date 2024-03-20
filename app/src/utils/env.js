@@ -4,7 +4,7 @@ const envDev = {
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "localhost",
   VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_1af2badc47b90e34d6add4f9f2f708c0c5cfe440a83986c2d6eb3f357f2c83ca",
+    "ngnc_p_lk_dcbe3d76a9d1c8991b470a2bc69a1f6f19515c9cd8749e6825b69cdfb40cefa0",
 };
 
 const envTest = {
@@ -13,7 +13,7 @@ const envTest = {
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfx.vercel.app",
   VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_1af2badc47b90e34d6add4f9f2f708c0c5cfe440a83986c2d6eb3f357f2c83ca",
+    "ngnc_p_lk_dcbe3d76a9d1c8991b470a2bc69a1f6f19515c9cd8749e6825b69cdfb40cefa0",
 };
 
 const envProd = {
@@ -22,7 +22,7 @@ const envProd = {
   VITE_RP_NAME: "sfx",
   VITE_DOMAIN: "sfxchange.app",
   VITE_NGNC_PUBLIC_KEY:
-    "ngnc_p_tk_1af2badc47b90e34d6add4f9f2f708c0c5cfe440a83986c2d6eb3f357f2c83ca",
+    "ngnc_p_lk_dcbe3d76a9d1c8991b470a2bc69a1f6f19515c9cd8749e6825b69cdfb40cefa0",
 };
 
 export const env =

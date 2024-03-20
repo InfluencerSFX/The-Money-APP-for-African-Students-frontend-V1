@@ -7,6 +7,7 @@ const TransactionCompleteModal = ({
   setTransactionComplete,
   transactionStatus,
   transactionMessage,
+  to,
 }) => {
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ const TransactionCompleteModal = ({
     if (transactionStatus) {
       navigate("/account");
     }
-    navigate("/send");
+    navigate(to || "/send");
   }
 
   return (

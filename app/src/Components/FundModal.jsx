@@ -94,10 +94,11 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     action="buy"
                   />
                   <PartnerCard
-                    partner={"Kotani Pay"}
+                    partner={"KotaniPay"}
                     email={userDetails?.email}
                     wallet={userDetails?.wallets?.find(
-                      (w) => w.blockchain === "BSC" && w.asset.includes("USDT")
+                      (w) =>
+                        w.blockchain === "Polygon" && w.asset.includes("USDT")
                     )}
                     action="buy"
                   />

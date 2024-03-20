@@ -9,6 +9,8 @@ import { Kotani } from "../utils/Kotani";
 import Spinner from "../Components/Spinner";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import usdt from "../../public/images/usdt.png";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
+import TransactionCompleteModal from "../Components/TransactionCompleteModal";
 
 const phoneRegExp = /^[1-9]\d{7,9}$/;
 
@@ -34,8 +36,64 @@ const KotaniPay = () => {
     defaultValues: {},
   });
 
+  let [transactionComplete, setTransactionComplete] = useState(false);
+  let [transactionStatus, setTransactionStatus] = useState(false);
+  const [transactionMessage, setTransactionMessage] = useState("");
+
+  const token = localStorage.getItem("token");
+  const refreshToken = localStorage.getItem("refreshToken");
+
   const onSubmit = async (data) => {
+    const user = await getMethod(
+      "/auth/me",
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
     console.log(data);
+    console.log({
+      selectedCountry,
+      USDTValue,
+      UGXValue,
+      serviceProvider,
+    });
+    let customerKey = user?.customerKey;
+    if (!customerKey) {
+      console.log("mobile money");
+      customerKey = await postMethod(
+        "/auth/mobile-money",
+        {
+          phoneNumber: data.phoneNumber,
+          network: serviceProvider,
+          countryCode: selectedCountry.letter,
+        },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
+    }
+    const onrampData = await postMethod(
+      "/wallet/kotanipay-fund",
+      {
+        publicAddress: data.walletAddress,
+        token: "USDT",
+        amount: USDTValue,
+      },
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+
+    if (onrampData?.isError) {
+      console.log("onramp", onrampData);
+      setTransactionStatus(false);
+      setTransactionComplete(true);
+      setTransactionMessage(onrampData?.message);
+    } else {
+      setTransactionStatus(true);
+      setTransactionComplete(true);
+      setTransactionMessage("SUCCESS");
+    }
   };
 
   // const onSubmit = async (data) => {
@@ -106,7 +164,7 @@ const KotaniPay = () => {
         className="relative p-4 max-w-full min-h-fit space-y-2"
       >
         <p className="font-semi-bold mb-4 text-lg">
-          Send and Recieve through Kotani Pay
+          Send and Receive through KotaniPay
         </p>
         <div className=" space-y-2">
           <div className="w-full p-3 bg-[#e9ebd94d] inline-flex justify-between rounded-md">
@@ -199,7 +257,7 @@ const KotaniPay = () => {
             name="walletAddress"
             id="walletAddress"
             placeholder="wallet Address"
-            className="flex-nonew-full bg-transparent h-full placeholder:text-white rounded-md"
+            className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
             {...register("walletAddress")}
           />
           {errors.walletAddress && (
@@ -252,6 +310,13 @@ const KotaniPay = () => {
           </button>
         </div>
       </form>
+      <TransactionCompleteModal
+        transactionComplete={transactionComplete}
+        setTransactionComplete={setTransactionComplete}
+        transactionStatus={transactionStatus}
+        transactionMessage={transactionMessage}
+        to={"/account"}
+      />
     </main>
   );
 };

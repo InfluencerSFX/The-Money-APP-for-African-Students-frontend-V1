@@ -3,9 +3,10 @@ import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Bridge from "@ngnc/bridge";
 import { useEffect } from "react";
-import { AxiosType, postMethod } from "../api/axios";
+import { AxiosType, getMethod, postMethod } from "../api/axios";
 import { paramsToObject } from "../utils/utilityFunctions";
 import { env } from "../utils/env";
+import { useNavigate } from "react-router-dom";
 
 const CardBody = ({ partner }) => {
   useEffect(() => {
@@ -31,6 +32,7 @@ const CardBody = ({ partner }) => {
 };
 
 const PartnerCard = ({ partner, email, wallet, action }) => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const refreshToken = localStorage.getItem("refreshToken");
   async function Paychant() {
@@ -74,7 +76,18 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     const amount = prompt("Enter amount to buy in NGN (Minimum 20000 NGN): ");
     if (!amount) return;
     if (Number(amount) < 20000) return alert("Minimum amount is 20000 NGN");
-    console.log(env.VITE_NGNC_PUBLIC_KEY);
+    const rates = await getMethod(
+      "/wallet/ngnc-rates",
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    console.log(rates);
+    alert(
+      `You will receive ${(Number(amount) / rates?.ngnUSD?.USD).toFixed(
+        2
+      )} USDT`
+    );
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: action,
@@ -95,9 +108,14 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     ngncWidget.open();
   }
 
+  async function kotaniBuy() {
+    navigate("/Kotani");
+  }
+
   const partnerFunction = {
     NGNC: ngncBuy,
     Paychant,
+    KotaniPay: kotaniBuy,
   };
 
   return (

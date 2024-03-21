@@ -84,7 +84,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     );
     console.log(rates);
     alert(
-      `You will receive ${(Number(amount) / rates?.ngnUSD?.USD).toFixed(
+      `You will receive approx. ${(Number(amount) / rates?.ngnUSD?.USD).toFixed(
         2
       )} USDT`
     );

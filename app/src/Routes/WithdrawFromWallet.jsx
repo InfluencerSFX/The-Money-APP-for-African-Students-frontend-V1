@@ -52,6 +52,18 @@ const WithdrawFromWallet = () => {
     const amount = prompt("Enter amount to sell in NGN (Minimum 15000 NGN): ");
     if (!amount) return;
     if (Number(amount) < 15000) return alert("Minimum amount is 15000 NGN");
+    const rates = await getMethod(
+      "/wallet/ngnc-rates",
+      AxiosType.Main,
+      token,
+      refreshToken
+    );
+    console.log(rates);
+    alert(
+      `You will send approx. ${(Number(amount) / rates?.usdNGN?.USD).toFixed(
+        2
+      )} USDT`
+    );
     const ngncWidget = new Bridge({
       key: env.VITE_NGNC_PUBLIC_KEY,
       type: "sell",

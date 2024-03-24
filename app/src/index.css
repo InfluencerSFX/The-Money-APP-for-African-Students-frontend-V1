@@ -75,6 +75,11 @@ a:hover {
   object-fit: fill;
 }
 
+
+.qr-code svg {
+  height: inherit;
+}
+
 .asset-btn {
   background: linear-gradient(
       0deg,

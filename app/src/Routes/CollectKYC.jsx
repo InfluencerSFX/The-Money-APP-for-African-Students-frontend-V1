@@ -176,7 +176,7 @@ function CollectKYC() {
                 className="rounded font-medium text-start bg-transparent placeholder:text-gray-600"
                 value={phoneNumber}
                 pattern="^[0-9]{10}$"
-                placeholder="Phone number"
+                placeholder="Phone number (10 digits after 0)"
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>

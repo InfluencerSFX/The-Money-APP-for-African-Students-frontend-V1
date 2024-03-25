@@ -69,10 +69,17 @@ a:hover {
   /* position: relative !important; */
   display: none;
 }
-
+.qr-code svg{
+  height:inherit;
+}
 .qr-scanner video {
   /* position: relative !important; */
   object-fit: fill;
+}
+
+
+.qr-code svg {
+  height: inherit;
 }
 
 .asset-btn {

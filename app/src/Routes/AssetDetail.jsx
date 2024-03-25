@@ -94,7 +94,7 @@ const AssetDetail = () => {
                     alt="scan to get address"
                     srcSet=""
                   /> */}
-                  <div className="h-[35vw] sm:h-[40vw] lg:h-32">
+                  <div className="h-[35vw] sm:h-[40vw] lg:h-32 qr-code">
                     <QRCode value={asset.contract_address} />
                   </div>
                   <p className=" text-white text-sm">{`Scan to receive ${asset.marker}`}</p>

@@ -4,7 +4,7 @@ import {
   ClipboardDocumentIcon,
   ClipboardDocumentCheckIcon,
 } from "@heroicons/react/20/solid";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import TransactionCompleteModal from "../Components/TransactionCompleteModal";

@@ -54,7 +54,7 @@ const KotaniPay = () => {
     console.log({
       selectedCountry,
       USDTValue,
-      UGXValue,
+      fiatAmount,
       serviceProvider,
     });
     let customerKey = user?.customerKey;
@@ -126,8 +126,8 @@ const KotaniPay = () => {
 
   const [USDTValue, setUSDTValue] = useState(0);
   const [USDTValueError, setUSDTValueError] = useState("");
-  const [UGXValue, setUGXValue] = useState(0);
-  const [UGXValueError, setUGXValueError] = useState("");
+  const [fiatAmount, setFiatAmount] = useState(0);
+  const [fiatAmountError, setFiatAmountError] = useState("");
 
   const navigate = useNavigate();
 
@@ -137,13 +137,13 @@ const KotaniPay = () => {
 
   useEffect(() => {
     // check for error here and setUSDTError
-    setUGXValue(USDTValue * 2);
+    setFiatAmount(USDTValue * 2);
   }, [USDTValue]);
 
   useEffect(() => {
     // check for error here and setUGXError
-    setUSDTValue(UGXValue / 2);
-  }, [UGXValue]);
+    setUSDTValue(fiatAmount / 2);
+  }, [fiatAmount]);
 
   return (
     <main className=" relative px-0 mobile-screen space-y-4 bg-black text-white overflow-y-auto no-scrollbar">
@@ -285,19 +285,19 @@ const KotaniPay = () => {
         </div>
 
         <div className="form-style form-validation p-3  bg-[#161817]">
-          <p className="text-[smaller]">UGX Amount</p>
+          <p className="text-[smaller]">Fiat Amount</p>
           <input
             type="number"
-            name="UGXAmount"
-            value={UGXValue}
+            name="fiatAmount"
+            value={fiatAmount}
             className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
             onChange={(e) => {
-              setUGXValue(e.target.value);
+              setFiatAmount(e.target.value);
             }}
           />
-          {UGXValueError?.length > 0 && (
+          {fiatAmountError?.length > 0 && (
             <p className="text-red-400 italic text-[smaller]">
-              {UGXValueError}
+              {fiatAmountError}
             </p>
           )}
         </div>

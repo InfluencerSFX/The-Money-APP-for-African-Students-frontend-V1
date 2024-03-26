@@ -136,13 +136,29 @@ const KotaniPay = () => {
   }, [selectedCountry]);
 
   useEffect(() => {
-    // check for error here and setUSDTError
-    setFiatAmount(USDTValue * 2);
-  }, [USDTValue]);
+    (async () => {
+      const latest = await fetch(
+        "https://cdn.moneyconvert.net/api/latest.json"
+      );
+      const latestJSON = await latest.json();
+      const rates = Number(latestJSON.rates[selectedCountry.currency]);
+      console.log(rates);
+      // check for error here and setUSDTError
+      setFiatAmount((USDTValue * rates).toFixed(2));
+    })();
+  }, [USDTValue, selectedCountry]);
 
   useEffect(() => {
-    // check for error here and setUGXError
-    setUSDTValue(fiatAmount / 2);
+    (async () => {
+      const latest = await fetch(
+        "https://cdn.moneyconvert.net/api/latest.json"
+      );
+      const latestJSON = await latest.json();
+      const rates = Number(latestJSON.rates[selectedCountry.currency]);
+      console.log(rates);
+      // check for error here and setUGXError
+      setUSDTValue((fiatAmount / rates).toFixed(2));
+    })();
   }, [fiatAmount]);
 
   return (

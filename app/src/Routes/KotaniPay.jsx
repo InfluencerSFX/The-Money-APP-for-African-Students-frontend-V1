@@ -56,17 +56,17 @@ const KotaniPay = () => {
     let customerKey = user?.customerKey;
     if (!customerKey) {
       console.log("mobile money");
-      // customerKey = await postMethod(
-      //   "/auth/mobile-money",
-      //   {
-      //     phoneNumber: data.phoneNumber,
-      //     network: serviceProvider,
-      //     countryCode: selectedCountry.letter,
-      //   },
-      //   AxiosType.Main,
-      //   token,
-      //   refreshToken
-      // );
+      customerKey = await postMethod(
+        "/auth/mobile-money",
+        {
+          phoneNumber: data.phoneNumber,
+          network: serviceProvider,
+          countryCode: selectedCountry.letter,
+        },
+        AxiosType.Main,
+        token,
+        refreshToken
+      );
     }
     const wallet = user?.wallets?.find(
       (w) => w.blockchain === "Polygon" && w.asset.includes("USDT")

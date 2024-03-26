@@ -19,10 +19,6 @@ const schema = yup.object({
     .string()
     .matches(phoneRegExp, "invalid phone No eg: 1234567890")
     .required(),
-  walletAddress: yup
-    .string()
-    .required()
-    .max(48, "should not exceed 48 characters"),
 });
 
 const KotaniPay = () => {
@@ -60,22 +56,26 @@ const KotaniPay = () => {
     let customerKey = user?.customerKey;
     if (!customerKey) {
       console.log("mobile money");
-      customerKey = await postMethod(
-        "/auth/mobile-money",
-        {
-          phoneNumber: data.phoneNumber,
-          network: serviceProvider,
-          countryCode: selectedCountry.letter,
-        },
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      // customerKey = await postMethod(
+      //   "/auth/mobile-money",
+      //   {
+      //     phoneNumber: data.phoneNumber,
+      //     network: serviceProvider,
+      //     countryCode: selectedCountry.letter,
+      //   },
+      //   AxiosType.Main,
+      //   token,
+      //   refreshToken
+      // );
     }
+    const wallet = user?.wallets?.find(
+      (w) => w.blockchain === "Polygon" && w.asset.includes("USDT")
+    );
+    console.log(wallet);
     const onrampData = await postMethod(
       "/wallet/kotanipay-fund",
       {
-        publicAddress: data.walletAddress,
+        publicAddress: wallet.walletAddress,
         token: "USDT",
         amount: USDTValue,
       },
@@ -249,22 +249,6 @@ const KotaniPay = () => {
               ))}
             </Listbox.Options>
           </Listbox>
-        </div>
-
-        <div className="form-style form-validation p-3 bg-[#161817] ">
-          <input
-            type="text"
-            name="walletAddress"
-            id="walletAddress"
-            placeholder="wallet Address"
-            className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
-            {...register("walletAddress")}
-          />
-          {errors.walletAddress && (
-            <p className="text-red-400 italic text-[smaller]">
-              {errors.walletAddress?.message}
-            </p>
-          )}
         </div>
         <div className="form-style form-validation p-3  bg-[#161817]">
           <p className="text-[smaller]">USDT Amount</p>

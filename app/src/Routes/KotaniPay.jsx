@@ -144,7 +144,7 @@ const KotaniPay = () => {
       const rates = Number(latestJSON.rates[selectedCountry.currency]);
       console.log(rates);
       // check for error here and setUSDTError
-      setFiatAmount((USDTValue * rates).toFixed(2));
+      setFiatAmount(USDTValue * rates);
     })();
   }, [USDTValue, selectedCountry]);
 
@@ -276,6 +276,9 @@ const KotaniPay = () => {
             onChange={(e) => {
               setUSDTValue(e.target.value);
             }}
+            onBlur={(e) => {
+              setUSDTValue(parseFloat(e.target.value).toFixed(2));
+            }}
           />
           {USDTValueError?.length > 0 && (
             <p className="text-red-400 italic text-[smaller]">
@@ -293,6 +296,9 @@ const KotaniPay = () => {
             className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
             onChange={(e) => {
               setFiatAmount(e.target.value);
+            }}
+            onBlur={(e) => {
+              setFiatAmount(parseFloat(e.target.value).toFixed(2));
             }}
           />
           {fiatAmountError?.length > 0 && (

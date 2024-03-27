@@ -157,7 +157,7 @@ const KotaniPay = () => {
       const rates = Number(latestJSON.rates[selectedCountry.currency]);
       console.log(rates);
       // check for error here and setUGXError
-      setUSDTValue((fiatAmount / rates).toFixed(2));
+      setUSDTValue(fiatAmount / rates);
     })();
   }, [fiatAmount]);
 

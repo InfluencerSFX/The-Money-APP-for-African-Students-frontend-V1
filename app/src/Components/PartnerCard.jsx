@@ -8,7 +8,7 @@ import { paramsToObject } from "../utils/utilityFunctions";
 import { env } from "../utils/env";
 import { useNavigate } from "react-router-dom";
 
-const CardBody = ({ partner }) => {
+const CardBody = ({ partner, action }) => {
   useEffect(() => {
     (async () => {})();
   }, []);
@@ -21,10 +21,13 @@ const CardBody = ({ partner }) => {
 
   return (
     <>
-      <div className={`flex flex-row gap-3`}>
-        <img className={"basis-1/5 h-7 my-auto"} src={images[partner]} alt="" />
+      <div className={`flex flex-row gap-3 items-center flex-1`}>
+        <img className={"basis-1/7 h-7 my-auto"} src={images[partner]} alt="" />
         <div className="space-y-1">
           <p className="text-md text-start text-[#C4A383]">{partner}</p>
+        </div>
+        <div className="flex-1">
+          {partner === "NGNC" && action === "buy" ? "Will charge $1 fee" : ""}
         </div>
       </div>
     </>
@@ -109,7 +112,8 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
   }
 
   async function kotaniBuy() {
-    navigate("/Kotani");
+    if (action === "sell") return window.open(`/kotanipay-withdraw`, "_blank");
+    navigate("/kotani");
   }
 
   const partnerFunction = {
@@ -123,7 +127,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
       onClick={partnerFunction[partner]}
       className="flex justify-between w-full p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d] cursor-pointer"
     >
-      <CardBody partner={partner} />
+      <CardBody partner={partner} action={action} />
     </div>
   );
 };

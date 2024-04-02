@@ -65,6 +65,7 @@ export default function Transact() {
           date: tx.transactionDate,
           status: tx.transactionStatus,
           amount: tx.amount,
+          hash: tx.txId,
           asset:
             tx.asset ||
             (tx.transactionType === "Tuition" || tx.transactionType === "P2P"

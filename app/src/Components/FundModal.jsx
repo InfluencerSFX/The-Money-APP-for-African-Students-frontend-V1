@@ -93,15 +93,20 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     )}
                     action="buy"
                   />
-                  <PartnerCard
-                    partner={"KotaniPay"}
-                    email={userDetails?.email}
-                    wallet={userDetails?.wallets?.find(
-                      (w) =>
-                        w.blockchain === "Polygon" && w.asset.includes("USDT")
-                    )}
-                    action="buy"
-                  />
+                  {/**userDetails?.wallets?.find(
+                    (w) =>
+                      w.blockchain === "Polygon" && w.asset.includes("USDT")
+                  ) && (
+                    <PartnerCard
+                      partner={"KotaniPay"}
+                      email={userDetails?.email}
+                      wallet={userDetails?.wallets?.find(
+                        (w) =>
+                          w.blockchain === "Polygon" && w.asset.includes("USDT")
+                      )}
+                      action="buy"
+                    />
+                  )**/}
                   {userDetails?.wallets?.find(
                     (w) =>
                       w.blockchain === "Polygon" && w.asset.includes("USDT")
@@ -136,6 +141,20 @@ const FundModal = ({ isOpen, setIsOpen }) => {
                     )}
                     action="sell"
                   />
+                  {userDetails?.wallets?.find(
+                    (w) =>
+                      w.blockchain === "Polygon" && w.asset.includes("USDT")
+                  ) && (
+                    <PartnerCard
+                      partner={"KotaniPay"}
+                      email={userDetails?.email}
+                      wallet={userDetails?.wallets?.find(
+                        (w) =>
+                          w.blockchain === "Polygon" && w.asset.includes("USDT")
+                      )}
+                      action="sell"
+                    />
+                  )}
                   {userDetails?.wallets?.find(
                     (w) =>
                       w.blockchain === "Polygon" && w.asset.includes("USDT")

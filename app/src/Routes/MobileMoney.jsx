@@ -20,7 +20,7 @@ const schema = yup.object({
     .required(),
 });
 
-const KotaniPay = () => {
+const MobileMoney = () => {
   const {
     register,
     formState: { errors, isSubmitting },
@@ -48,8 +48,6 @@ const KotaniPay = () => {
     console.log(data);
     console.log({
       selectedCountry,
-      USDTValue,
-      fiatAmount,
       serviceProvider,
     });
     let customerKey = user?.customerKey;
@@ -80,51 +78,7 @@ const KotaniPay = () => {
       (w) => w.blockchain === "Polygon" && w.asset.includes("USDT")
     );
     console.log(wallet);
-    const onrampData = await postMethod(
-      "/wallet/kotanipay-fund",
-      {
-        publicAddress: wallet.walletAddress,
-        token: "USDT",
-        amount: Number(USDTValue),
-      },
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
-
-    if (onrampData?.isError || !onrampData) {
-      console.log("onramp", onrampData);
-      setTransactionStatus(false);
-      setTransactionComplete(true);
-      setTransactionMessage(onrampData?.message);
-    } else {
-      setTransactionStatus(true);
-      setTransactionComplete(true);
-      setTransactionMessage("SUCCESS");
-    }
   };
-
-  // const onSubmit = async (data) => {
-  // try {
-  //   const user = await getMethod(
-  //     "/auth/me",
-  //     AxiosType.Main,
-  //     token,
-  //     refreshToken
-  //   );
-  //   console.log(data);
-  //   localStorage.setItem(
-  //     "tuition",
-  //     JSON.stringify({ ...data, email: user?.email })
-  //   );
-  //   // await new Promise((resolve) => setTimeout(resolve, 1000));
-  //   // throw new Error();
-  //   alert("form submitted successfully");
-  //   //   setValidated(true);
-  // } catch (error) {
-  //   setError("root", { message: "something went wrong" });
-  // }
-  // };
 
   const [selectedCountry, setSelectedCountry] = useState(Kotani[0]);
 
@@ -132,42 +86,11 @@ const KotaniPay = () => {
     selectedCountry.serviceProviders[0]
   );
 
-  const [USDTValue, setUSDTValue] = useState(0);
-  const [USDTValueError, setUSDTValueError] = useState("");
-  const [fiatAmount, setFiatAmount] = useState(0);
-  const [fiatAmountError, setFiatAmountError] = useState("");
-
   const navigate = useNavigate();
 
   useEffect(() => {
     setServiceProvider(selectedCountry.serviceProviders[0]);
   }, [selectedCountry]);
-
-  useEffect(() => {
-    (async () => {
-      const latest = await fetch(
-        "https://cdn.moneyconvert.net/api/latest.json"
-      );
-      const latestJSON = await latest.json();
-      const rates = Number(latestJSON.rates[selectedCountry.currency]);
-      console.log(rates);
-      // check for error here and setUSDTError
-      setFiatAmount(USDTValue * rates);
-    })();
-  }, [USDTValue, selectedCountry]);
-
-  useEffect(() => {
-    (async () => {
-      const latest = await fetch(
-        "https://cdn.moneyconvert.net/api/latest.json"
-      );
-      const latestJSON = await latest.json();
-      const rates = Number(latestJSON.rates[selectedCountry.currency]);
-      console.log(rates);
-      // check for error here and setUGXError
-      setUSDTValue(fiatAmount / rates);
-    })();
-  }, [fiatAmount]);
 
   return (
     <main className=" relative px-0 mobile-screen space-y-4 bg-black text-white overflow-y-auto no-scrollbar">
@@ -274,47 +197,6 @@ const KotaniPay = () => {
             </Listbox.Options>
           </Listbox>
         </div>
-        <div className="form-style form-validation p-3  bg-[#161817]">
-          <p className="text-[smaller]">USDT Amount</p>
-          <input
-            type="number"
-            name="inputAmount"
-            value={USDTValue}
-            className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
-            onChange={(e) => {
-              setUSDTValue(e.target.value);
-            }}
-            onBlur={(e) => {
-              setUSDTValue(parseFloat(e.target.value).toFixed(2));
-            }}
-          />
-          {USDTValueError?.length > 0 && (
-            <p className="text-red-400 italic text-[smaller]">
-              {USDTValueError}
-            </p>
-          )}
-        </div>
-
-        <div className="form-style form-validation p-3  bg-[#161817]">
-          <p className="text-[smaller]">Fiat Amount</p>
-          <input
-            type="number"
-            name="fiatAmount"
-            value={fiatAmount}
-            className="flex-none w-full bg-transparent h-full placeholder:text-white rounded-md"
-            onChange={(e) => {
-              setFiatAmount(e.target.value);
-            }}
-            onBlur={(e) => {
-              setFiatAmount(parseFloat(e.target.value).toFixed(2));
-            }}
-          />
-          {fiatAmountError?.length > 0 && (
-            <p className="text-red-400 italic text-[smaller]">
-              {fiatAmountError}
-            </p>
-          )}
-        </div>
 
         <div className="px-4 pb-4 fixed bottom-0 w-full inset-x-0 max-w-md mx-auto">
           <button
@@ -336,4 +218,4 @@ const KotaniPay = () => {
   );
 };
 
-export default KotaniPay;
+export default MobileMoney;

@@ -24,6 +24,8 @@ import PayTuition from "./Routes/PayTuition";
 import ConfirmTransaction from "./Routes/ConfirmTransaction";
 import ErrorPage from "./Routes/ErrorPage";
 import KotaniPay from "./Routes/KotaniPay";
+import KotaniPayWithdraw from "./Routes/KotaniPayWithdraw";
+import MobileMoney from "./Routes/MobileMoney";
 
 const router = createBrowserRouter([
   {
@@ -82,8 +84,16 @@ const router = createBrowserRouter([
         element: <KYC />,
       },
       {
-        path: "/Kotani",
+        path: "/kotani",
         element: <KotaniPay />,
+      },
+      {
+        path: "/mobile-money",
+        element: <MobileMoney />,
+      },
+      {
+        path: "/kotanipay-withdraw",
+        element: <KotaniPayWithdraw />,
       },
       {
         path: "/collect-kyc",

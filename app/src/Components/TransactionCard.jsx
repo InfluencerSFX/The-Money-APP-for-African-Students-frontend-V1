@@ -1,4 +1,26 @@
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
+
 const TransactionCard = ({ transaction }) => {
+  const copyText = () => {
+    navigator.clipboard
+      .writeText(transaction.hash)
+      .then(() => console.log(`${transaction.hash} copied to clipboard`))
+      .catch((error) => {
+        console.error("Error copying text: ", error);
+      });
+  };
+
+  useEffect(() => {
+    (async () => {
+      const copyButton = document.getElementById(`${transaction.hash}-copyBtn`);
+      if (copyButton) {
+        copyButton.addEventListener("click", copyText);
+        return () => copyButton.removeEventListener("click", copyText);
+      }
+    })();
+  }, []);
   return (
     <div className="relative flex justify-between p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d]">
       <img
@@ -40,6 +62,13 @@ const TransactionCard = ({ transaction }) => {
           >
             {transaction.status}
           </p>
+        </div>
+        <div className="space-x-2">
+          <span>
+            {transaction.hash.slice(0, 5)}...
+            {transaction.hash.slice(transaction.hash.length - 4)}
+          </span>
+          <FontAwesomeIcon id={`${transaction.hash}-copyBtn`} icon={faCopy} />
         </div>
       </div>
     </div>

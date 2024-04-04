@@ -11,31 +11,12 @@ const SecureWallet = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
-      // const user = await getMethod(
-      //   "/auth/me",
-      //   AxiosType.Yuki,
-      //   token,
-      //   refreshToken
-      // );
-      // await postMethod(
-      //   "/auth/user",
-      //   { ...user },
-      //   AxiosType.Main,
-      //   token,
-      //   refreshToken
-      // );
-    })();
+    (async () => {})();
   }, []);
 
   const passkey = async () => {
     setLoading(true);
-    const data = await getMethod(
-      "/auth/credential",
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    const data = await getMethod("/auth/credential", token, refreshToken);
     const credentialOnDevice = localStorage.getItem("credential");
     const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
     console.log(data);

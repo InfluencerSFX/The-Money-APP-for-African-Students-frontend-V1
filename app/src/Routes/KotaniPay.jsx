@@ -39,12 +39,7 @@ const KotaniPay = () => {
   const refreshToken = localStorage.getItem("refreshToken");
 
   const onSubmit = async (data) => {
-    const user = await getMethod(
-      "/auth/me",
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    const user = await getMethod("/auth/me", token, refreshToken);
     console.log(data);
     console.log({
       selectedCountry,
@@ -62,7 +57,6 @@ const KotaniPay = () => {
           network: serviceProvider,
           countryCode: selectedCountry.letter,
         },
-        AxiosType.Main,
         token,
         refreshToken
       );
@@ -87,7 +81,6 @@ const KotaniPay = () => {
         token: "USDT",
         amount: Number(USDTValue),
       },
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -108,7 +101,7 @@ const KotaniPay = () => {
   // try {
   //   const user = await getMethod(
   //     "/auth/me",
-  //     AxiosType.Main,
+  //
   //     token,
   //     refreshToken
   //   );

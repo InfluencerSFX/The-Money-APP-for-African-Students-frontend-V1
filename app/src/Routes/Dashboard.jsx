@@ -28,12 +28,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getMethod(
-        "/auth/credential",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const data = await getMethod("/auth/credential", token, refreshToken);
       const credentialOnDevice = localStorage.getItem("credential");
       const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
       if (!credentialOnDeviceParsed || data.length == 0) {
@@ -41,19 +36,13 @@ const Dashboard = () => {
           state: { from: location },
         });
       }
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       console.log(user);
       setUser(user);
       if (user?.tier?.level > 0) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},
-          AxiosType.Main,
           token,
           refreshToken
         );

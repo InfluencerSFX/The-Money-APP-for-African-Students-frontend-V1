@@ -14,12 +14,7 @@ const ConnectWallet = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getMethod(
-        "/auth/credential",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const data = await getMethod("/auth/credential", token, refreshToken);
       const credentialOnDevice = localStorage.getItem("credential");
       const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
       console.log(
@@ -57,7 +52,6 @@ const ConnectWallet = () => {
     const userAccount = await postMethod(
       "/auth/signin-request",
       { challenge: credentialOnDeviceParsed.challenge },
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -98,7 +92,6 @@ const ConnectWallet = () => {
               },
               user: userAccount,
             },
-            AxiosType.Main,
             token,
             refreshToken
           );

@@ -28,12 +28,7 @@ const Root = () => {
   // }, []);
   useEffect(() => {
     (async () => {
-      const data = await getMethod(
-        "/auth/credential",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const data = await getMethod("/auth/credential", token, refreshToken);
       const credentialOnDevice = localStorage.getItem("credential");
       const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
       if (!credentialOnDeviceParsed || data.length == 0) {

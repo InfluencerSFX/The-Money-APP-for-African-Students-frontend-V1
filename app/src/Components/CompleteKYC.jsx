@@ -11,12 +11,7 @@ const CompleteVerification = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       setUser(user);
     })();
   }, []);

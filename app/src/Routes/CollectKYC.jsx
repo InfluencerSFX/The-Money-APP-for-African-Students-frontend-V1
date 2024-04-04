@@ -61,7 +61,6 @@ function CollectKYC() {
         },
         tier: Number(tier),
       },
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -82,7 +81,6 @@ function CollectKYC() {
       const result = await postMethod(
         "/kyc/verify-bvn",
         { id_number: bvn, dob, phone_number: phoneNumber },
-        AxiosType.Main,
         token,
         refreshToken
       );

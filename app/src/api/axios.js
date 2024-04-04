@@ -2,12 +2,8 @@ import axios from "axios";
 import { saveAccessToken } from "../functions/saveAccessToken";
 import { env } from "../utils/env";
 
-export const mainAxios = axios.create({
+export const backend = axios.create({
   baseURL: env.VITE_SFX_BACKEND_BASE_URL,
-});
-
-export const yukiAxios = axios.create({
-  baseURL: env.VITE_YUKI_BACKEND_BASE_URL,
 });
 
 export const AxiosType = {
@@ -23,10 +19,9 @@ export const AxiosType = {
  * @param {string} token
  * @param {string} refreshToken
  */
-export async function postMethod(url, body, axiosType, token, refreshToken) {
-  const a = axiosType === AxiosType.Yuki ? yukiAxios : mainAxios;
+export async function postMethod(url, body, token, refreshToken) {
   try {
-    const res = await a.post(url, body, {
+    const res = await backend.post(url, body, {
       headers: {
         Authorization: `Bearer ${token}`,
         "refresh-token": refreshToken,
@@ -52,10 +47,9 @@ export async function postMethod(url, body, axiosType, token, refreshToken) {
  * @param {string} token
  * @param {string} refreshToken
  */
-export async function getMethod(url, axiosType, token, refreshToken) {
-  const a = axiosType === AxiosType.Yuki ? yukiAxios : mainAxios;
+export async function getMethod(url, token, refreshToken) {
   try {
-    const res = await a.get(url, {
+    const res = await backend.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
         "refresh-token": refreshToken,

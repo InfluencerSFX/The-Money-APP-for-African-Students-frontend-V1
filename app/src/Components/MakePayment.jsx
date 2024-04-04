@@ -31,17 +31,11 @@ const MakePayment = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},
-          AxiosType.Main,
           token,
           refreshToken
         );

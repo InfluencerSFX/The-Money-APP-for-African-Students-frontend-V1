@@ -37,19 +37,13 @@ const ConfirmTransaction = () => {
   }
 
   async function completeTransaction() {
-    const user = await getMethod(
-      "/auth/me",
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    const user = await getMethod("/auth/me", token, refreshToken);
     const tuition = localStorage.getItem("tuition");
     if (!tuition) return alert("Tuition form not filled");
     const tuitionObj = JSON.parse(tuition);
     const tuitionData = await postMethod(
       "/wallet/submit-tuition",
       { ...tuitionObj, amountPaid: amount, finalAmount },
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -67,7 +61,6 @@ const ConfirmTransaction = () => {
         amount: finalAmount.toString(),
         tuition: tuitionData,
       },
-      AxiosType.Main,
       token,
       refreshToken
     );

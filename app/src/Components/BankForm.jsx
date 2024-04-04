@@ -34,12 +34,7 @@ const BankForm = () => {
 
   const onSubmit = async (data) => {
     try {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       console.log(data);
       localStorage.setItem(
         "tuition",

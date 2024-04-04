@@ -64,7 +64,7 @@ export default {
 
 // const manifestForPlugin = {
 //   registerType: "prompt",
-//   includeAssets: ["favicon.ico", "pwa-icon-512.png", "android-chrome-512x512.png", "apple-touch-icon.png", "mask-icon.svg", "cr.jpg"], //I tried adding/removing icon name from here but , no change, generate the 4 icons only
+//   includeAssets: ["favicon.ico", "pwa-icon-512.png", "android-chrome-512x512.png", "apple-touch-icon.png", "mask-icon.svg", "cr.jpg"], //I tried adding/removing icon name from here but ,no change, generate the 4 icons only
 
 //   manifest: {
 //       name: "App name",

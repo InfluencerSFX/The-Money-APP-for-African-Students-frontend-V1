@@ -44,7 +44,6 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     const url = await postMethod(
       "/wallet/paychant-fund?assetAmount=10",
       {},
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -79,12 +78,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
     const amount = prompt("Enter amount to buy in NGN (Minimum 20000 NGN): ");
     if (!amount) return;
     if (Number(amount) < 20000) return alert("Minimum amount is 20000 NGN");
-    const rates = await getMethod(
-      "/wallet/ngnc-rates",
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    const rates = await getMethod("/wallet/ngnc-rates", token, refreshToken);
     console.log(rates);
     alert(
       `You will receive approx. ${(Number(amount) / rates?.ngnUSD?.USD).toFixed(

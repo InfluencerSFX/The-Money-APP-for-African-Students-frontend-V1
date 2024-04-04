@@ -25,27 +25,16 @@ export default function Transact() {
   const refreshToken = localStorage.getItem("refreshToken");
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       setUser(user);
       if (user?.tier?.level > 0 || user?.bvn?.code === BVN.Success) {
         const bal = await postMethod(
           "/wallet/check-assets-balance",
           {},
-          AxiosType.Main,
           token,
           refreshToken
         );
-        const txs = await getMethod(
-          "/wallet/tx-history",
-          AxiosType.Main,
-          token,
-          refreshToken
-        );
+        const txs = await getMethod("/wallet/tx-history", token, refreshToken);
         console.log(bal);
         const userWallets = user?.wallets?.map((a) => ({
           network: a.blockchain.toUpperCase(),

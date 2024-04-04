@@ -27,12 +27,7 @@ const KotaniPayWithdraw = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       if (!user?.customerKey) {
         alert("Please create a mobile money wallet with SFX");
         return navigate(`/mobile-money`);
@@ -50,7 +45,6 @@ const KotaniPayWithdraw = () => {
           senderAddress: wallet.walletAddress,
           asset: "USDT",
         },
-        AxiosType.Main,
         token,
         refreshToken
       );
@@ -82,7 +76,6 @@ const KotaniPayWithdraw = () => {
         requestId,
         asset: "USDT",
       },
-      AxiosType.Main,
       token,
       refreshToken
     );

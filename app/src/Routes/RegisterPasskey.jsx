@@ -14,12 +14,7 @@ const RegisterPasskey = () => {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      const data = await getMethod(
-        "/auth/credential",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const data = await getMethod("/auth/credential", token, refreshToken);
       const credentialOnDevice = localStorage.getItem("credential");
       const credentialOnDeviceParsed = JSON.parse(credentialOnDevice);
       if (credentialOnDeviceParsed && data.length > 0) {
@@ -34,7 +29,6 @@ const RegisterPasskey = () => {
     const data = await postMethod(
       "/auth/register-request",
       {},
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -77,7 +71,6 @@ const RegisterPasskey = () => {
             rawId: isoBase64URL.fromBuffer(credential.rawId),
             type: credential.type,
           },
-          AxiosType.Main,
           token,
           refreshToken
         );
@@ -105,7 +98,6 @@ const RegisterPasskey = () => {
               challengeBuffer: challengeBufferString,
               origin: window.location.origin,
             },
-            AxiosType.Main,
             token,
             refreshToken
           );

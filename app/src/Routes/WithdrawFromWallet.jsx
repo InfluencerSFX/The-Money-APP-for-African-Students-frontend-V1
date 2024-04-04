@@ -19,7 +19,6 @@ const WithdrawFromWallet = () => {
     const url = await postMethod(
       "/wallet/paychant-fund?assetAmount=10",
       {},
-      AxiosType.Main,
       token,
       refreshToken
     );
@@ -52,12 +51,7 @@ const WithdrawFromWallet = () => {
     const amount = prompt("Enter amount to sell in NGN (Minimum 15000 NGN): ");
     if (!amount) return;
     if (Number(amount) < 15000) return alert("Minimum amount is 15000 NGN");
-    const rates = await getMethod(
-      "/wallet/ngnc-rates",
-      AxiosType.Main,
-      token,
-      refreshToken
-    );
+    const rates = await getMethod("/wallet/ngnc-rates", token, refreshToken);
     console.log(rates);
     alert(
       `You will send approx. ${(Number(amount) / rates?.usdNGN?.USD).toFixed(
@@ -86,12 +80,7 @@ const WithdrawFromWallet = () => {
 
   useEffect(() => {
     (async () => {
-      const user = await getMethod(
-        "/auth/me",
-        AxiosType.Main,
-        token,
-        refreshToken
-      );
+      const user = await getMethod("/auth/me", token, refreshToken);
       setUser(user);
       const wallet = user?.wallets?.find(
         (w) => w.blockchain === "Polygon" && w.asset.includes("USDT")

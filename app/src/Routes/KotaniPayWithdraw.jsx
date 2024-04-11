@@ -26,7 +26,7 @@ const KotaniPayWithdraw = () => {
         console.log(`${escrowAddress} copied to clipboard`);
       })
       .catch((error) => {
-        console.error("Error copying text: ", error);
+        alert(JSON.stringify(error));
       });
   };
 
@@ -118,10 +118,10 @@ const KotaniPayWithdraw = () => {
         <div className="flex flex-col space-y-4">
           <div className="border border-gray-400 rounded-md p-3">
             Transfer {amount} USDT to{" "}
-            <span className="font-bold">
+            <span className="font-bold cursor-pointer" id={`copyBtn`}>
               {escrowAddress.slice(0, 5)}...
               {escrowAddress.slice(escrowAddress.length - 4)}{" "}
-              <FontAwesomeIcon id={`copyBtn`} icon={faCopy} />
+              <FontAwesomeIcon icon={faCopy} />
             </span>
           </div>
           <div className="form-style form-validation space-y-3">

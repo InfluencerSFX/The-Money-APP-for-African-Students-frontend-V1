@@ -13,7 +13,7 @@ const TransactionCard = ({ transaction }) => {
         console.log(`${transaction.hash} copied to clipboard`);
       })
       .catch((error) => {
-        console.error("Error copying text: ", error);
+        alert(JSON.stringify(error));
       });
   };
 
@@ -69,12 +69,15 @@ const TransactionCard = ({ transaction }) => {
             {transaction.status}
           </p>
         </div>
-        <div className="space-x-2">
+        <div
+          className="space-x-2 cursor-pointer"
+          id={`${transaction.hash}-copyBtn`}
+        >
           <span>
             {transaction.hash.slice(0, 5)}...
             {transaction.hash.slice(transaction.hash.length - 4)}
           </span>
-          <FontAwesomeIcon id={`${transaction.hash}-copyBtn`} icon={faCopy} />
+          <FontAwesomeIcon icon={faCopy} />
         </div>
       </div>
     </div>

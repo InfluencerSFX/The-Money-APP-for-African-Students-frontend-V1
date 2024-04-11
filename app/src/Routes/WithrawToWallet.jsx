@@ -60,7 +60,10 @@ const WithdrawToWallet = () => {
           }
         }
         setWallets(wallets);
-        setSelected(wallets?.[0]);
+        console.log("selected 0, ", wallets);
+        setSelected(
+          wallets?.find((w) => w.marker === "USDT" && w.network === "POLYGON")
+        );
       }
     })();
   }, []);

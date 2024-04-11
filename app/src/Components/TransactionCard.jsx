@@ -1,12 +1,17 @@
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
+import { show } from "../utils/utilityFunctions";
+import Snackbar from "./Snackbar";
 
 const TransactionCard = ({ transaction }) => {
   const copyText = () => {
     navigator.clipboard
       .writeText(transaction.hash)
-      .then(() => console.log(`${transaction.hash} copied to clipboard`))
+      .then(() => {
+        show("Copied to clipboard");
+        console.log(`${transaction.hash} copied to clipboard`);
+      })
       .catch((error) => {
         console.error("Error copying text: ", error);
       });
@@ -23,6 +28,7 @@ const TransactionCard = ({ transaction }) => {
   }, []);
   return (
     <div className="relative flex justify-between p-4 bg-[#161817] rounded-lg border border-[#e9ebd94d]">
+      <Snackbar />
       <img
         src={`/images/${transaction.type.toLowerCase()}.png`}
         className="absolute right-2 bottom-1 h-14 w-auto"

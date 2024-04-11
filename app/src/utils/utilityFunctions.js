@@ -67,3 +67,19 @@ export const paramsToObject = (params) => {
   }
   return obj;
 };
+
+export function show(message) {
+  // Get the snackbar DIV
+  const x = document.getElementById("snackbar");
+
+  if (x) {
+    // Add the "show" class to DIV
+    x.textContent = message;
+    x.className = "show";
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+      x.className = "snackbar";
+    }, 3000);
+  } else console.log(x);
+}

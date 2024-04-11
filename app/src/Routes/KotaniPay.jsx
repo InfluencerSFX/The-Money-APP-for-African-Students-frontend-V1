@@ -133,6 +133,16 @@ const KotaniPay = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    (async () => {
+      const user = await getMethod("/auth/me", token, refreshToken);
+      if (!user?.customerKey) {
+        alert("Please create a mobile money wallet with SFX");
+        return navigate(`/mobile-money`);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
     setServiceProvider(selectedCountry.serviceProviders[0]);
   }, [selectedCountry]);
 
@@ -183,7 +193,7 @@ const KotaniPay = () => {
         <p className="font-semi-bold mb-4 text-lg">
           Send and Receive through KotaniPay
         </p>
-        <div className=" space-y-2">
+        {/* <div className=" space-y-2">
           <div className="w-full p-3 bg-[#e9ebd94d] inline-flex justify-between rounded-md">
             <div className="space-y-1">
               <p className="">USDT</p>
@@ -266,7 +276,7 @@ const KotaniPay = () => {
               ))}
             </Listbox.Options>
           </Listbox>
-        </div>
+        </div> */}
         <div className="form-style form-validation p-3  bg-[#161817]">
           <p className="text-[smaller]">USDT Amount</p>
           <input

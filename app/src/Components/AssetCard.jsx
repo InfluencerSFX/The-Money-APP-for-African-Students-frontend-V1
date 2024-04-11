@@ -2,7 +2,8 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
-import { filterMarker } from "../utils/utilityFunctions";
+import { filterMarker, show } from "../utils/utilityFunctions";
+import Snackbar from "./Snackbar";
 
 const CardBody = ({ asset, dropdown }) => {
   const copyText = () => {
@@ -12,6 +13,7 @@ const CardBody = ({ asset, dropdown }) => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        show("Copied to clipboard");
         console.log("Text copied to clipboard!");
       })
       .catch((error) => {
@@ -36,6 +38,7 @@ const CardBody = ({ asset, dropdown }) => {
 
   return (
     <>
+      <Snackbar />
       <div
         className={`${
           dropdown ? "flex flex-row gap-3" : "flex flex-row gap-2"

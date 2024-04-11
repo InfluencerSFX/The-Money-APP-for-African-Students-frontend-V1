@@ -4,9 +4,10 @@ import AssetCard from "../Components/AssetCard";
 import { DocumentDuplicateIcon } from "@heroicons/react/24/outline";
 import { AxiosType, getMethod, postMethod } from "../api/axios";
 import Spinner from "../Components/Spinner";
-import { filterMarker } from "../utils/utilityFunctions";
+import { show } from "../utils/utilityFunctions";
 import { useNavigate } from "react-router-dom";
 import QRCode from "react-qr-code";
+import Snackbar from "../Components/Snackbar";
 
 const AssetDetail = () => {
   const navigate = useNavigate();
@@ -45,6 +46,7 @@ const AssetDetail = () => {
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        show("Copied to clipboard");
         console.log("Text copied to clipboard!");
       })
       .catch((error) => {
@@ -59,6 +61,7 @@ const AssetDetail = () => {
         </div>
       ) : (
         <div className="relative bg-[#000000] pt-4 mx-auto lg:max-w-md  mobile-screen">
+          <Snackbar />
           <div className="border-b border-[#D4B998]">
             <button
               onClick={() => navigate(-1)}

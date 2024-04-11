@@ -106,7 +106,7 @@ const PartnerCard = ({ partner, email, wallet, action }) => {
   }
 
   async function kotaniBuy() {
-    if (action === "sell") return window.open(`/kotanipay-withdraw`, "_blank");
+    if (action === "sell") return navigate(`/kotanipay-withdraw`);
     navigate("/kotani");
   }
 

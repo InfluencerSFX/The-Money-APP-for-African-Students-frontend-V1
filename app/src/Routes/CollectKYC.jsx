@@ -3,6 +3,7 @@ import "@smile_identity/smart-camera-web";
 import { AxiosType, postMethod } from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import Snackbar from "../Components/Snackbar";
+import { show } from "../utils/utilityFunctions";
 
 function CollectKYC() {
   const searchParams = new URLSearchParams(document.location.search);
@@ -90,24 +91,7 @@ function CollectKYC() {
     }
   };
 
-  function show(message) {
-    // Get the snackbar DIV
-    const x = document.getElementById("snackbar");
-
-    if (x) {
-      // Add the "show" class to DIV
-      x.textContent = message;
-      x.className = "show";
-
-      // After 3 seconds, remove the show class from DIV
-      setTimeout(function () {
-        x.className = "snackbar";
-      }, 3000);
-    } else console.log(x);
-  }
-
   useEffect(() => {
-    // M.AutoInit();
     if (selected) {
       const app = document.querySelector("smart-camera-web");
       console.log("enabled");

@@ -70,14 +70,14 @@ const TransactionCard = ({ transaction }) => {
           </p>
         </div>
         <div
-          className="space-x-2 cursor-pointer"
+          className="space-x-5 cursor-pointer flex"
           id={`${transaction.hash}-copyBtn`}
         >
-          <span>
+          <span className="text-left">
             {transaction.hash.slice(0, 5)}...
             {transaction.hash.slice(transaction.hash.length - 4)}
           </span>
-          <FontAwesomeIcon icon={faCopy} />
+          <FontAwesomeIcon icon={faCopy} className="scale-[1.5]" />
         </div>
       </div>
     </div>

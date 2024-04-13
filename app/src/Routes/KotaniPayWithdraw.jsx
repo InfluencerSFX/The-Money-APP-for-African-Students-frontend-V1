@@ -116,13 +116,13 @@ const KotaniPayWithdraw = () => {
       <main className="flex flex-col flex-wrap items-center mobile-screen justify-center relative space-y-4 bg-black text-white overflow-y-auto no-scrollbar">
         <Snackbar />
         <div className="flex flex-col space-y-4">
-          <div className="border border-gray-400 rounded-md p-3">
+          <div className="border space-x-2 border-gray-400 rounded-md p-3">
             Transfer {amount} USDT to{" "}
             <span className="font-bold cursor-pointer" id={`copyBtn`}>
               {escrowAddress.slice(0, 5)}...
               {escrowAddress.slice(escrowAddress.length - 4)}{" "}
-              <FontAwesomeIcon icon={faCopy} />
             </span>
+            <FontAwesomeIcon icon={faCopy} className="scale-[1.5]" />
           </div>
           <div className="form-style form-validation space-y-3">
             <p>Copy the transaction hash from the transaction history tab</p>

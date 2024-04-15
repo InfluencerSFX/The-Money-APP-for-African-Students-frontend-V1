@@ -30,6 +30,8 @@ const KotaniPayWithdraw = () => {
       });
   };
 
+  const [ngn, setNgn] = useState(0);
+
   useEffect(() => {
     (async () => {
       const user = await getMethod("/auth/me", token, refreshToken);
@@ -37,12 +39,14 @@ const KotaniPayWithdraw = () => {
         alert("Please create a mobile money wallet with SFX");
         return navigate(`/mobile-money`);
       }
+      const rates = await getMethod("/wallet/ngnc-rates", token, refreshToken);
       const cachedRequestDataJSON = localStorage.getItem("kotanipayWithdraw");
       if (cachedRequestDataJSON) {
         const cachedRequestData = JSON.parse(cachedRequestDataJSON);
         setEscrowAddress(cachedRequestData?.escrow_address);
         setRequestId(cachedRequestData?.request_id);
         setAmount(Number(cachedRequestData?.amount));
+        setNgn(amount * rates?.usdNGN?.USD);
       } else {
         const amount = prompt("Enter amount to sell in USDT");
         if (!amount) return;
@@ -67,6 +71,7 @@ const KotaniPayWithdraw = () => {
         }
         setEscrowAddress(requestData?.escrow_address);
         setRequestId(requestData?.request_id);
+        setNgn(amount * rates?.usdNGN?.USD);
         localStorage.setItem(
           "kotanipayWithdraw",
           JSON.stringify({ ...requestData, amount })
@@ -128,6 +133,7 @@ const KotaniPayWithdraw = () => {
               {escrowAddress.slice(escrowAddress.length - 4)}{" "}
             </span>
             <FontAwesomeIcon icon={faCopy} className="scale-[1.5]" />
+            <span>You will receive {ngn} NGN</span>
           </div>
           <div className="form-style form-validation space-y-3">
             <p>Copy the transaction hash from the transaction history tab</p>

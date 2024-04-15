@@ -84,6 +84,11 @@ const KotaniPayWithdraw = () => {
   let [transactionStatus, setTransactionStatus] = useState(false);
   const [transactionMessage, setTransactionMessage] = useState("");
 
+  function cancel() {
+    localStorage.removeItem("kotanipayWithdraw");
+    navigate("/account");
+  }
+
   async function offramp() {
     console.log(transactionHash, requestId);
     const offrampData = await postMethod(
@@ -146,7 +151,7 @@ const KotaniPayWithdraw = () => {
               SEND USDT
             </button>
             <button
-              onClick={() => localStorage.removeItem("kotanipayWithdraw")}
+              onClick={() => cancel()}
               className="w-full border border-[#55bb6c] hover:bg-[#55bb6c]"
             >
               CANCEL
